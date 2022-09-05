@@ -23,7 +23,7 @@ public class SpringDocConfigTest {
 
 
     /**
-     * This Test generate the swagger.yaml file used to publish in github pages.
+     * This Test generate the swagger.json file used to publish in github pages.
      * @throws IOException
      */
     @Test
@@ -34,6 +34,6 @@ public class SpringDocConfigTest {
 
         Path specs = Paths.get("docs/specs");
         Files.createDirectories(specs);
-        Files.writeString(specs.resolve("swagger.yaml"), responseEntity.getBody());
+        Files.writeString(specs.resolve("swagger.json"), responseEntity.getBody());
     }
 }
