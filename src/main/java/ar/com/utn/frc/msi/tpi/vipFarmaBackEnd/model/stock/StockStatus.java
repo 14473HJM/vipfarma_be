@@ -1,6 +1,6 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.stock;
 
-public enum StockItemStatus {
+public enum StockStatus {
 
     ACTIVE, INACTIVE, EXPIRED;
 }
