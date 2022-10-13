@@ -1,6 +1,5 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.controllers;
 
-
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.user.User;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-public class UserController {
+public class UserController extends AbstractController {
 
     private final UserService userService;
 
@@ -18,9 +17,7 @@ public class UserController {
         String userName = user.getUserName();
         String password = user.getPassword();
         User userLogged = userService.login(userName, password);
-        if(userLogged == null) {
-            return ResponseEntity.notFound().build();
-        }
+
         return ResponseEntity.ok(userLogged);
     }
 

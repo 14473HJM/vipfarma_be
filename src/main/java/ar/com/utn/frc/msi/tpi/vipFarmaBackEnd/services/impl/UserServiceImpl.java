@@ -4,10 +4,11 @@ import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.UserEntity;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.user.User;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.repositories.UserRepository;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.UserService;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+
+import javax.persistence.EntityNotFoundException;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +25,7 @@ public class UserServiceImpl implements UserService {
             User user = modelMapper.map(userEntity, User.class);
             return user;
         }
-        return null;
+        throw new EntityNotFoundException("No se encontro ningun usuario");
     }
 
     @Override
