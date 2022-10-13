@@ -3,6 +3,7 @@ package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.controllers;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.common.ErrorDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
@@ -10,6 +11,7 @@ import javax.persistence.EntityNotFoundException;
 import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 
+@ControllerAdvice
 public class AbstractController {
 
     @ExceptionHandler(Exception.class)
