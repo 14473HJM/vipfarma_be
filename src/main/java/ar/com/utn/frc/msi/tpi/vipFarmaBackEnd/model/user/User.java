@@ -14,7 +14,7 @@ public class User {
     private String userName;
     private String email;
     private String password;
-    private List<UserRole> userRoles;
+    private UserRole userRoles;
     private BranchOffice branchOffice;
 
 }
