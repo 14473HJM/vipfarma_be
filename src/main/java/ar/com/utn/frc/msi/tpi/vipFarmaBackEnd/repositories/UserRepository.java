@@ -9,7 +9,4 @@ import org.springframework.stereotype.Repository;
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
     UserEntity getByUserNameAndPassword(String userName, String password);
-
-    UserEntity getByEmail(String email);
-
 }
