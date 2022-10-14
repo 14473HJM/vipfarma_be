@@ -1,6 +1,7 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale;
 
 
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.common.BranchOffice;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.customer.Customer;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.user.User;
 import lombok.AllArgsConstructor;
