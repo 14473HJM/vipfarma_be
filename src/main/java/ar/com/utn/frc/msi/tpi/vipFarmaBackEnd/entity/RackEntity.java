@@ -21,7 +21,7 @@ public class RackEntity {
     @JoinColumn(name = "warehouseId", referencedColumnName = "id")
     private WarehouseEntity warehouse;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "racks")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "rack")
     private List<LockerEntity> lockers;
 
 }

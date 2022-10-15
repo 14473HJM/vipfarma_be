@@ -16,9 +16,9 @@ public class LockerEntity {
     @JoinColumn(name = "rackId", referencedColumnName = "id")
     private RackEntity rack;
 
-    @OneToMany
-    @JoinColumn(name = "prodId")
-    private List<ProductEntity> product;
+    @OneToOne
+    @JoinColumn(name = "productId", referencedColumnName = "id")
+    private ProductEntity product;
     private Integer stockCapacity;
 
     //TODO MS Aguardar que AS suba su branch ya que contiene ProductEntity. Realizar relacion @ManyToOne

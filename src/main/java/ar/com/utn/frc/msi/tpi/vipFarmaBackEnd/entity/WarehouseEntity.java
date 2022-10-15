@@ -19,6 +19,6 @@ public class WarehouseEntity {
     @JoinColumn(name = "branchOfficeId", referencedColumnName = "id")
     private BranchOfficeEntity branchOffice;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "warehouses")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "warehouse")
     private List<RackEntity> racks;
 }
