@@ -4,17 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Price {
+public class Offer {
 
     private Long id;
-    private Integer version;
-    private BigDecimal price;
-    private LocalDate validFrom;
-    private LocalDate validTo;
+    private Product product;
+    private HealthInsurance healthInsurance;
+    private HealthInsurancePlan healthInsurancePlan;
+    private Discount discount;
 }
