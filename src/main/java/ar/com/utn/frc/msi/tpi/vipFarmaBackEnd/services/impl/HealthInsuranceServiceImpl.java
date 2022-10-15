@@ -1,13 +1,16 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.impl;
 
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.HealthInsuranceEntity;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.HealthInsurancePlanEntity;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.HealthInsurance;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.HealthInsurancePlan;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.repositories.HealthInsuranceRepository;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.HealthInsuranceService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,5 +41,15 @@ public class HealthInsuranceServiceImpl implements HealthInsuranceService {
             myList.add(modelMapper.map(entity, HealthInsurance.class));
         }
         return myList;*/
+    }
+
+    @Override
+    public HealthInsurance getById(Long id) {
+        HealthInsuranceEntity healthInsuranceEntity = healthInsuranceRepository.getReferenceById(id);
+        if(healthInsuranceEntity == null) {
+            throw new EntityNotFoundException(String.format("HealthInsurance id {} not found", id));
+        } else {
+            return modelMapper.map(healthInsuranceEntity, HealthInsurance.class);
+        }
     }
 }

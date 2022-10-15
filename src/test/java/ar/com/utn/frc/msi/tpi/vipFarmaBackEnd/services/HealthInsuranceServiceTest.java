@@ -29,5 +29,7 @@ public class HealthInsuranceServiceTest {
         hi.setName("OSDE");
         hi.setAvailablePlans(Arrays.asList(hip));
         HealthInsurance result = healthInsuranceService.createHealthInsurance(hi);
+        HealthInsurance queryResult = healthInsuranceService.getById(result.getId());
+
     }
 }

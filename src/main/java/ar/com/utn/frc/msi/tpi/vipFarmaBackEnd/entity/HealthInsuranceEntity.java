@@ -17,6 +17,6 @@ public class HealthInsuranceEntity {
     private String name;
     private String number;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "healthInsuranceId")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "healthInsuranceId", cascade = CascadeType.ALL)
     private List<HealthInsurancePlanEntity> availablePlans;
 }
