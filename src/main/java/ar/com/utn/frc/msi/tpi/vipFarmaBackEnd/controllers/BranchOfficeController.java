@@ -30,8 +30,8 @@ public class BranchOfficeController {
 
     @GetMapping("/branchOffice/{id}")
     public ResponseEntity<BranchOffice> getAll(@PathVariable Long id) {
-        BranchOffice healthInsurance = branchOfficeService.getById(id);
-        return ResponseEntity.ok(healthInsurance);
+        BranchOffice branchOffice = branchOfficeService.getById(id);
+        return ResponseEntity.ok(branchOffice);
     }
 
 }
