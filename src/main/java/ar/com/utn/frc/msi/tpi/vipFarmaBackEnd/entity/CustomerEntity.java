@@ -3,11 +3,13 @@ package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.HealthInsurance;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.HealthInsurancePlan;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.customer.IdentificationType;
+import lombok.Data;
 
 import javax.persistence.*;
 
 
-@Entity(name = "CustomerEntity")
+@Data
+@Entity(name = "Customer")
 public class CustomerEntity {
 
     @Id
@@ -20,5 +22,7 @@ public class CustomerEntity {
     private String address;
     private Long healthInsurance;
     private Long healthInsurancePlan;
+
+
 
 }
