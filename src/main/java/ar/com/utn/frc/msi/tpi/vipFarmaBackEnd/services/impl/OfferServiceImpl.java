@@ -53,12 +53,34 @@ public class OfferServiceImpl extends BaseModelServiceImpl<Offer, OfferEntity> i
 
     @Override
     public List<OfferStock> getAllOffersWithStock() {
-        return null;
+        List<OfferStock> offerStockList = offerRepository.getAllOffersWithStock();
+        for (OfferStock offer : offerStockList) {
+            offer.setFinalPrice(this.getFinalPrice(offer));
+        }
+        return offerStockList;
     }
 
     @Override
     public OfferStock getOffersWithStock(Long id) {
-        return null;
+        return offerRepository.getOfferByIdWithStock(id);
+    }
+
+    @Override
+    public List<OfferStock> getOfferStockByProductId(Long productId) {
+        List<OfferStock> offerStockList = offerRepository.getOfferStockByProductId(productId);
+        for (OfferStock offer : offerStockList) {
+            offer.setFinalPrice(this.getFinalPrice(offer));
+        }
+        return offerStockList;
+    }
+
+    @Override
+    public List<OfferStock> getOfferStockByProductIdAndBranchOffice(Long productId, Long branchOfficeId) {
+        List<OfferStock> offerStockList = offerRepository.getOfferStockByProductIdAndBranchOffice(productId, branchOfficeId);
+        for (OfferStock offer : offerStockList) {
+            offer.setFinalPrice(this.getFinalPrice(offer));
+        }
+        return offerStockList;
     }
 
     private BigDecimal getFinalPrice(Offer offer) {
