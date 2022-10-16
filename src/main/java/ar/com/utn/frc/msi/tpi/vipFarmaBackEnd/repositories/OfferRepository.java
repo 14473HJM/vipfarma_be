@@ -9,6 +9,4 @@ import java.util.List;
 @Repository
 public interface OfferRepository extends JpaRepository<OfferEntity, Long> {
 
-    List<OfferEntity> getByProductId(Long productId);
-
 }

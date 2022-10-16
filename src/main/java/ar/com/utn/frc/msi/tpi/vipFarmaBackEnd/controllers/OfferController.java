@@ -1,18 +1,43 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.controllers;
 
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.Offer;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.stock.Warehouse;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.OfferService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequiredArgsConstructor
 public class OfferController {
 
-    /**
-     * GET
-     * /offers getOffers List (todos los prod con sus precios y descuentos)
-     * /offers/{id} Offer (oferta por id)
-     * /offers/{id}/stock (OfferStock por id)
-     * POST
-     * /offers created offer (Crear oferta para pruebas) Body(oferta)
-     */
+    private final OfferService offerService;
 
-    /**
-     * controlador (model) --> service (entity) --> Repositorio
-     */
+    @PostMapping("/offers")
+    public ResponseEntity<Offer> create(@RequestBody Offer offer) {
+        offer = offerService.create(offer);
+        return ResponseEntity.created(null).body(offer);
+    }
+
+    @GetMapping("/offers")
+    public ResponseEntity<List<Offer>> getAll() {
+        List<Offer> offerList = offerService.getAll();
+        return ResponseEntity.ok(offerList);
+    }
+
+    @GetMapping("/offers/{id}")
+    public ResponseEntity<Offer> getById(@PathVariable Long id) {
+        Offer offer = offerService.getById(id);
+        return ResponseEntity.ok(offer);
+    }
+
+    @GetMapping("/offers/{id}/stock")
+    public ResponseEntity<Offer> getOfferStock(@PathVariable Long id) {
+        Offer offer = offerService.getById(id);
+        return ResponseEntity.ok(offer);
+    }
+
 
 }

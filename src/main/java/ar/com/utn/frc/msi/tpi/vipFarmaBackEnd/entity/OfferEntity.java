@@ -18,12 +18,12 @@ public class OfferEntity {
     private ProductEntity product;
 
     @OneToOne
-    @JoinColumn(name = "hiId")
-    private HealthInsuranceEntity healthInsuranceEntity;
+    @JoinColumn(name = "healthInsuranceId")
+    private HealthInsuranceEntity healthInsurance;
 
     @OneToOne
-    @JoinColumn(name = "hipId")
-    private HealthInsurancePlanEntity healthInsurancePlanId;
+    @JoinColumn(name = "healthInsurancePlanId")
+    private HealthInsurancePlanEntity healthInsurancePlan;
 
     private String discountType;
 
