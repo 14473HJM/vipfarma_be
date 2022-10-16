@@ -8,9 +8,9 @@ public interface SaleOrderService {
 
     SaleOrder createOrder(SaleOrder saleOrder);
     
-    List<SaleOrder> getOrders(String saleOrderStatus, String branchOffice);
+    List<SaleOrder> getOrders(String saleOrderStatus, Long branchOfficeId);
 
-    SaleOrder changeStatus(Long id, String status);
+    SaleOrder changeStatus(Long id, String saleOrderStatus);
 
     SaleOrder changeOrder(Long id, SaleOrder saleOrder);
 

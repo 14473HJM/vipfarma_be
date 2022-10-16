@@ -25,8 +25,8 @@ public class SaleOrderController {
 
     @GetMapping("/sale/order")
     public ResponseEntity<List<SaleOrder>> getOrders(@RequestParam String saleOrderStatus,
-                                                     @RequestParam String branchOffice) {
-        List<SaleOrder> saleOrderList = saleOrderService.getOrders(saleOrderStatus, branchOffice);
+                                                     @RequestParam Long branchOfficeId) {
+        List<SaleOrder> saleOrderList = saleOrderService.getOrders(saleOrderStatus, branchOfficeId);
         return ResponseEntity.ok(saleOrderList);
     }
 
@@ -38,8 +38,8 @@ public class SaleOrderController {
 
     @PutMapping("/sale/order/{orderId}/status/{status}")
     public ResponseEntity<SaleOrder> changeStatus(@PathVariable("orderId") Long id,
-                                            @PathVariable("status") String status) {
-        SaleOrder saleOrder = saleOrderService.changeStatus(id, status);
+                                            @PathVariable("status") String saleOrderStatus) {
+        SaleOrder saleOrder = saleOrderService.changeStatus(id, saleOrderStatus);
         return ResponseEntity.ok(saleOrder);
     }
 
