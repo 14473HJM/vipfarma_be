@@ -1,6 +1,7 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity;
 
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.Product;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.common.BranchOffice;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.stock.Rack;
 import lombok.Data;
 
@@ -22,5 +23,10 @@ public class LockerEntity {
     @JoinColumn(name = "productId", referencedColumnName = "id")
     private ProductEntity product;
     private Integer stockCapacity;
+    private Integer occupiedCapacity;
     private Integer currentStock;
+
+    @OneToOne
+    @JoinColumn(name = "branchOfficeId", referencedColumnName = "id")
+    private BranchOfficeEntity branchOfficeId;
 }

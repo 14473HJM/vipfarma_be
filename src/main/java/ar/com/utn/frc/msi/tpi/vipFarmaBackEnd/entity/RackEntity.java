@@ -11,9 +11,9 @@ import java.util.List;
 @Data
 @Entity(name = "racks")
 public class RackEntity {
+
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-
     private Long id;
     private String name;
 
