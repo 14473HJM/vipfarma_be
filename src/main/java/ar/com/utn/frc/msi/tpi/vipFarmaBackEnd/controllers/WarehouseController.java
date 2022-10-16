@@ -16,19 +16,19 @@ public class WarehouseController {
 
     private final WarehouseService warehouseService;
 
-    @PostMapping("/warehouse")
+    @PostMapping("/warehouses")
     public ResponseEntity<Warehouse> create(@RequestBody Warehouse warehouse) {
         warehouse = warehouseService.create(warehouse);
         return ResponseEntity.created(null).body(warehouse);
     }
 
-    @GetMapping("/warehouse")
+    @GetMapping("/warehouses")
     public ResponseEntity<List<Warehouse>> getAll() {
         List<Warehouse> warehouseList = warehouseService.getAll();
         return ResponseEntity.ok(warehouseList);
     }
 
-    @GetMapping("/warehouse/{id}")
+    @GetMapping("/warehouses/{id}")
     public ResponseEntity<Warehouse> getAll(@PathVariable Long id) {
         Warehouse warehouse = warehouseService.getById(id);
         return ResponseEntity.ok(warehouse);
