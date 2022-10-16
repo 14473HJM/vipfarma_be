@@ -12,12 +12,20 @@ public class OfferEntity {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
-    private Long productId;
 
     @OneToOne
-    @JoinColumn(name = "heId")
+    @JoinColumn(name = "productId")
+    private ProductEntity product;
+
+    @OneToOne
+    @JoinColumn(name = "hiId")
     private HealthInsuranceEntity healthInsuranceEntity;
-    private Long healthInsurancePlanId;
+
+    @OneToOne
+    @JoinColumn(name = "hipId")
+    private HealthInsurancePlanEntity healthInsurancePlanId;
+
     private String discountType;
+
     private BigDecimal discountValue;
 }
