@@ -2,6 +2,7 @@ package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.controllers;
 
 
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.HealthInsurance;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.HealthInsurancePlan;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.user.User;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.HealthInsuranceService;
 import lombok.RequiredArgsConstructor;
@@ -26,5 +27,11 @@ public class HealthInsuranceController {
     public ResponseEntity<List<HealthInsurance>> getAll() {
         List<HealthInsurance> healthInsuranceList = healthInsuranceService.getHealthInsurances();
         return ResponseEntity.ok(healthInsuranceList);
+    }
+
+    @GetMapping("/healthInsurance/{id}")
+    public ResponseEntity<HealthInsurance> getAll(@PathVariable Long id) {
+        HealthInsurance healthInsurance = healthInsuranceService.getById(id);
+        return ResponseEntity.ok(healthInsurance);
     }
 }

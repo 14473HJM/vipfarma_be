@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.persistence.EntityNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -36,20 +37,15 @@ public class HealthInsuranceServiceImpl implements HealthInsuranceService {
         return entityList.stream()
                 .map(entity -> modelMapper.map(entity, HealthInsurance.class))
                 .collect(Collectors.toList());
-        /*List<HealthInsurance> myList = new LinkedList<>();
-        for(HealthInsuranceEntity entity : entityList) {
-            myList.add(modelMapper.map(entity, HealthInsurance.class));
-        }
-        return myList;*/
     }
 
     @Override
     public HealthInsurance getById(Long id) {
-        HealthInsuranceEntity healthInsuranceEntity = healthInsuranceRepository.getReferenceById(id);
-        if(healthInsuranceEntity == null) {
+        Optional<HealthInsuranceEntity> healthInsuranceEntityOptional = healthInsuranceRepository.findById(id);
+        if(healthInsuranceEntityOptional.isEmpty()) {
             throw new EntityNotFoundException(String.format("HealthInsurance id {} not found", id));
         } else {
-            return modelMapper.map(healthInsuranceEntity, HealthInsurance.class);
+            return modelMapper.map(healthInsuranceEntityOptional.get(), HealthInsurance.class);
         }
     }
 }

@@ -1,14 +1,12 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity;
 
-
-import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.HealthInsurancePlan;
 import lombok.Data;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Entity(name = "healthI")
+@Entity(name = "healthInsurance")
 public class HealthInsuranceEntity {
 
     @Id
@@ -17,6 +15,6 @@ public class HealthInsuranceEntity {
     private String name;
     private String number;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "healthInsuranceId", cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "healthInsuranceId")
     private List<HealthInsurancePlanEntity> availablePlans;
 }

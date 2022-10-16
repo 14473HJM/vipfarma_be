@@ -1,10 +1,13 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity;
 
+import lombok.Data;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+@Data
 @Entity(name = "branchOffice")
 public class BranchOfficeEntity {
 

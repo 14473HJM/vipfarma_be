@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -40,11 +41,11 @@ public class HealthInsurancePlanServiceImpl implements HealthInsurancePlanServic
 
     @Override
     public HealthInsurancePlan getById(Long id){
-        HealthInsurancePlanEntity healthInsurancePlanEntity = healthInsurancePlanRepository.getReferenceById(id);
-        if(healthInsurancePlanEntity == null) {
+        Optional<HealthInsurancePlanEntity> healthInsurancePlanEntityOptional = healthInsurancePlanRepository.findById(id);
+        if(healthInsurancePlanEntityOptional.isEmpty()) {
             throw new EntityNotFoundException(String.format("HealthInsurancePlan id {} not found", id));
         } else {
-            return modelMapper.map(healthInsurancePlanEntity, HealthInsurancePlan.class);
+            return modelMapper.map(healthInsurancePlanEntityOptional.get(), HealthInsurancePlan.class);
         }
     }
 

@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Data
-@Entity(name = "healthIPlan")
+@Entity(name = "healthInsurancePlan")
 public class HealthInsurancePlanEntity {
 
     @Id
@@ -14,7 +14,6 @@ public class HealthInsurancePlanEntity {
     private String name;
     private String description;
 
-    @ManyToOne
     @JoinColumn(name="healthInsuranceId")
-    private HealthInsuranceEntity healthInsuranceId;
+    private Long healthInsuranceId;
 }

@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
+import java.util.List;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class HealthInsuranceServiceTest {
@@ -23,13 +24,21 @@ public class HealthInsuranceServiceTest {
 
     @Test
     void createHealthInsuranceTest() {
-        HealthInsurancePlan hip = new HealthInsurancePlan();
-        hip.setName("OSDE 210");
         HealthInsurance hi = new HealthInsurance();
         hi.setName("OSDE");
-        hi.setAvailablePlans(Arrays.asList(hip));
-        HealthInsurance result = healthInsuranceService.createHealthInsurance(hi);
-        HealthInsurance queryResult = healthInsuranceService.getById(result.getId());
+        hi = healthInsuranceService.createHealthInsurance(hi);
+
+        HealthInsurancePlan hip = new HealthInsurancePlan();
+        hip.setName("OSDE 210");
+        hip.setHealthInsurance(hi);
+        hip = healthInsurancePlanService.createHealthInsurancePlan(hip);
+
+        //hi.setAvailablePlans(Arrays.asList(hip));
+
+        List<HealthInsurance> list = healthInsuranceService.getHealthInsurances();
+
+        hip = healthInsurancePlanService.getById(hip.getId());
+        hi = healthInsuranceService.getById(hi.getId());
 
     }
 }
