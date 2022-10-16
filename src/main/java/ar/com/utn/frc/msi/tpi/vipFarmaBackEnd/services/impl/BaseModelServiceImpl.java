@@ -37,7 +37,7 @@ public abstract class BaseModelServiceImpl<M, E> implements BaseModelService<M, 
     public M getById(Long id) {
         Optional<E> entity = getJpaRepository().findById(id);
         if(entity.isEmpty()) {
-            throw new EntityNotFoundException(String.format("{} id {} not found", modelClass.getName(), id));
+            throw new EntityNotFoundException(String.format("%s id %s not found", modelClass.getName(), id));
         } else {
             return getModelMapper().map(entity.get(), modelClass);
         }
