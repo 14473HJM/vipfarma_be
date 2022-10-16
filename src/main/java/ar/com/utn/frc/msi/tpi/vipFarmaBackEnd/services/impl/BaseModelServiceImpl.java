@@ -10,6 +10,7 @@ import javax.annotation.PostConstruct;
 import javax.persistence.EntityNotFoundException;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,12 +36,24 @@ public abstract class BaseModelServiceImpl<M, E> implements BaseModelService<M, 
 
     @Override
     public M getById(Long id) {
+        /**
+         * I search by list because the method findById return duplicated information
+         * if processing a unique primary element
+         */
+        List<E> list = getJpaRepository().findAllById(Arrays.asList(id));
+        if(!list.isEmpty()) {
+            return getModelMapper().map(list.get(0), modelClass);
+        } else {
+            throw new EntityNotFoundException(String.format("%s id %s not found", modelClass.getName(), id));
+        }
+        /*
         Optional<E> entity = getJpaRepository().findById(id);
         if(entity.isEmpty()) {
             throw new EntityNotFoundException(String.format("%s id %s not found", modelClass.getName(), id));
         } else {
             return getModelMapper().map(entity.get(), modelClass);
         }
+        */
     }
 
     @Override
