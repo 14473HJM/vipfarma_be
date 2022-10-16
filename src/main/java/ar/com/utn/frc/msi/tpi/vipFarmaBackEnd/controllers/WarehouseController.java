@@ -29,7 +29,7 @@ public class WarehouseController {
     }
 
     @GetMapping("/warehouses/{id}")
-    public ResponseEntity<Warehouse> getAll(@PathVariable Long id) {
+    public ResponseEntity<Warehouse> getById(@PathVariable Long id) {
         Warehouse warehouse = warehouseService.getById(id);
         return ResponseEntity.ok(warehouse);
     }

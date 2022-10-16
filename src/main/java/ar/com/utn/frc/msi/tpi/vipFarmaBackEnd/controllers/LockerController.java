@@ -29,7 +29,7 @@ public class LockerController {
     }
 
     @GetMapping("/lockers/{id}")
-    public ResponseEntity<Locker> getAll(@PathVariable Long id) {
+    public ResponseEntity<Locker> getById(@PathVariable Long id) {
         Locker locker = lockerService.getById(id);
         return ResponseEntity.ok(locker);
     }

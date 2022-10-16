@@ -29,7 +29,7 @@ public class HealthInsurancePlanController {
     }
 
     @GetMapping("/healthInsurancePlan/{id}")
-    public ResponseEntity<HealthInsurancePlan> getAll(@PathVariable Long id) {
+    public ResponseEntity<HealthInsurancePlan> getById(@PathVariable Long id) {
         HealthInsurancePlan healthInsurancePlan = healthInsurancePlanService.getById(id);
         return ResponseEntity.ok(healthInsurancePlan);
     }

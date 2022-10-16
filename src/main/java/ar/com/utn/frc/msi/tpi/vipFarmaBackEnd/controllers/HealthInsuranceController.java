@@ -30,7 +30,7 @@ public class HealthInsuranceController {
     }
 
     @GetMapping("/healthInsurance/{id}")
-    public ResponseEntity<HealthInsurance> getAll(@PathVariable Long id) {
+    public ResponseEntity<HealthInsurance> getById(@PathVariable Long id) {
         HealthInsurance healthInsurance = healthInsuranceService.getById(id);
         return ResponseEntity.ok(healthInsurance);
     }

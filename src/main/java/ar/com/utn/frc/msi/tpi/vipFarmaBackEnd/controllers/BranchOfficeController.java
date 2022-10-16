@@ -29,7 +29,7 @@ public class BranchOfficeController {
     }
 
     @GetMapping("/branchOffice/{id}")
-    public ResponseEntity<BranchOffice> getAll(@PathVariable Long id) {
+    public ResponseEntity<BranchOffice> getById(@PathVariable Long id) {
         BranchOffice branchOffice = branchOfficeService.getById(id);
         return ResponseEntity.ok(branchOffice);
     }

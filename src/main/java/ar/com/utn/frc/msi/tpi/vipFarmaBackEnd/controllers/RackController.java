@@ -28,7 +28,7 @@ public class RackController {
     }
 
     @GetMapping("/racks/{id}")
-    public ResponseEntity<Rack> getAll(@PathVariable Long id) {
+    public ResponseEntity<Rack> getById(@PathVariable Long id) {
         Rack rack = rackService.getById(id);
         return ResponseEntity.ok(rack);
     }
