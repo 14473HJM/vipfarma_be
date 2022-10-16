@@ -1,0 +1,12 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="SpingDocConfigTest" type="JUnit" factoryName="JUnit">
+    <module name="vipFarmaBackEnd" />
+    <option name="PACKAGE_NAME" value="ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.config" />
+    <option name="MAIN_CLASS_NAME" value="ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.config.SpringDocConfigTest" />
+    <option name="METHOD_NAME" value="" />
+    <option name="TEST_OBJECT" value="class" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>
