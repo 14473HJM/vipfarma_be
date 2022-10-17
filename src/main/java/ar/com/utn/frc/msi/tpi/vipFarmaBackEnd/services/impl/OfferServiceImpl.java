@@ -117,7 +117,8 @@ public class OfferServiceImpl extends BaseModelServiceImpl<Offer, OfferEntity> i
         if(value.signum() == 0) {
             return price;
         } else if(value.signum() == 1 && value.compareTo(BigDecimal.ONE) <= 0) {
-            return price.multiply(value).setScale(2, RoundingMode.HALF_UP);
+            BigDecimal rate = BigDecimal.ONE.subtract(value);
+            return price.multiply(rate).setScale(2, RoundingMode.HALF_UP);
         } else {
             return BigDecimal.ZERO;
         }

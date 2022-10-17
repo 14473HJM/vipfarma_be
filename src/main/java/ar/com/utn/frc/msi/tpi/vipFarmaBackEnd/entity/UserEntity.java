@@ -16,5 +16,8 @@ public class UserEntity {
     private String email;
     private String password;
     private String userRole;
-    private Long branchOfficeId;
+
+    @OneToOne
+    @JoinColumn(name = "branchOfficeId", referencedColumnName = "id")
+    private BranchOfficeEntity branchOfficeId;
 }

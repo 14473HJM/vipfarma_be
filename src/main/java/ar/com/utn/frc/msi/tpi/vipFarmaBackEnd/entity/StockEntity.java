@@ -30,5 +30,5 @@ public class StockEntity {
     @JoinColumn(name = "lockerId", referencedColumnName = "id")
     private LockerEntity lockerId;
 
-    private StockStatus stockStatus;
+    private String stockStatus;
 }
