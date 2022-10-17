@@ -30,7 +30,7 @@ public class HealthInsuranceServiceTest {
 
         HealthInsurancePlan hip = new HealthInsurancePlan();
         hip.setName("OSDE 210");
-        hip.setHealthInsurance(hi);
+        hip.setHealthInsuranceId(hi.getId());
         hip = healthInsurancePlanService.createHealthInsurancePlan(hip);
 
         //hi.setAvailablePlans(Arrays.asList(hip));
