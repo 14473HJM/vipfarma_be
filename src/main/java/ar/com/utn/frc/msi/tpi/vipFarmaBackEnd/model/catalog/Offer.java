@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 
 @Data
 @AllArgsConstructor
@@ -14,5 +16,7 @@ public class Offer {
     private Product product;
     private HealthInsurance healthInsurance;
     private HealthInsurancePlan healthInsurancePlan;
-    private Discount discount;
+    private String discountType;
+    private BigDecimal discountValue;
+    private BigDecimal finalPrice;
 }

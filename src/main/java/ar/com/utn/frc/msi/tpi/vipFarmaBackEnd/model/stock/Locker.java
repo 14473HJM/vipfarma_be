@@ -31,4 +31,5 @@ public class Locker {
      *  Este campo es el que se mantendra actualizado con el stock real TOTAL de un producto para un Rack/Warehouse
      */
     private Integer currentStock;
+    private Long branchOfficeId;
 }

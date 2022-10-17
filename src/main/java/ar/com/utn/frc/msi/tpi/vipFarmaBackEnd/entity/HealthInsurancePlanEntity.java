@@ -5,12 +5,15 @@ import lombok.Data;
 import javax.persistence.*;
 
 @Data
-@Entity(name = "branchOffice")
-public class BranchOfficeEntity {
+@Entity(name = "healthInsurancePlan")
+public class HealthInsurancePlanEntity {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     private String name;
-    private String location;
+    private String description;
+
+    @JoinColumn(name="healthInsuranceId")
+    private Long healthInsuranceId;
 }
