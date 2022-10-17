@@ -161,6 +161,9 @@ VALUES (2, CURRENT_DATE -10, 'BILLED', null, 600, 1, 1, 4);
 INSERT INTO sale_orders (id, created_date, sale_order_status, status_detail, total_amount, branch_office_id, customer_id, user_id)
 VALUES (3, CURRENT_DATE -20, 'DELIVERED', null, 750, 1, 1, 4);
 
+INSERT INTO taxes (id, label_invoice, tax_type, tax_value)
+VALUES (1, 'IVA Consumidor Final', 'VAT', CONVERT('0.21',DECIMAL(19,2)));
+
 INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
 VALUES (1, null, 1, 1, 100, 100, 1);
 INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
@@ -179,3 +182,23 @@ INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, tota
 VALUES (8, null, 1, 3, 300, 300, 3);
 INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
 VALUES (9, null, 1, 3, 150, 150, 4);
+
+INSERT INTO bills (id, cae, created_date, due_date, customer_id, sale_order_id, user_id)
+VALUES (1, '1234567891234567890', CURRENT_DATE, CURRENT_DATE +1, 1, 2, 1);
+INSERT INTO bills (id, cae, created_date, due_date, customer_id, sale_order_id, user_id)
+VALUES (2, '1234567891234567891', CURRENT_DATE, CURRENT_DATE +1, 1, 3, 1);
+
+INSERT INTO bill_items (id, bill_id, discount_amount, label_invoice, quantity, total_price, unitary_price, offer_id)
+VALUES (1, 1, null, 'Ibuprofeno 400', 1, 100, 100, 1);
+INSERT INTO bill_items (id, bill_id, discount_amount, label_invoice, quantity, total_price, unitary_price, offer_id)
+VALUES (2, 1, null, 'Ibuprofeno 600', 1, 200, 200, 2);
+INSERT INTO bill_items (id, bill_id, discount_amount, label_invoice, quantity, total_price, unitary_price, offer_id)
+VALUES (3, 1, null, 'Ibuprofeno 800', 1, 300, 300, 3);
+INSERT INTO bill_items (id, bill_id, discount_amount, label_invoice, quantity, total_price, unitary_price, offer_id)
+VALUES (4, 2, null, 'Ibuprofeno 400', 1, 100, 100, 1);
+INSERT INTO bill_items (id, bill_id, discount_amount, label_invoice, quantity, total_price, unitary_price, offer_id)
+VALUES (5, 2, null, 'Ibuprofeno 600', 1, 200, 200, 2);
+INSERT INTO bill_items (id, bill_id, discount_amount, label_invoice, quantity, total_price, unitary_price, offer_id)
+VALUES (6, 2, null, 'Ibuprofeno 800', 1, 300, 300, 3);
+INSERT INTO bill_items (id, bill_id, discount_amount, label_invoice, quantity, total_price, unitary_price, offer_id)
+VALUES (7, 2, null, 'Ibuprofeno 500', 1, 150, 150, 4);
