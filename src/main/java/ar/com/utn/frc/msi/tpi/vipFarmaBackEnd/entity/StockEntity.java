@@ -30,5 +30,6 @@ public class StockEntity {
     @JoinColumn(name = "lockerId", referencedColumnName = "id")
     private LockerEntity lockerId;
 
-    private String stockStatus;
+    @Enumerated(EnumType.STRING)
+    private StockStatus stockStatus;
 }
