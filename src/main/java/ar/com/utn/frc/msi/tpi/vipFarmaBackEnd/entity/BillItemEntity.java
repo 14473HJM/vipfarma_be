@@ -1,6 +1,5 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity;
 
-import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.Product;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -16,6 +15,8 @@ public class BillItemEntity {
 
     @JoinColumn(name="billId")
     private Long billId;
+
+    private String labelInvoice;
 
     @OneToOne
     @JoinColumn(name = "offerId", referencedColumnName = "id")
