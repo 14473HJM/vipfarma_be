@@ -6,6 +6,7 @@ import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.repositories.ProductRepository;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -17,44 +18,33 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl extends BaseModelServiceImpl<Product,ProductEntity> implements ProductService {
 
     private final ProductRepository productRepository;
     private final ModelMapper modelMapper;
+
     @Override
-    public Product createProduct(Product product) {
-        return null;
+    protected JpaRepository getJpaRepository() {
+        return this.productRepository;
     }
 
     @Override
-    public Product getProduct(Long id) {
-        ProductEntity productEntity = productRepository.getReferenceById(id);
-        if(productEntity == null){
-            throw new EntityNotFoundException(String.format("Product id {} not found", id));
-        } else {
-            return modelMapper.map(productEntity, Product.class);
-        }
+    protected ModelMapper getModelMapper() {
+        return this.modelMapper;
+    }
+
+
+    @Override
+    public List<Product> getProductsByName(String name) {
+        List<ProductEntity> productEntityList = productRepository.getByNameContaining(name);
+        return productEntityList.stream()
+                .map(entity -> getModelMapper().map(entity, Product.class))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<Product> getProducts() {
-        return null;
-    }
-
-    @Override
-    public List<Product> getProducts(String name, Long barcode) {
-        List<ProductEntity> productEntityList = new LinkedList();
-        if (barcode==null)
-            productEntityList.add(productRepository.getByNameContaining(name));
-        else{
-            productEntityList.add(productRepository.getByBarcode(barcode));
-        }
-        return productEntityList.stream().map(
-                entity -> modelMapper.map(entity, Product.class)).collect(Collectors.toList());
-    }
-
-    @Override
-    public Product updateProduct(Product product) {
-        return null;
+    public Product getProductByBarcode(Long barcode) {
+        ProductEntity productEntity = productRepository.getByBarcode(barcode);
+        return modelMapper.map(productEntity, Product.class);
     }
 }
