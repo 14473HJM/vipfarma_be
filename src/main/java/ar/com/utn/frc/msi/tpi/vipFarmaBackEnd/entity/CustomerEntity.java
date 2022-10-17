@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 
 @Data
-@Entity(name = "Customer")
+@Entity(name = "customers")
 public class CustomerEntity {
 
     @Id
@@ -20,8 +20,14 @@ public class CustomerEntity {
     private String identificationType;
     private String identification;
     private String address;
-    private Long healthInsurance;
-    private Long healthInsurancePlan;
+
+    @OneToOne
+    @JoinColumn(name = "healthInsuranceId")
+    private HealthInsuranceEntity healthInsuranceId;
+
+    @OneToOne
+    @JoinColumn(name = "healthInsurancePlanId")
+    private HealthInsurancePlanEntity healthInsurancePlanId;
 
 
 

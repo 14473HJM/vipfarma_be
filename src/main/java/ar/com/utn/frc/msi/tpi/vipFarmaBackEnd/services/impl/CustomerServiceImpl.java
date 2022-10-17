@@ -8,20 +8,25 @@ import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.repositories.CustomerRepository;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl extends BaseModelServiceImpl<Customer, CustomerEntity> implements CustomerService {
 
-    private CustomerService customerService;
+    private final CustomerRepository customerRepository;
+
     private final ModelMapper modelMapper;
 
+    @Override
+    protected JpaRepository getJpaRepository() {
+        return this.customerRepository;
+    }
 
     @Override
-    public Customer createCustomer(Customer customer) {
-        CustomerEntity costumerEntity = modelMapper.map(customer, CustomerEntity.class);
-        costumerEntity = CustomerRepository.save(costumerEntity);
-        return modelMapper.map(costumerEntity, Customer.class);
+    protected ModelMapper getModelMapper() {
+        return this.modelMapper;
     }
+
 }
