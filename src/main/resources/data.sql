@@ -148,3 +148,8 @@ INSERT INTO offers (id, discount_type, discount_value, health_insurance_id, heal
 VALUES (29, 'PERCENTAGE', CONVERT('0.30',DECIMAL(19,2)), 1, 2, 9);
 INSERT INTO offers (id, discount_type, discount_value, health_insurance_id, health_insurance_plan_id, product_id)
 VALUES (30, 'PERCENTAGE', CONVERT('0.30',DECIMAL(19,2)), 1, 2, 10);
+
+INSERT INTO customers (id, address, identification, identification_type, last_name, name, health_insurance_id, health_insurance_plan_id)
+VALUES (1, 'Calle sin numero 150', '28654321', 'DNI', 'Lescano', 'Pablo', 1, 1);
+INSERT INTO customers (id, address, identification, identification_type, last_name, name, health_insurance_id, health_insurance_plan_id)
+VALUES (2, 'La esquina del infinito', '20987654', 'DNI', 'Nápoli', 'Chizzo', 1, 2);
