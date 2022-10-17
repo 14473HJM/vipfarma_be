@@ -5,4 +5,6 @@ import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.billing.Bill;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.BaseModelService;
 
 public interface BillService extends BaseModelService<Bill, BillEntity> {
+
+    Bill billOrder(Long id, Long userId);
 }
