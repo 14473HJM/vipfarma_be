@@ -1,5 +1,6 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.billing;
 
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.Offer;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.Product;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,7 +16,7 @@ public class BillItem {
 
     private Long id;
     private Long billId;
-    private Product product;
+    private Offer offer;
     private Integer quantity;
     private BigDecimal unitaryPrice;
     private BigDecimal discountAmount;
