@@ -6,6 +6,8 @@ import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.customer.Customer;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrder;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.user.User;
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -35,6 +37,7 @@ public class BillEntity {
     private LocalDate dueDate;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "billId")
+    @Fetch(FetchMode.SELECT)
     private List<BillItemEntity> items;
 
     private String cae;
