@@ -1,116 +1,101 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.impl;
 
-import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.OrderItemEntity;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.SaleOrderEntity;
-import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.OrderItem;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrder;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrderItem;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrderStatus;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.stock.Stock;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.repositories.SaleOrderRepository;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.SaleOrderItemService;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.SaleOrderService;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class SaleOrderServiceImpl implements SaleOrderService {
+public class SaleOrderServiceImpl extends BaseModelServiceImpl<SaleOrder, SaleOrderEntity> implements SaleOrderService {
 
-    //private UserService userService;
-    //esto lo pusiste vos Hernán, no va acá
+    private final UserService userService;
+
+    private final SaleOrderItemService saleOrderItemService;
 
     private final SaleOrderRepository saleOrderRepository;
+
     private final ModelMapper modelMapper;
 
     @Override
-    public SaleOrder createOrder(SaleOrder saleOrder) {
-
-        SaleOrderEntity saleOrderEntity = getOrderToSave(saleOrder);
-
-        // Insert orden
-        List<OrderItemEntity> orderItemEntityList =
-                getItemsToSave(saleOrder.getOrderItems(),
-                        saleOrderEntity.getId());
-        // Insert items
-
-        // Set items en orden
-
-        List<OrderItem> items = saleOrder.getOrderItems();
-        BigDecimal totalAmount = getTotalOrder(items);
-        saleOrder.setTotalAmount(totalAmount);
-        // return orden
-        return null;
+    protected JpaRepository getJpaRepository() {
+        return this.saleOrderRepository;
     }
 
     @Override
-    public List<SaleOrder> getOrders(String saleOrderStatus, Long branchOfficeId) {
+    protected ModelMapper getModelMapper() {
+        return this.modelMapper;
+    }
+
+    @Override
+    public SaleOrder create(SaleOrder saleOrder) {
+
+        // Set status to CREATED, creation date and save Order
+        saleOrder.setSaleOrderStatus(SaleOrderStatus.CREATED);
+        saleOrder.setCreatedDate(LocalDate.now());
+        SaleOrder savedOrder = super.create(saleOrder);
+
+        // Set orderId in each items and save items
+        List<SaleOrderItem> itemsToSave = saleOrder.getSaleOrderItems();
+        for(SaleOrderItem item : itemsToSave) {
+            item.setOrderId(savedOrder.getId());
+        }
+        List<SaleOrderItem> savedItems = saleOrderItemService.createAll(itemsToSave);
+
+        // Set itemsSaved into order saved
+        savedOrder.setSaleOrderItems(savedItems);
+
+        // Calculate total Amount Order
+        savedOrder.setTotalAmount(this.getTotalOrder(savedItems));
+
+        return savedOrder;
+    }
+
+    @Override
+    public List<SaleOrder> getOrdersByStatusAndBranchOffice(SaleOrderStatus saleOrderStatus, Long branchOfficeId) {
         List<SaleOrderEntity> ordersList = saleOrderRepository.getBySaleOrderStatusAndBranchOfficeId(saleOrderStatus, branchOfficeId);
-
-
-        return null;
+        return ordersList.stream()
+                .map(entity -> getModelMapper().map(entity, SaleOrder.class))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public SaleOrder changeStatus(Long id, String saleOrderStatus) {
-        SaleOrderEntity saleOrderEntity = saleOrderRepository.getByIdAndSaleOrderStatus(id, saleOrderStatus);
-        if (saleOrderEntity != null){
-            //TODO me quedé trabado acá //saleOrderEntity.setSaleOrderStatus();
-            return modelMapper.map(saleOrderEntity, SaleOrder.class);
+    public SaleOrder changeStatus(Long id, SaleOrderStatus saleOrderStatus) {
+        SaleOrder saleOrder = this.getById(id);
+        saleOrder.setSaleOrderStatus(saleOrderStatus);
+        saleOrder = this.update(saleOrder);
+        return saleOrder;
+    }
+
+    private BigDecimal getTotalOrder(List<SaleOrderItem> items) {
+        BigDecimal totalAmount = BigDecimal.ZERO;
+        for(SaleOrderItem item : items) {
+            totalAmount.add(getTotalItem(item));
         }
-        throw new EntityNotFoundException("Orden no encontrada");
+        return totalAmount;
     }
 
-    @Override
-    public SaleOrder changeOrder(Long id, SaleOrder saleOrder) {
-        return null;
+    private BigDecimal getTotalItem(SaleOrderItem item) {
+        BigDecimal subTotal = getSubTotalItem(item.getUnitaryPrice(), item.getQuantity());
+        return subTotal.subtract(item.getDiscountAmount());
     }
 
-    @Override
-    public SaleOrder getOrder(Long id) {
-        SaleOrderEntity saleOrderEntity = saleOrderRepository.getReferenceById(id);
-        if (saleOrderEntity == null) {
-            throw new EntityNotFoundException(String.format("SaleOrder id {} not found", id));
-        } else {
-            return modelMapper.map(saleOrderEntity, SaleOrder.class);
-        }
-    }
-
-    private SaleOrderEntity getOrderToSave(SaleOrder saleOrder) {
-        SaleOrderEntity saleOrderEntity = new SaleOrderEntity();
-        saleOrderEntity.setUserId(saleOrder.getUser().getId());
-        saleOrderEntity.setCustomerId(saleOrder.getCustomer().getId());
-        saleOrderEntity.setBranchOfficeId(saleOrder.getUser().getBranchOffice().getId());
-        saleOrderEntity.setCreatedDate(LocalDate.now());
-        saleOrderEntity.setSaleOrderStatus(SaleOrderStatus.CREATED.name());
-        saleOrderEntity.setStatusDetail(saleOrder.getStatusDetail());
-        return saleOrderEntity;
-    }
-
-    private List<OrderItemEntity> getItemsToSave(List<OrderItem> orderItems, Long id) {
-        List<OrderItemEntity> orderItemEntityList = new LinkedList<>();
-
-        for (OrderItem orderItem : orderItems) {
-            OrderItemEntity orderItemEntity = new OrderItemEntity();
-            orderItemEntity.setOrderId(id);
-            orderItemEntity.setProductId(orderItem.getProduct().getId());
-            orderItemEntity.setQuantity(orderItem.getQuantity());
-            orderItemEntity.setUnitaryPrice(orderItem.getUnitaryPrice());
-            orderItemEntity.setDiscountAmount(orderItem.getDiscountAmount());
-            orderItemEntity.setTotalPrice(orderItem.getTotalPrice());
-            orderItemEntityList.add(orderItemEntity);
-        }
-        return orderItemEntityList;
-    }
-
-    private BigDecimal getTotalOrder(List<OrderItem> items) {
-        //for (OrderItem orderItem : items) {
-        //}
-        //return total;
+    private BigDecimal getSubTotalItem(BigDecimal price, Integer quantity) {
+        return price.multiply(BigDecimal.valueOf(quantity));
     }
 }

@@ -153,3 +153,29 @@ INSERT INTO customers (id, address, identification, identification_type, last_na
 VALUES (1, 'Calle sin numero 150', '28654321', 'DNI', 'Lescano', 'Pablo', 1, 1);
 INSERT INTO customers (id, address, identification, identification_type, last_name, name, health_insurance_id, health_insurance_plan_id)
 VALUES (2, 'La esquina del infinito', '20987654', 'DNI', 'Nápoli', 'Chizzo', 1, 2);
+
+INSERT INTO sale_orders (id, created_date, sale_order_status, status_detail, total_amount, branch_office_id, customer_id, user_id)
+VALUES (1, CURRENT_DATE, 'READY_TO_BILL', null, 300, 1, 1, 4);
+INSERT INTO sale_orders (id, created_date, sale_order_status, status_detail, total_amount, branch_office_id, customer_id, user_id)
+VALUES (2, CURRENT_DATE -10, 'BILLED', null, 600, 1, 1, 4);
+INSERT INTO sale_orders (id, created_date, sale_order_status, status_detail, total_amount, branch_office_id, customer_id, user_id)
+VALUES (3, CURRENT_DATE -20, 'DELIVERED', null, 750, 1, 1, 4);
+
+INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
+VALUES (1, null, 1, 1, 100, 100, 1);
+INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
+VALUES (2, null, 1, 1, 200, 200, 2);
+INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
+VALUES (3, null, 1, 2, 100, 100, 1);
+INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
+VALUES (4, null, 1, 2, 200, 200, 2);
+INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
+VALUES (5, null, 1, 2, 300, 300, 3);
+INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
+VALUES (6, null, 1, 3, 100, 100, 1);
+INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
+VALUES (7, null, 1, 3, 200, 200, 2);
+INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
+VALUES (8, null, 1, 3, 300, 300, 3);
+INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
+VALUES (9, null, 1, 3, 150, 150, 4);

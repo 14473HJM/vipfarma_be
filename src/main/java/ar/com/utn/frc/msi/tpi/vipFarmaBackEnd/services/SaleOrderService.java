@@ -1,18 +1,15 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services;
 
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.SaleOrderEntity;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrder;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrderStatus;
 
 import java.util.List;
 
-public interface SaleOrderService {
-
-    SaleOrder createOrder(SaleOrder saleOrder);
+public interface SaleOrderService extends BaseModelService<SaleOrder, SaleOrderEntity> {
     
-    List<SaleOrder> getOrders(String saleOrderStatus, Long branchOfficeId);
+    List<SaleOrder> getOrdersByStatusAndBranchOffice(SaleOrderStatus saleOrderStatus, Long branchOfficeId);
 
-    SaleOrder changeStatus(Long id, String saleOrderStatus);
+    SaleOrder changeStatus(Long id, SaleOrderStatus saleOrderStatus);
 
-    SaleOrder changeOrder(Long id, SaleOrder saleOrder);
-
-    SaleOrder getOrder(Long id);
 }

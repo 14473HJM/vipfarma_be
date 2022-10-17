@@ -1,7 +1,6 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale;
 
 
-import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.common.BranchOffice;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.customer.Customer;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.user.User;
 import lombok.AllArgsConstructor;
@@ -23,6 +22,6 @@ public class SaleOrder {
     private LocalDate createdDate;
     private SaleOrderStatus saleOrderStatus;
     private String statusDetail;
-    private List<OrderItem> orderItems;
+    private List<SaleOrderItem> saleOrderItems;
     private BigDecimal totalAmount;
 }
