@@ -92,7 +92,7 @@ public class OfferServiceImpl extends BaseModelServiceImpl<Offer, OfferEntity> i
     }
 
     private BigDecimal applyDiscount(Offer offer) {
-        DiscountType discountType = DiscountType.valueOf(offer.getDiscountType());
+        DiscountType discountType = offer.getDiscountType();
         switch (discountType) {
             case FIXED:
                 return applyFixDiscount(offer.getProduct().getPrice(), offer.getDiscountValue());

@@ -16,7 +16,7 @@ public class Offer {
     private Product product;
     private HealthInsurance healthInsurance;
     private HealthInsurancePlan healthInsurancePlan;
-    private String discountType;
+    private DiscountType discountType;
     private BigDecimal discountValue;
     private BigDecimal finalPrice;
 }
