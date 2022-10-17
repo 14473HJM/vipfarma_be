@@ -15,9 +15,9 @@ import java.util.List;
 public class ProductController {
     private final ProductService productService;
 
-    @GetMapping("/products/{productId}")
-    public ResponseEntity<Product> getProduct(@PathVariable Long productId) {
-        Product product = productService.getById(productId);
+    @GetMapping("/products/{id}")
+    public ResponseEntity<Product> getProduct(@PathVariable Long id) {
+        Product product = productService.getById(id);
         return ResponseEntity.ok(product);
     }
 
@@ -42,8 +42,10 @@ public class ProductController {
         return ResponseEntity.created(null).body(product);
     }
 
-    @PutMapping("/products/{productId}")
-    public ResponseEntity<Product> updateProduct(@RequestBody Product product) {
+    @PutMapping("/products/{id}")
+    public ResponseEntity<Product> updateProduct(@RequestBody Product product,
+                                                 @PathVariable Long id) {
+        product.setId(id);
         product = productService.update(product);
         return ResponseEntity.ok(product);
     }
