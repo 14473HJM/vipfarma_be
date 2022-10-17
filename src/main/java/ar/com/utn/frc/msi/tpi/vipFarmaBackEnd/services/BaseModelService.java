@@ -11,6 +11,8 @@ public interface BaseModelService<M, E> {
 
     M create(M model);
 
+    List<M> createAll(List<M> modelList);
+
     M update(M model);
 
 }

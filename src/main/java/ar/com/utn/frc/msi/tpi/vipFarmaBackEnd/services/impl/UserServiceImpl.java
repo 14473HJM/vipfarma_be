@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -33,5 +34,14 @@ public class UserServiceImpl implements UserService {
         UserEntity userEntity = modelMapper.map(user, UserEntity.class);
         userEntity = userRepository.save(userEntity);
         return modelMapper.map(userEntity, User.class);
+    }
+
+    @Override
+    public User getUserById(Long userId) {
+        Optional<UserEntity> userEntity = userRepository.findById(userId);
+        if(userEntity.isPresent()) {
+            return modelMapper.map(userEntity.get(), User.class);
+        }
+        throw new EntityNotFoundException("El usuario " + userId + " No existe");
     }
 }

@@ -1,18 +1,13 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.impl;
 
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.BaseModelService;
-import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
 import javax.persistence.EntityNotFoundException;
 import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public abstract class BaseModelServiceImpl<M, E> implements BaseModelService<M, E> {
@@ -65,11 +60,23 @@ public abstract class BaseModelServiceImpl<M, E> implements BaseModelService<M, 
     }
 
     @Override
-    public M create(Object model) {
+    public M create(M model) {
         E entity = getModelMapper().map(model, entityClass);
         entity = getJpaRepository().save(entity);
         return getModelMapper().map(entity, modelClass);
     }
+
+    @Override
+    public List<M> createAll(List<M> modelList) {
+        List<E> entityList = modelList.stream()
+                .map(model -> getModelMapper().map(model, entityClass))
+                .collect(Collectors.toList());
+        entityList = getJpaRepository().saveAll(entityList);
+        return entityList.stream()
+                .map(entity -> getModelMapper().map(entity, modelClass))
+                .collect(Collectors.toList());
+    }
+
 
     @Override
     public M update(Object model) {

@@ -22,5 +22,4 @@ public class Bill {
     private LocalDate dueDate;
     private List<BillItem> items;
     private String cae;
-
 }

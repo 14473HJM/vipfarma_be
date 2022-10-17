@@ -22,6 +22,6 @@ public class SaleOrder {
     private LocalDate createdDate;
     private SaleOrderStatus saleOrderStatus;
     private String statusDetail;
-    private List<OrderItem> orderItems;
+    private List<SaleOrderItem> saleOrderItems;
     private BigDecimal totalAmount;
 }
