@@ -1,6 +1,7 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.impl;
 
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.OfferEntity;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.OfferStockEntity;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.DiscountType;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.Offer;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.OfferStock;
@@ -53,30 +54,32 @@ public class OfferServiceImpl extends BaseModelServiceImpl<Offer, OfferEntity> i
 
     @Override
     public List<OfferStock> getAllOffersWithStock() {
-        List<OfferStock> offerStockList = offerRepository.getAllOffersWithStock();
-        for (OfferStock offer : offerStockList) {
-            offer.setFinalPrice(this.getFinalPrice(offer));
-        }
-        return offerStockList;
+        List<OfferStockEntity> offerStockEntityList = offerRepository.getAllOffersWithStock();
+        return getOfferStockList(offerStockEntityList);
     }
 
     @Override
     public OfferStock getOffersWithStock(Long id) {
-        return offerRepository.getOfferByIdWithStock(id);
+        OfferStockEntity offerStockEntity = offerRepository.getOfferByIdWithStock(id);
+        return modelMapper.map(offerStockEntity, OfferStock.class);
     }
 
     @Override
     public List<OfferStock> getOfferStockByProductId(Long productId) {
-        List<OfferStock> offerStockList = offerRepository.getOfferStockByProductId(productId);
-        for (OfferStock offer : offerStockList) {
-            offer.setFinalPrice(this.getFinalPrice(offer));
-        }
-        return offerStockList;
+        List<OfferStockEntity> offerStockEntityList = offerRepository.getOfferStockByProductId(productId);
+        return getOfferStockList(offerStockEntityList);
     }
 
     @Override
     public List<OfferStock> getOfferStockByProductIdAndBranchOffice(Long productId, Long branchOfficeId) {
-        List<OfferStock> offerStockList = offerRepository.getOfferStockByProductIdAndBranchOffice(productId, branchOfficeId);
+        List<OfferStockEntity> offerStockEntityList = offerRepository.getOfferStockByProductIdAndBranchOffice(productId, branchOfficeId);
+        return getOfferStockList(offerStockEntityList);
+    }
+
+    private List<OfferStock> getOfferStockList(List<OfferStockEntity> offerStockEntityList) {
+        List<OfferStock> offerStockList = offerStockEntityList.stream()
+                .map(entity -> modelMapper.map(entity, OfferStock.class))
+                .collect(Collectors.toList());
         for (OfferStock offer : offerStockList) {
             offer.setFinalPrice(this.getFinalPrice(offer));
         }

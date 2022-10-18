@@ -40,7 +40,7 @@ public class OfferController {
         return ResponseEntity.ok(offer);
     }
 
-    @GetMapping("/offers/stock")
+    @GetMapping("/stocks/offers")
     public ResponseEntity<List<OfferStock>> getAllWithStock() {
         List<OfferStock> offerList = offerService.getAllOffersWithStock();
         return ResponseEntity.ok(offerList);
