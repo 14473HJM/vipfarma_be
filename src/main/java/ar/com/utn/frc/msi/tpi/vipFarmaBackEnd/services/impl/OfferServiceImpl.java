@@ -1,6 +1,7 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.impl;
 
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.OfferEntity;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.OfferStockEntity;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.DiscountType;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.Offer;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.OfferStock;
@@ -53,7 +54,10 @@ public class OfferServiceImpl extends BaseModelServiceImpl<Offer, OfferEntity> i
 
     @Override
     public List<OfferStock> getAllOffersWithStock() {
-        List<OfferStock> offerStockList = offerRepository.getAllOffersWithStock();
+        List<OfferStockEntity> offerStockEntityList = offerRepository.getAllOffersWithStock();
+        List<OfferStock> offerStockList = offerStockEntityList.stream()
+                .map(entity -> getModelMapper().map(entity, OfferStock.class))
+                .collect(Collectors.toList());
         for (OfferStock offer : offerStockList) {
             offer.setFinalPrice(this.getFinalPrice(offer));
         }
