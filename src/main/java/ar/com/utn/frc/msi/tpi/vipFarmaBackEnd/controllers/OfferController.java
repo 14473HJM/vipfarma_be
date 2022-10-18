@@ -1,6 +1,7 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.controllers;
 
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.Offer;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.OfferStock;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.stock.Warehouse;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.OfferService;
 import lombok.RequiredArgsConstructor;
@@ -39,5 +40,9 @@ public class OfferController {
         return ResponseEntity.ok(offer);
     }
 
-
+    @GetMapping("/offers/stock")
+    public ResponseEntity<List<OfferStock>> getAllWithStock() {
+        List<OfferStock> offerList = offerService.getAllOffersWithStock();
+        return ResponseEntity.ok(offerList);
+    }
 }
