@@ -7,6 +7,7 @@ import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.billing.Tax;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.billing.TaxType;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrder;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrderItem;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrderStatus;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.repositories.BillRepository;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.BillItemService;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.BillService;
@@ -70,6 +71,8 @@ public class BillServiceImpl extends BaseModelServiceImpl<Bill, BillEntity> impl
         bill.setItems(billItemList);
 
         bill.setCae(this.getCae());
+
+        saleOrderService.changeStatus(id, SaleOrderStatus.BILLED);
         return bill;
     }
 
