@@ -51,7 +51,7 @@ public class BillServiceImpl extends BaseModelServiceImpl<Bill, BillEntity> impl
     public Bill billOrder(Long id, Long userId) {
         SaleOrder saleOrder = saleOrderService.getById(id);
         Bill bill = new Bill();
-        bill.setOrderId(saleOrder.getId());
+        bill.setOrderId(id);
         bill.setCreatedDate(LocalDate.now());
         bill.setDueDate(this.getDueDate());
         bill.setCustomer(saleOrder.getCustomer());
