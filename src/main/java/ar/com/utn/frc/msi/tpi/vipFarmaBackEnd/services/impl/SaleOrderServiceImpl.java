@@ -1,5 +1,6 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.impl;
 
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.BranchOfficeEntity;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.SaleOrderEntity;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrder;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrderItem;
@@ -68,7 +69,9 @@ public class SaleOrderServiceImpl extends BaseModelServiceImpl<SaleOrder, SaleOr
 
     @Override
     public List<SaleOrder> getOrdersByStatusAndBranchOffice(SaleOrderStatus saleOrderStatus, Long branchOfficeId) {
-        List<SaleOrderEntity> ordersList = saleOrderRepository.getBySaleOrderStatusAndBranchOfficeId(saleOrderStatus, branchOfficeId);
+        BranchOfficeEntity branchOfficeEntity = new BranchOfficeEntity();
+        branchOfficeEntity.setId(branchOfficeId);
+        List<SaleOrderEntity> ordersList = saleOrderRepository.getBySaleOrderStatusAndBranchOfficeId(saleOrderStatus, branchOfficeEntity);
         return ordersList.stream()
                 .map(entity -> getModelMapper().map(entity, SaleOrder.class))
                 .collect(Collectors.toList());
