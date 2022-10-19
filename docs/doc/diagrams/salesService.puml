@@ -1,0 +1,54 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+interface BaseModelService<M, E> << interface >> {
+  + create(M): M
+  + getById(Long): M
+  + update(M): M
+  + createAll(List<M>): List<M>
+   all: List<M>
+}
+class BaseModelServiceImpl<M, E> {
+  # BaseModelServiceImpl():
+  + getById(Long): M
+  + update(Object): M
+  + create(M): M
+  + createAll(List<M>): List<M>
+   all: List<M>
+   modelMapper: ModelMapper
+   jpaRepository: JpaRepository<E, Long>
+}
+interface SaleOrderItemService << interface >>
+class SaleOrderItemServiceImpl {
+  + SaleOrderItemServiceImpl(SaleOrderItemRepository, ModelMapper):
+  - modelMapper: ModelMapper
+   modelMapper: ModelMapper
+   jpaRepository: JpaRepository
+}
+interface SaleOrderService << interface >> {
+  + getOrdersByStatusAndBranchOffice(SaleOrderStatus, Long): List<SaleOrder>
+  + changeStatus(Long, SaleOrderStatus): SaleOrder
+}
+class SaleOrderServiceImpl {
+  + SaleOrderServiceImpl(UserService, SaleOrderItemService, SaleOrderRepository, ModelMapper):
+  - modelMapper: ModelMapper
+  - getSubTotalItem(BigDecimal, Integer): BigDecimal
+  - getTotalOrder(List<SaleOrderItem>): BigDecimal
+  + getOrdersByStatusAndBranchOffice(SaleOrderStatus, Long): List<SaleOrder>
+  + changeStatus(Long, SaleOrderStatus): SaleOrder
+  - getTotalItem(SaleOrderItem): BigDecimal
+  + create(SaleOrder): SaleOrder
+   modelMapper: ModelMapper
+   jpaRepository: JpaRepository
+}
+
+BaseModelServiceImpl      -[#008200,dashed]-^  BaseModelService
+SaleOrderItemService      -[#008200,plain]-^  BaseModelService
+SaleOrderItemServiceImpl  -[#000082,plain]-^  BaseModelServiceImpl
+SaleOrderItemServiceImpl  -[#008200,dashed]-^  SaleOrderItemService
+SaleOrderService          -[#008200,plain]-^  BaseModelService
+SaleOrderServiceImpl      -[#000082,plain]-^  BaseModelServiceImpl
+SaleOrderServiceImpl      -[#008200,dashed]-^  SaleOrderService
+@enduml

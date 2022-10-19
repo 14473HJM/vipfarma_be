@@ -1,0 +1,22 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+class User {
+  - email: String
+  - password: String
+  - id: Long
+  - userName: String
+  - userRole: UserRole
+  - branchOffice: BranchOffice
+}
+enum UserRole << enumeration >> {
+  + SELLER:
+  + CASHIER:
+  + ADMIN:
+  + WAREHOUSE_MANAGER:
+}
+
+User     "1" *-[#595959,plain]-> "userRole\n1" UserRole
+@enduml

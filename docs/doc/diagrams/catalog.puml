@@ -1,0 +1,58 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+class Discount {
+  - value: BigDecimal
+  - discountType: DiscountType
+}
+enum DiscountType << enumeration >> {
+  + PERCENTAGE:
+  + FIXED:
+  + OVERRIDE:
+}
+class HealthInsurance {
+  - name: String
+  - number: String
+  - availablePlans: List<HealthInsurancePlan>
+  - id: Long
+}
+class HealthInsurancePlan {
+  - id: Long
+  - name: String
+  - description: String
+  - healthInsuranceId: Long
+}
+class Offer {
+  - healthInsurance: HealthInsurance
+  - product: Product
+  - discountType: DiscountType
+  - discountValue: BigDecimal
+  - id: Long
+  - finalPrice: BigDecimal
+  - healthInsurancePlan: HealthInsurancePlan
+}
+class OfferStock {
+  - stock: Long
+}
+class Product {
+  - price: BigDecimal
+  - id: Long
+  - barcode: Long
+  - name: String
+  - laboratory: String
+  - prescriptionRequired: Boolean
+}
+class ProductStock {
+  - stock: Long
+}
+
+Discount            "1" *-[#595959,plain]-> "discountType\n1" DiscountType
+HealthInsurance     "1" *-[#595959,plain]-> "availablePlans\n*" HealthInsurancePlan
+Offer               "1" *-[#595959,plain]-> "discountType\n1" DiscountType
+Offer               "1" *-[#595959,plain]-> "healthInsurance\n1" HealthInsurance
+Offer               "1" *-[#595959,plain]-> "healthInsurancePlan\n1" HealthInsurancePlan
+Offer               "1" *-[#595959,plain]-> "product\n1" Product
+OfferStock           -[#000082,plain]-^  Offer
+@enduml

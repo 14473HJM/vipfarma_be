@@ -1,0 +1,35 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+interface BaseModelService<M, E> << interface >> {
+  + create(M): M
+  + getById(Long): M
+  + update(M): M
+  + createAll(List<M>): List<M>
+   all: List<M>
+}
+class BaseModelServiceImpl<M, E> {
+  # BaseModelServiceImpl():
+  + getById(Long): M
+  + update(Object): M
+  + create(M): M
+  + createAll(List<M>): List<M>
+   all: List<M>
+   modelMapper: ModelMapper
+   jpaRepository: JpaRepository<E, Long>
+}
+interface CustomerService << interface >>
+class CustomerServiceImpl {
+  + CustomerServiceImpl(CustomerRepository, ModelMapper):
+  - modelMapper: ModelMapper
+   modelMapper: ModelMapper
+   jpaRepository: JpaRepository
+}
+
+BaseModelServiceImpl  -[#008200,dashed]-^  BaseModelService
+CustomerService       -[#008200,plain]-^  BaseModelService
+CustomerServiceImpl   -[#000082,plain]-^  BaseModelServiceImpl
+CustomerServiceImpl   -[#008200,dashed]-^  CustomerService
+@enduml
