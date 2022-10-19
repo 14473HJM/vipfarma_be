@@ -1,0 +1,114 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+class Locker {
+  - id: Long
+  - rackId: Long
+  - stockCapacity: Integer
+  - branchOfficeId: Long
+  - occupiedCapacity: Integer
+  - currentStock: Integer
+  - product: Product
+}
+class Rack {
+  - warehouseId: Long
+  - id: Long
+  - name: String
+  - lockers: List<Locker>
+}
+class Stock {
+  - endDate: LocalDate
+  - initialStock: Integer
+  - stockStatus: StockStatus
+  - createdDate: LocalDate
+  - product: Product
+  - locker: Locker
+  - dueDate: LocalDate
+  - id: Long
+  - availableStock: Integer
+}
+class StockOrder {
+  - purchaseOrderId: Long
+  - statusReason: String
+  - stockOrderItems: List<StockOrderItem>
+  - statusComment: String
+  - endDate: LocalDate
+  - stockOrderStatus: StockOrderStatus
+  - id: Long
+  - warehouse: Warehouse
+  - createdDate: LocalDate
+}
+class StockOrderItem {
+  - rejectedQuantity: Integer
+  - actualQuantity: Integer
+  - id: Long
+  - stockOrderId: Long
+  - product: Product
+  - requiredQuantity: Integer
+  - stockOrderItemStatus: StockOrderItemStatus
+  - receivedQuantity: Integer
+}
+enum StockOrderItemStatus << enumeration >> {
+  + CREATED:
+  + PARTIALLY_RECEIVED:
+  + STORED:
+  - isFinalStatus: Boolean
+  + COMPLETELY_RECEIVED:
+  + RETURNED:
+  + NO_RECEIVED:
+  + PENDING:
+  - isInitialStatus: Boolean
+}
+enum StockOrderStatus << enumeration >> {
+  - isFinalStatus: Boolean
+  - isInitialStatus: Boolean
+  + CREATED:
+  + PENDING_DELIVERY:
+  + REJECTED:
+  + CANCELED:
+  + RECEIVED:
+}
+enum StockStatus << enumeration >> {
+  + INACTIVE:
+  + EXPIRED:
+  + ACTIVE:
+}
+class StockTransaction {
+  - id: Long
+  - stockOrderItem: StockOrderItem
+  - stock: Stock
+  - stockOrderId: Long
+  - effectiveDate: LocalDate
+  - quantity: Integer
+  - stockTransactionType: StockTransactionType
+  - product: Product
+}
+enum StockTransactionType << enumeration >> {
+  + MOV_IN:
+  + INBOUND:
+  + SALE:
+  + MOV_OUT:
+  + OUTBOUND:
+}
+class Warehouse {
+  - branchOffice: BranchOffice
+  - location: String
+  - name: String
+  - racks: List<Rack>
+  - id: Long
+}
+
+Rack                 "1" *-[#595959,plain]-> "lockers\n*" Locker
+Stock                "1" *-[#595959,plain]-> "locker\n1" Locker
+Stock                "1" *-[#595959,plain]-> "stockStatus\n1" StockStatus
+StockOrder           "1" *-[#595959,plain]-> "stockOrderItems\n*" StockOrderItem
+StockOrder           "1" *-[#595959,plain]-> "stockOrderStatus\n1" StockOrderStatus
+StockOrder           "1" *-[#595959,plain]-> "warehouse\n1" Warehouse
+StockOrderItem       "1" *-[#595959,plain]-> "stockOrderItemStatus\n1" StockOrderItemStatus
+StockTransaction     "1" *-[#595959,plain]-> "stock\n1" Stock
+StockTransaction     "1" *-[#595959,plain]-> "stockOrderItem\n1" StockOrderItem
+StockTransaction     "1" *-[#595959,plain]-> "stockTransactionType\n1" StockTransactionType
+Warehouse            "1" *-[#595959,plain]-> "racks\n*" Rack
+@enduml

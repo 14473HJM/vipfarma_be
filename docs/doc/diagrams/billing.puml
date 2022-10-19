@@ -1,0 +1,47 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+class Bill {
+  - user: User
+  - customer: Customer
+  - dueDate: LocalDate
+  - id: Long
+  - orderId: Long
+  - cae: String
+  - items: List<BillItem>
+  - createdDate: LocalDate
+}
+class BillItem {
+  - labelInvoice: String
+  - billId: Long
+  - totalPrice: BigDecimal
+  - id: Long
+  - offer: Offer
+  - quantity: Integer
+  - unitaryPrice: BigDecimal
+  - discountAmount: BigDecimal
+}
+enum PaymentMode << enumeration >> {
+  + CHECK:
+  + DEBIT:
+  + CASH:
+  + CREDIT_CARD:
+  + MERCADO_PAGO:
+}
+class Tax {
+  - taxValue: BigDecimal
+  - labelInvoice: String
+  - id: Long
+  - taxType: TaxType
+}
+enum TaxType << enumeration >> {
+  + VAT:
+  + IIBB:
+  + INTERNAL:
+}
+
+Bill        "1" *-[#595959,plain]-> "items\n*" BillItem
+Tax         "1" *-[#595959,plain]-> "taxType\n1" TaxType
+@enduml

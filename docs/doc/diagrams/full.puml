@@ -1,0 +1,278 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+class AbstractController
+class Application
+interface BaseModelService<M, E> << interface >>
+class BaseModelServiceImpl<M, E>
+class Bill
+class BillController
+class BillEntity
+class BillItem
+class BillItemEntity
+interface BillItemRepository << interface >>
+interface BillItemService << interface >>
+class BillItemServiceImpl
+interface BillRepository << interface >>
+interface BillService << interface >>
+class BillServiceImpl
+class BranchOffice
+class BranchOfficeController
+class BranchOfficeEntity
+interface BranchOfficeRepository << interface >>
+interface BranchOfficeService << interface >>
+class BranchOfficeServiceImpl
+class Customer
+class CustomerController
+class CustomerEntity
+interface CustomerRepository << interface >>
+interface CustomerService << interface >>
+class CustomerServiceImpl
+class Discount
+enum DiscountType << enumeration >>
+class ErrorDTO
+class HealthInsurance
+class HealthInsuranceController
+class HealthInsuranceEntity
+class HealthInsurancePlan
+class HealthInsurancePlanController
+class HealthInsurancePlanEntity
+interface HealthInsurancePlanRepository << interface >>
+interface HealthInsurancePlanService << interface >>
+class HealthInsurancePlanServiceImpl
+interface HealthInsuranceRepository << interface >>
+interface HealthInsuranceService << interface >>
+class HealthInsuranceServiceImpl
+enum IdentificationType << enumeration >>
+class Locker
+class LockerController
+class LockerEntity
+interface LockerRepository << interface >>
+interface LockerService << interface >>
+class LockerServiceImpl
+class ModelMapperConfig
+class Offer
+class OfferController
+class OfferEntity
+interface OfferRepository << interface >>
+interface OfferService << interface >>
+class OfferServiceImpl
+class OfferStock
+class OfferStockEntity
+enum PaymentMode << enumeration >>
+class PingController
+class Product
+class ProductController
+class ProductEntity
+interface ProductRepository << interface >>
+interface ProductService << interface >>
+class ProductServiceImpl
+class ProductStock
+class ProductStockEntity
+class Rack
+class RackController
+class RackEntity
+interface RackRepository << interface >>
+interface RackService << interface >>
+class RackServiceImpl
+class SaleOrder
+class SaleOrderController
+class SaleOrderEntity
+class SaleOrderItem
+class SaleOrderItemEntity
+interface SaleOrderItemRepository << interface >>
+interface SaleOrderItemService << interface >>
+class SaleOrderItemServiceImpl
+interface SaleOrderRepository << interface >>
+interface SaleOrderService << interface >>
+class SaleOrderServiceImpl
+enum SaleOrderStatus << enumeration >>
+class SpringDocConfig
+class Stock
+class StockEntity
+class StockOrder
+class StockOrderItem
+enum StockOrderItemStatus << enumeration >>
+enum StockOrderStatus << enumeration >>
+interface StockRepository << interface >>
+interface StockService << interface >>
+class StockServiceImpl
+enum StockStatus << enumeration >>
+class StockTransaction
+enum StockTransactionType << enumeration >>
+class Tax
+class TaxEntity
+interface TaxRepository << interface >>
+interface TaxService << interface >>
+class TaxServiceImpl
+enum TaxType << enumeration >>
+class User
+class UserController
+class UserEntity
+interface UserRepository << interface >>
+enum UserRole << enumeration >>
+interface UserService << interface >>
+class UserServiceImpl
+class Warehouse
+class WarehouseController
+class WarehouseEntity
+interface WarehouseRepository << interface >>
+interface WarehouseService << interface >>
+class WarehouseServiceImpl
+class WebConfig
+
+BaseModelServiceImpl            -[#008200,dashed]-^  BaseModelService
+Bill                           "1" *-[#595959,plain]-> "items\n*" BillItem
+Bill                           "1" *-[#595959,plain]-> "customer\n1" Customer
+Bill                           "1" *-[#595959,plain]-> "user\n1" User
+BillController                 "1" *-[#595959,plain]-> "billService\n1" BillService
+BillEntity                     "1" *-[#595959,plain]-> "items\n*" BillItemEntity
+BillEntity                     "1" *-[#595959,plain]-> "customerId\n1" CustomerEntity
+BillEntity                     "1" *-[#595959,plain]-> "saleOrderId\n1" SaleOrderEntity
+BillEntity                     "1" *-[#595959,plain]-> "userId\n1" UserEntity
+BillItem                       "1" *-[#595959,plain]-> "offer\n1" Offer
+BillItemEntity                 "1" *-[#595959,plain]-> "offerId\n1" OfferEntity
+BillItemService                 -[#008200,plain]-^  BaseModelService
+BillItemServiceImpl             -[#000082,plain]-^  BaseModelServiceImpl
+BillItemServiceImpl             -[#595959,dashed]->  BillItem                       : "«create»"
+BillItemServiceImpl            "1" *-[#595959,plain]-> "billItemRepository\n1" BillItemRepository
+BillItemServiceImpl             -[#008200,dashed]-^  BillItemService
+BillService                     -[#008200,plain]-^  BaseModelService
+BillServiceImpl                 -[#000082,plain]-^  BaseModelServiceImpl
+BillServiceImpl                 -[#595959,dashed]->  Bill                           : "«create»"
+BillServiceImpl                 -[#595959,dashed]->  BillItem                       : "«create»"
+BillServiceImpl                "1" *-[#595959,plain]-> "billItemService\n1" BillItemService
+BillServiceImpl                "1" *-[#595959,plain]-> "billRepository\n1" BillRepository
+BillServiceImpl                 -[#008200,dashed]-^  BillService
+BillServiceImpl                "1" *-[#595959,plain]-> "saleOrderService\n1" SaleOrderService
+BillServiceImpl                "1" *-[#595959,plain]-> "taxService\n1" TaxService
+BranchOfficeController         "1" *-[#595959,plain]-> "branchOfficeService\n1" BranchOfficeService
+BranchOfficeService             -[#008200,plain]-^  BaseModelService
+BranchOfficeServiceImpl         -[#000082,plain]-^  BaseModelServiceImpl
+BranchOfficeServiceImpl        "1" *-[#595959,plain]-> "branchOfficeRepository\n1" BranchOfficeRepository
+BranchOfficeServiceImpl         -[#008200,dashed]-^  BranchOfficeService
+Customer                       "1" *-[#595959,plain]-> "healthInsurance\n1" HealthInsurance
+Customer                       "1" *-[#595959,plain]-> "healthInsurancePlan\n1" HealthInsurancePlan
+Customer                       "1" *-[#595959,plain]-> "identificationType\n1" IdentificationType
+CustomerController             "1" *-[#595959,plain]-> "customerService\n1" CustomerService
+CustomerEntity                 "1" *-[#595959,plain]-> "healthInsuranceId\n1" HealthInsuranceEntity
+CustomerEntity                 "1" *-[#595959,plain]-> "healthInsurancePlanId\n1" HealthInsurancePlanEntity
+CustomerService                 -[#008200,plain]-^  BaseModelService
+CustomerServiceImpl             -[#000082,plain]-^  BaseModelServiceImpl
+CustomerServiceImpl            "1" *-[#595959,plain]-> "customerRepository\n1" CustomerRepository
+CustomerServiceImpl             -[#008200,dashed]-^  CustomerService
+Discount                       "1" *-[#595959,plain]-> "discountType\n1" DiscountType
+HealthInsurance                "1" *-[#595959,plain]-> "availablePlans\n*" HealthInsurancePlan
+HealthInsuranceController      "1" *-[#595959,plain]-> "healthInsuranceService\n1" HealthInsuranceService
+HealthInsuranceEntity          "1" *-[#595959,plain]-> "availablePlans\n*" HealthInsurancePlanEntity
+HealthInsurancePlanController  "1" *-[#595959,plain]-> "healthInsurancePlanService\n1" HealthInsurancePlanService
+HealthInsurancePlanServiceImpl "1" *-[#595959,plain]-> "healthInsurancePlanRepository\n1" HealthInsurancePlanRepository
+HealthInsurancePlanServiceImpl  -[#008200,dashed]-^  HealthInsurancePlanService
+HealthInsuranceServiceImpl     "1" *-[#595959,plain]-> "healthInsuranceRepository\n1" HealthInsuranceRepository
+HealthInsuranceServiceImpl      -[#008200,dashed]-^  HealthInsuranceService
+Locker                         "1" *-[#595959,plain]-> "product\n1" Product
+LockerController               "1" *-[#595959,plain]-> "lockerService\n1" LockerService
+LockerEntity                   "1" *-[#595959,plain]-> "branchOfficeId\n1" BranchOfficeEntity
+LockerEntity                   "1" *-[#595959,plain]-> "product\n1" ProductEntity
+LockerEntity                   "1" *-[#595959,plain]-> "rack\n1" RackEntity
+LockerService                   -[#008200,plain]-^  BaseModelService
+LockerServiceImpl               -[#000082,plain]-^  BaseModelServiceImpl
+LockerServiceImpl              "1" *-[#595959,plain]-> "lockerRepository\n1" LockerRepository
+LockerServiceImpl               -[#008200,dashed]-^  LockerService
+Offer                          "1" *-[#595959,plain]-> "discountType\n1" DiscountType
+Offer                          "1" *-[#595959,plain]-> "healthInsurance\n1" HealthInsurance
+Offer                          "1" *-[#595959,plain]-> "healthInsurancePlan\n1" HealthInsurancePlan
+Offer                          "1" *-[#595959,plain]-> "product\n1" Product
+OfferController                "1" *-[#595959,plain]-> "offerService\n1" OfferService
+OfferEntity                    "1" *-[#595959,plain]-> "healthInsurance\n1" HealthInsuranceEntity
+OfferEntity                    "1" *-[#595959,plain]-> "healthInsurancePlan\n1" HealthInsurancePlanEntity
+OfferEntity                    "1" *-[#595959,plain]-> "product\n1" ProductEntity
+OfferService                    -[#008200,plain]-^  BaseModelService
+OfferServiceImpl                -[#000082,plain]-^  BaseModelServiceImpl
+OfferServiceImpl               "1" *-[#595959,plain]-> "offerRepository\n1" OfferRepository
+OfferServiceImpl                -[#008200,dashed]-^  OfferService
+OfferStock                      -[#000082,plain]-^  Offer
+OfferStockEntity               "1" *-[#595959,plain]-> "healthInsurance\n1" HealthInsuranceEntity
+OfferStockEntity               "1" *-[#595959,plain]-> "healthInsurancePlan\n1" HealthInsurancePlanEntity
+OfferStockEntity               "1" *-[#595959,plain]-> "product\n1" ProductEntity
+ProductController              "1" *-[#595959,plain]-> "productService\n1" ProductService
+ProductService                  -[#008200,plain]-^  BaseModelService
+ProductServiceImpl              -[#000082,plain]-^  BaseModelServiceImpl
+ProductServiceImpl             "1" *-[#595959,plain]-> "productRepository\n1" ProductRepository
+ProductServiceImpl              -[#008200,dashed]-^  ProductService
+Rack                           "1" *-[#595959,plain]-> "lockers\n*" Locker
+RackController                 "1" *-[#595959,plain]-> "rackService\n1" RackService
+RackEntity                     "1" *-[#595959,plain]-> "lockers\n*" LockerEntity
+RackEntity                     "1" *-[#595959,plain]-> "warehouse\n1" WarehouseEntity
+RackService                     -[#008200,plain]-^  BaseModelService
+RackServiceImpl                 -[#000082,plain]-^  BaseModelServiceImpl
+RackServiceImpl                "1" *-[#595959,plain]-> "rackRepository\n1" RackRepository
+RackServiceImpl                 -[#008200,dashed]-^  RackService
+SaleOrder                      "1" *-[#595959,plain]-> "customer\n1" Customer
+SaleOrder                      "1" *-[#595959,plain]-> "saleOrderItems\n*" SaleOrderItem
+SaleOrder                      "1" *-[#595959,plain]-> "saleOrderStatus\n1" SaleOrderStatus
+SaleOrder                      "1" *-[#595959,plain]-> "user\n1" User
+SaleOrderController            "1" *-[#595959,plain]-> "saleOrderService\n1" SaleOrderService
+SaleOrderEntity                "1" *-[#595959,plain]-> "branchOfficeId\n1" BranchOfficeEntity
+SaleOrderEntity                "1" *-[#595959,plain]-> "customerId\n1" CustomerEntity
+SaleOrderEntity                "1" *-[#595959,plain]-> "saleOrderItems\n*" SaleOrderItemEntity
+SaleOrderEntity                "1" *-[#595959,plain]-> "saleOrderStatus\n1" SaleOrderStatus
+SaleOrderEntity                "1" *-[#595959,plain]-> "userId\n1" UserEntity
+SaleOrderItem                  "1" *-[#595959,plain]-> "offer\n1" Offer
+SaleOrderItemEntity            "1" *-[#595959,plain]-> "offerId\n1" OfferEntity
+SaleOrderItemService            -[#008200,plain]-^  BaseModelService
+SaleOrderItemServiceImpl        -[#000082,plain]-^  BaseModelServiceImpl
+SaleOrderItemServiceImpl       "1" *-[#595959,plain]-> "saleOrderItemRepository\n1" SaleOrderItemRepository
+SaleOrderItemServiceImpl        -[#008200,dashed]-^  SaleOrderItemService
+SaleOrderService                -[#008200,plain]-^  BaseModelService
+SaleOrderServiceImpl            -[#000082,plain]-^  BaseModelServiceImpl
+SaleOrderServiceImpl            -[#595959,dashed]->  BranchOfficeEntity             : "«create»"
+SaleOrderServiceImpl           "1" *-[#595959,plain]-> "saleOrderItemService\n1" SaleOrderItemService
+SaleOrderServiceImpl           "1" *-[#595959,plain]-> "saleOrderRepository\n1" SaleOrderRepository
+SaleOrderServiceImpl            -[#008200,dashed]-^  SaleOrderService
+SaleOrderServiceImpl           "1" *-[#595959,plain]-> "userService\n1" UserService
+Stock                          "1" *-[#595959,plain]-> "locker\n1" Locker
+Stock                          "1" *-[#595959,plain]-> "product\n1" Product
+Stock                          "1" *-[#595959,plain]-> "stockStatus\n1" StockStatus
+StockEntity                    "1" *-[#595959,plain]-> "lockerId\n1" LockerEntity
+StockEntity                    "1" *-[#595959,plain]-> "productId\n1" ProductEntity
+StockEntity                    "1" *-[#595959,plain]-> "stockStatus\n1" StockStatus
+StockOrder                     "1" *-[#595959,plain]-> "stockOrderItems\n*" StockOrderItem
+StockOrder                     "1" *-[#595959,plain]-> "stockOrderStatus\n1" StockOrderStatus
+StockOrder                     "1" *-[#595959,plain]-> "warehouse\n1" Warehouse
+StockOrderItem                 "1" *-[#595959,plain]-> "product\n1" Product
+StockOrderItem                 "1" *-[#595959,plain]-> "stockOrderItemStatus\n1" StockOrderItemStatus
+StockService                    -[#008200,plain]-^  BaseModelService
+StockServiceImpl                -[#000082,plain]-^  BaseModelServiceImpl
+StockServiceImpl               "1" *-[#595959,plain]-> "stockRepository\n1" StockRepository
+StockServiceImpl                -[#008200,dashed]-^  StockService
+StockTransaction               "1" *-[#595959,plain]-> "product\n1" Product
+StockTransaction               "1" *-[#595959,plain]-> "stock\n1" Stock
+StockTransaction               "1" *-[#595959,plain]-> "stockOrderItem\n1" StockOrderItem
+StockTransaction               "1" *-[#595959,plain]-> "stockTransactionType\n1" StockTransactionType
+Tax                            "1" *-[#595959,plain]-> "taxType\n1" TaxType
+TaxEntity                      "1" *-[#595959,plain]-> "taxType\n1" TaxType
+TaxService                      -[#008200,plain]-^  BaseModelService
+TaxServiceImpl                  -[#000082,plain]-^  BaseModelServiceImpl
+TaxServiceImpl                 "1" *-[#595959,plain]-> "taxRepository\n1" TaxRepository
+TaxServiceImpl                  -[#008200,dashed]-^  TaxService
+User                           "1" *-[#595959,plain]-> "branchOffice\n1" BranchOffice
+User                           "1" *-[#595959,plain]-> "userRole\n1" UserRole
+UserController                 "1" *-[#595959,plain]-> "userService\n1" UserService
+UserEntity                     "1" *-[#595959,plain]-> "branchOfficeId\n1" BranchOfficeEntity
+UserService                     -[#008200,plain]-^  BaseModelService
+UserServiceImpl                 -[#000082,plain]-^  BaseModelServiceImpl
+UserServiceImpl                "1" *-[#595959,plain]-> "userRepository\n1" UserRepository
+UserServiceImpl                 -[#008200,dashed]-^  UserService
+Warehouse                      "1" *-[#595959,plain]-> "branchOffice\n1" BranchOffice
+Warehouse                      "1" *-[#595959,plain]-> "racks\n*" Rack
+WarehouseController            "1" *-[#595959,plain]-> "warehouseService\n1" WarehouseService
+WarehouseEntity                "1" *-[#595959,plain]-> "branchOffice\n1" BranchOfficeEntity
+WarehouseEntity                "1" *-[#595959,plain]-> "racks\n*" RackEntity
+WarehouseService                -[#008200,plain]-^  BaseModelService
+WarehouseServiceImpl            -[#000082,plain]-^  BaseModelServiceImpl
+WarehouseServiceImpl           "1" *-[#595959,plain]-> "warehouseRepository\n1" WarehouseRepository
+WarehouseServiceImpl            -[#008200,dashed]-^  WarehouseService
+@enduml
