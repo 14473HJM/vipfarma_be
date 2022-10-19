@@ -1,0 +1,68 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+interface BaseModelService<M, E> << interface >> {
+  + create(M): M
+  + getById(Long): M
+  + update(M): M
+  + createAll(List<M>): List<M>
+   all: List<M>
+}
+class BaseModelServiceImpl<M, E> {
+  # BaseModelServiceImpl():
+  + getById(Long): M
+  + update(Object): M
+  + create(M): M
+  + createAll(List<M>): List<M>
+   all: List<M>
+   modelMapper: ModelMapper
+   jpaRepository: JpaRepository<E, Long>
+}
+interface BillItemService << interface >> {
+  + billingItem(SaleOrderItem, Long): BillItem
+}
+class BillItemServiceImpl {
+  + BillItemServiceImpl(BillItemRepository, ModelMapper):
+  - modelMapper: ModelMapper
+  + billingItem(SaleOrderItem, Long): BillItem
+   modelMapper: ModelMapper
+   jpaRepository: JpaRepository
+}
+interface BillService << interface >> {
+  + billOrder(Long, Long): Bill
+}
+class BillServiceImpl {
+  + BillServiceImpl(BillRepository, TaxService, SaleOrderService, BillItemService, ModelMapper):
+  - modelMapper: ModelMapper
+  - calculateTaxes(List<BillItem>, Long): void
+  + billOrder(Long, Long): Bill
+  - calculateTax(BillItem, Tax): BigDecimal
+   cae: String
+   modelMapper: ModelMapper
+   jpaRepository: JpaRepository
+   dueDate: LocalDate
+}
+interface TaxService << interface >> {
+  + getTaxByTaxType(TaxType): Tax
+}
+class TaxServiceImpl {
+  + TaxServiceImpl(TaxRepository, ModelMapper):
+  - modelMapper: ModelMapper
+  + getTaxByTaxType(TaxType): Tax
+   modelMapper: ModelMapper
+   jpaRepository: JpaRepository
+}
+
+BaseModelServiceImpl  -[#008200,dashed]-^  BaseModelService
+BillItemService       -[#008200,plain]-^  BaseModelService
+BillItemServiceImpl   -[#000082,plain]-^  BaseModelServiceImpl
+BillItemServiceImpl   -[#008200,dashed]-^  BillItemService
+BillService           -[#008200,plain]-^  BaseModelService
+BillServiceImpl       -[#000082,plain]-^  BaseModelServiceImpl
+BillServiceImpl       -[#008200,dashed]-^  BillService
+TaxService            -[#008200,plain]-^  BaseModelService
+TaxServiceImpl        -[#000082,plain]-^  BaseModelServiceImpl
+TaxServiceImpl        -[#008200,dashed]-^  TaxService
+@enduml

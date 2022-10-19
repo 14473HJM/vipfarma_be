@@ -1,0 +1,5 @@
+- **Class Diagrams**
+  - [**Domain**](/diagrams/domain.md)
+  - [**Service**](/diagrams/service.md)
+  - [**Controller**](/diagrams/controller.md)
+  - [**Full**](/diagrams/full.md)

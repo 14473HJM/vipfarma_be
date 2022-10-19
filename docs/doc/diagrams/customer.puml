@@ -1,0 +1,23 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+class Customer {
+  - identification: String
+  - healthInsurance: HealthInsurance
+  - address: String
+  - lastName: String
+  - healthInsurancePlan: HealthInsurancePlan
+  - name: String
+  - identificationType: IdentificationType
+  - id: Long
+}
+enum IdentificationType << enumeration >> {
+  + DNI:
+  + CUIT:
+  + CUIL:
+}
+
+Customer           "1" *-[#595959,plain]-> "identificationType\n1" IdentificationType
+@enduml

@@ -1,0 +1,70 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+interface BaseModelService<M, E> << interface >> {
+  + create(M): M
+  + getById(Long): M
+  + update(M): M
+  + createAll(List<M>): List<M>
+   all: List<M>
+}
+class BaseModelServiceImpl<M, E> {
+  # BaseModelServiceImpl():
+  + getById(Long): M
+  + update(Object): M
+  + create(M): M
+  + createAll(List<M>): List<M>
+   all: List<M>
+   modelMapper: ModelMapper
+   jpaRepository: JpaRepository<E, Long>
+}
+interface LockerService << interface >>
+class LockerServiceImpl {
+  + LockerServiceImpl(LockerRepository, ModelMapper):
+  - modelMapper: ModelMapper
+   modelMapper: ModelMapper
+   jpaRepository: JpaRepository
+}
+interface RackService << interface >>
+class RackServiceImpl {
+  + RackServiceImpl(RackRepository, ModelMapper):
+  - modelMapper: ModelMapper
+   modelMapper: ModelMapper
+   jpaRepository: JpaRepository
+}
+interface StockService << interface >> {
+  + getStockByProduct(Long): List<Stock>
+  + getStockByProductAndBranchOffice(Long, Long): List<Stock>
+}
+class StockServiceImpl {
+  + StockServiceImpl(StockRepository, ModelMapper):
+  - modelMapper: ModelMapper
+  + getStockByProduct(Long): List<Stock>
+  + getStockByProductAndBranchOffice(Long, Long): List<Stock>
+   modelMapper: ModelMapper
+   jpaRepository: JpaRepository
+}
+interface WarehouseService << interface >>
+class WarehouseServiceImpl {
+  + WarehouseServiceImpl(WarehouseRepository, ModelMapper):
+  - modelMapper: ModelMapper
+   modelMapper: ModelMapper
+   jpaRepository: JpaRepository
+}
+
+BaseModelServiceImpl  -[#008200,dashed]-^  BaseModelService
+LockerService         -[#008200,plain]-^  BaseModelService
+LockerServiceImpl     -[#000082,plain]-^  BaseModelServiceImpl
+LockerServiceImpl     -[#008200,dashed]-^  LockerService
+RackService           -[#008200,plain]-^  BaseModelService
+RackServiceImpl       -[#000082,plain]-^  BaseModelServiceImpl
+RackServiceImpl       -[#008200,dashed]-^  RackService
+StockService          -[#008200,plain]-^  BaseModelService
+StockServiceImpl      -[#000082,plain]-^  BaseModelServiceImpl
+StockServiceImpl      -[#008200,dashed]-^  StockService
+WarehouseService      -[#008200,plain]-^  BaseModelService
+WarehouseServiceImpl  -[#000082,plain]-^  BaseModelServiceImpl
+WarehouseServiceImpl  -[#008200,dashed]-^  WarehouseService
+@enduml

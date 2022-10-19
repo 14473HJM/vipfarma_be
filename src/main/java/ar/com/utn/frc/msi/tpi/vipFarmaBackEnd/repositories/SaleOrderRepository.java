@@ -1,5 +1,6 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.repositories;
 
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.BranchOfficeEntity;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.SaleOrderEntity;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrderStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface SaleOrderRepository extends JpaRepository <SaleOrderEntity, Long>  {
-    List<SaleOrderEntity> getBySaleOrderStatusAndBranchOfficeId(SaleOrderStatus saleOrderStatus, Long branchOfficeId);
+    List<SaleOrderEntity> getBySaleOrderStatusAndBranchOfficeId(SaleOrderStatus saleOrderStatus, BranchOfficeEntity branchOfficeId);
 
 }

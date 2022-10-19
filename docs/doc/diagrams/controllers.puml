@@ -1,0 +1,97 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+class AbstractController {
+  + handleError(Exception): ResponseEntity<ErrorDTO>
+  + handleError(RuntimeException): ResponseEntity<ErrorDTO>
+  + handleError(EntityNotFoundException): ResponseEntity<ErrorDTO>
+  + handleError(IllegalArgumentException): ResponseEntity<ErrorDTO>
+  - buildErrorDto(String, HttpStatus): ErrorDTO
+  + handleError(MethodArgumentTypeMismatchException): ResponseEntity<ErrorDTO>
+}
+class BillController {
+  - billService: BillService
+  + getById(Long): ResponseEntity<Bill>
+  + create(Bill): ResponseEntity<Bill>
+  + getAll(): ResponseEntity<List<Bill>>
+  + billOrder(Long): ResponseEntity<Bill>
+}
+class BranchOfficeController {
+  - branchOfficeService: BranchOfficeService
+  + create(BranchOffice): ResponseEntity<BranchOffice>
+  + getById(Long): ResponseEntity<BranchOffice>
+  + getAll(): ResponseEntity<List<BranchOffice>>
+}
+class CustomerController {
+  - customerService: CustomerService
+  + getById(Long): ResponseEntity<Customer>
+  + login(Customer): ResponseEntity<Customer>
+  + getAll(): ResponseEntity<List<Customer>>
+}
+class HealthInsuranceController {
+  - healthInsuranceService: HealthInsuranceService
+  + getAll(): ResponseEntity<List<HealthInsurance>>
+  + create(HealthInsurance): ResponseEntity<HealthInsurance>
+  + getById(Long): ResponseEntity<HealthInsurance>
+}
+class HealthInsurancePlanController {
+  - healthInsurancePlanService: HealthInsurancePlanService
+  + getById(Long): ResponseEntity<HealthInsurancePlan>
+  + create(HealthInsurancePlan): ResponseEntity<HealthInsurancePlan>
+  + getAll(): ResponseEntity<List<HealthInsurancePlan>>
+}
+class LockerController {
+  - lockerService: LockerService
+  + create(Locker): ResponseEntity<Locker>
+  + getAll(): ResponseEntity<List<Locker>>
+  + getById(Long): ResponseEntity<Locker>
+}
+class OfferController {
+  - offerService: OfferService
+  + getOfferStock(Long): ResponseEntity<Offer>
+  + create(Offer): ResponseEntity<Offer>
+  + getAll(): ResponseEntity<List<Offer>>
+  + getById(Long): ResponseEntity<Offer>
+  + getAllWithStock(): ResponseEntity<List<OfferStock>>
+}
+class PingController {
+  + ping(): String
+}
+class ProductController {
+  - productService: ProductService
+  + createProduct(Product): ResponseEntity<Product>
+  + getProduct(Long): ResponseEntity<Product>
+  + getProducts(String, Long): ResponseEntity<List<Product>>
+  + updateProduct(Product, Long): ResponseEntity<Product>
+}
+class RackController {
+  - rackService: RackService
+  + create(Rack): ResponseEntity<Rack>
+  + getAll(): ResponseEntity<List<Rack>>
+  + getById(Long): ResponseEntity<Rack>
+}
+class SaleOrderController {
+  - saleOrderService: SaleOrderService
+  + changeStatus(Long, SaleOrderStatus): ResponseEntity<SaleOrder>
+  + getOrder(Long): ResponseEntity<SaleOrder>
+  + changeOrder(Long, SaleOrder): ResponseEntity<SaleOrder>
+  + create(SaleOrder): ResponseEntity<SaleOrder>
+  + getOrders(SaleOrderStatus, Long): ResponseEntity<List<SaleOrder>>
+}
+class UserController {
+  - userService: UserService
+  + getUserById(Long): ResponseEntity<User>
+  + login(User): ResponseEntity<User>
+  + getAll(): ResponseEntity<List<User>>
+  + create(User): ResponseEntity<User>
+}
+class WarehouseController {
+  - warehouseService: WarehouseService
+  + create(Warehouse): ResponseEntity<Warehouse>
+  + getAll(): ResponseEntity<List<Warehouse>>
+  + getById(Long): ResponseEntity<Warehouse>
+}
+
+@enduml

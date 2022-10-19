@@ -1,0 +1,93 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+interface BaseModelService<M, E> << interface >> {
+  + create(M): M
+  + getById(Long): M
+  + update(M): M
+  + createAll(List<M>): List<M>
+   all: List<M>
+}
+class BaseModelServiceImpl<M, E> {
+  # BaseModelServiceImpl():
+  + getById(Long): M
+  + update(Object): M
+  + create(M): M
+  + createAll(List<M>): List<M>
+   all: List<M>
+   modelMapper: ModelMapper
+   jpaRepository: JpaRepository<E, Long>
+}
+interface HealthInsurancePlanService << interface >> {
+  + getById(Long): HealthInsurancePlan
+  + updateHealthInsurancePlan(HealthInsurancePlan): HealthInsurancePlan
+  + createHealthInsurancePlan(HealthInsurancePlan): HealthInsurancePlan
+   all: List<HealthInsurancePlan>
+}
+class HealthInsurancePlanServiceImpl {
+  + HealthInsurancePlanServiceImpl(HealthInsurancePlanRepository, ModelMapper):
+  + getById(Long): HealthInsurancePlan
+  + updateHealthInsurancePlan(HealthInsurancePlan): HealthInsurancePlan
+  + createHealthInsurancePlan(HealthInsurancePlan): HealthInsurancePlan
+   all: List<HealthInsurancePlan>
+}
+interface HealthInsuranceService << interface >> {
+  + getById(Long): HealthInsurance
+  + createHealthInsurance(HealthInsurance): HealthInsurance
+   healthInsurances: List<HealthInsurance>
+}
+class HealthInsuranceServiceImpl {
+  + HealthInsuranceServiceImpl(HealthInsuranceRepository, ModelMapper):
+  + getById(Long): HealthInsurance
+  + createHealthInsurance(HealthInsurance): HealthInsurance
+   healthInsurances: List<HealthInsurance>
+}
+interface OfferService << interface >> {
+  + getOffersWithStock(Long): OfferStock
+  + getOfferStockByProductIdAndBranchOffice(Long, Long): List<OfferStock>
+  + getOfferStockByProductId(Long): List<OfferStock>
+   allOffersWithStock: List<OfferStock>
+}
+class OfferServiceImpl {
+  + OfferServiceImpl(OfferRepository, ModelMapper):
+  - modelMapper: ModelMapper
+  - applyDiscount(Offer): BigDecimal
+  - getOfferStockList(List<OfferStockEntity>): List<OfferStock>
+  + getOfferStockByProductId(Long): List<OfferStock>
+  + getOffersWithStock(Long): OfferStock
+  - getFinalPrice(Offer): BigDecimal
+  + getById(Long): Offer
+  + getOfferStockByProductIdAndBranchOffice(Long, Long): List<OfferStock>
+  - applyFixDiscount(BigDecimal, BigDecimal): BigDecimal
+  - applyPercentageDiscount(BigDecimal, BigDecimal): BigDecimal
+  - applyOverrideDiscount(BigDecimal, BigDecimal): BigDecimal
+   all: List<Offer>
+   modelMapper: ModelMapper
+   allOffersWithStock: List<OfferStock>
+   jpaRepository: JpaRepository
+}
+interface ProductService << interface >> {
+  + getProductsByName(String): List<Product>
+  + getProductByBarcode(Long): Product
+}
+class ProductServiceImpl {
+  + ProductServiceImpl(ProductRepository, ModelMapper):
+  - modelMapper: ModelMapper
+  + getProductByBarcode(Long): Product
+  + getProductsByName(String): List<Product>
+   modelMapper: ModelMapper
+   jpaRepository: JpaRepository
+}
+
+BaseModelServiceImpl            -[#008200,dashed]-^  BaseModelService
+HealthInsurancePlanServiceImpl  -[#008200,dashed]-^  HealthInsurancePlanService
+HealthInsuranceServiceImpl      -[#008200,dashed]-^  HealthInsuranceService
+OfferService                    -[#008200,plain]-^  BaseModelService
+OfferServiceImpl                -[#000082,plain]-^  BaseModelServiceImpl
+OfferServiceImpl                -[#008200,dashed]-^  OfferService
+ProductService                  -[#008200,plain]-^  BaseModelService
+ProductServiceImpl              -[#000082,plain]-^  BaseModelServiceImpl
+ProductServiceImpl              -[#008200,dashed]-^  ProductService
+@enduml

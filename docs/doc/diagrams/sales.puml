@@ -1,0 +1,35 @@
+@startuml
+
+top to bottom direction
+skinparam linetype ortho
+
+class SaleOrder {
+  - user: User
+  - customer: Customer
+  - totalAmount: BigDecimal
+  - statusDetail: String
+  - id: Long
+  - createdDate: LocalDate
+  - saleOrderStatus: SaleOrderStatus
+  - saleOrderItems: List<SaleOrderItem>
+}
+class SaleOrderItem {
+  - totalPrice: BigDecimal
+  - id: Long
+  - offer: Offer
+  - unitaryPrice: BigDecimal
+  - orderId: Long
+  - quantity: Integer
+  - discountAmount: BigDecimal
+}
+enum SaleOrderStatus << enumeration >> {
+  + CLOSED:
+  + DELIVERED:
+  + READY_TO_BILL:
+  + CREATED:
+  + BILLED:
+}
+
+SaleOrder       "1" *-[#595959,plain]-> "saleOrderItems\n*" SaleOrderItem
+SaleOrder       "1" *-[#595959,plain]-> "saleOrderStatus\n1" SaleOrderStatus
+@enduml
