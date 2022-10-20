@@ -14,16 +14,20 @@ import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrderItem;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrderStatus;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.user.User;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.repositories.BillRepository;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.impl.BillServiceImpl;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
-import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.util.ReflectionTestUtils;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -33,23 +37,19 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest
 public class BillItemServiceTest {
 
-    @SpyBean
-    private BillService billService;
-
-    @MockBean private BillRepository billRepository;
-
+    @SpyBean private BillServiceImpl billService;
     @MockBean private TaxService taxService;
-
     @MockBean private SaleOrderService saleOrderService;
-
     @MockBean private BillItemService billItemService;
     @MockBean private UserService userService;
+    @MockBean private BillRepository billRepository;
     @MockBean private ModelMapper modelMapper;
+
+
 
     @Test
     public void getCaeTest() {
@@ -85,27 +85,6 @@ public class BillItemServiceTest {
     }
 
     @Test
-    public void calculateTaxesTest() {
-        // given
-        Long billId = 1001L;
-        BigDecimal expectedAmount = BigDecimal.valueOf(210.00).setScale(2);
-        String expectedLabel = "Iva Consumidor Final";
-        List<BillItem> items = new LinkedList<>();
-        Tax tax = new Tax(1L, TaxType.VAT, "Iva Consumidor Final", BigDecimal.valueOf(0.21));
-        BillItem item = new BillItem(1L, 1L, new Offer(), 1, "Offer 1",
-                BigDecimal.valueOf(1000), BigDecimal.ZERO, BigDecimal.valueOf(1000));
-        items.add(item);
-        given(taxService.getTaxByTaxType(TaxType.VAT)).willReturn(tax);
-        ReflectionTestUtils.setField(billService, "taxService", taxService);
-        // when
-        ReflectionTestUtils.invokeMethod(billService, "calculateTaxes", items, billId);
-        // then
-        Assertions.assertEquals(2, items.size());
-        Assertions.assertEquals(expectedAmount, items.get(1).getTotalPrice());
-        Assertions.assertEquals(expectedLabel, items.get(1).getLabelInvoice());
-    }
-
-    @Test
     public void billOrderTest() {
         // given
         BigDecimal price = BigDecimal.valueOf(1000).setScale(2);
@@ -125,7 +104,7 @@ public class BillItemServiceTest {
         Tax tax = new Tax(1L, TaxType.VAT, "Iva Consumidor Final", BigDecimal.valueOf(0.21));
         User user = new User(1L, null, null, null, null, null);
         given(saleOrderService.getById(1L)).willReturn(saleOrder);
-        given(billService.create(Mockito.any())).willReturn(bill);
+        given(billService.create(bill)).willReturn(bill);
         given(billItemService.billingItem(saleOrderItem, 1L)).willReturn(billItem);
         given(billItemService.createAll(Mockito.anyList())).willReturn(Arrays.asList(billItem, taxItem));
         given(taxService.getTaxByTaxType(TaxType.VAT)).willReturn(tax);
