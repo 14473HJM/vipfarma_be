@@ -19,13 +19,13 @@ public class HealthInsuranceController {
 
     @PostMapping("/healthInsurance")
     public ResponseEntity<HealthInsurance> create(@RequestBody HealthInsurance healthInsurance) {
-        healthInsurance = healthInsuranceService.createHealthInsurance(healthInsurance);
+        healthInsurance = healthInsuranceService.create(healthInsurance);
         return ResponseEntity.created(null).body(healthInsurance);
     }
 
     @GetMapping("/healthInsurance")
     public ResponseEntity<List<HealthInsurance>> getAll() {
-        List<HealthInsurance> healthInsuranceList = healthInsuranceService.getHealthInsurances();
+        List<HealthInsurance> healthInsuranceList = healthInsuranceService.getAll();
         return ResponseEntity.ok(healthInsuranceList);
     }
 

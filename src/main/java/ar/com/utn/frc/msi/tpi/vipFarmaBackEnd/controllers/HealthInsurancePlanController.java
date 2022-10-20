@@ -18,7 +18,7 @@ public class HealthInsurancePlanController {
 
     @PostMapping("/healthInsurancePlan")
     public ResponseEntity<HealthInsurancePlan> create(@RequestBody HealthInsurancePlan healthInsurancePlan) {
-        healthInsurancePlan = healthInsurancePlanService.createHealthInsurancePlan(healthInsurancePlan);
+        healthInsurancePlan = healthInsurancePlanService.create(healthInsurancePlan);
         return ResponseEntity.created(null).body(healthInsurancePlan);
     }
 

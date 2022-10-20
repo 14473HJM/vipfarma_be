@@ -9,19 +9,7 @@ import org.springframework.boot.test.web.server.LocalServerPort;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-class PingControllerTest {
-
-    /**
-     * This Test was performed with the full server, but can be done wothout server.
-     * More information here https://spring.io/guides/gs/testing-web/
-     */
-
-    @LocalServerPort
-    private int port;
-
-    @Autowired
-    private TestRestTemplate restTemplate;
+class PingControllerTest extends ControllersTest{
 
     @Test
     void ping() {
