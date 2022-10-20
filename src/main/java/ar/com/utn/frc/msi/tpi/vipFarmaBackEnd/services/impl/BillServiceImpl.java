@@ -28,6 +28,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class BillServiceImpl extends BaseModelServiceImpl<Bill, BillEntity> implements BillService {
 
+    private static final Long daysToDueDate = 1L;
     private final BillRepository billRepository;
 
     private final TaxService taxService;
@@ -99,6 +100,6 @@ public class BillServiceImpl extends BaseModelServiceImpl<Bill, BillEntity> impl
     }
 
     private LocalDate getDueDate() {
-        return LocalDate.now().plusDays(1L);
+        return LocalDate.now().plusDays(daysToDueDate);
     }
 }

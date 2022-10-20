@@ -52,19 +52,23 @@ public class SaleOrderServiceImpl extends BaseModelServiceImpl<SaleOrder, SaleOr
         SaleOrder savedOrder = super.create(saleOrder);
 
         // Set orderId in each items and save items
-        List<SaleOrderItem> itemsToSave = saleOrder.getSaleOrderItems();
-        for(SaleOrderItem item : itemsToSave) {
-            item.setOrderId(savedOrder.getId());
+        if(saleOrder.getSaleOrderItems() != null && !saleOrder.getSaleOrderItems().isEmpty()) {
+            List<SaleOrderItem> savedItems = saveSaleOrserItems(saleOrder.getSaleOrderItems(), savedOrder.getId());
+            // Set itemsSaved into order saved
+            savedOrder.setSaleOrderItems(savedItems);
+            // Calculate total Amount Order
+            savedOrder.setTotalAmount(this.getTotalOrder(savedItems));
         }
-        List<SaleOrderItem> savedItems = saleOrderItemService.createAll(itemsToSave);
-
-        // Set itemsSaved into order saved
-        savedOrder.setSaleOrderItems(savedItems);
-
-        // Calculate total Amount Order
-        savedOrder.setTotalAmount(this.getTotalOrder(savedItems));
 
         return savedOrder;
+    }
+
+    private List<SaleOrderItem> saveSaleOrserItems(List<SaleOrderItem> saleOrderItems, Long savedOrderId) {
+        for(SaleOrderItem item : saleOrderItems) {
+            item.setOrderId(savedOrderId);
+        }
+        List<SaleOrderItem> savedItems = saleOrderItemService.createAll(saleOrderItems);
+        return savedItems;
     }
 
     @Override
@@ -95,10 +99,19 @@ public class SaleOrderServiceImpl extends BaseModelServiceImpl<SaleOrder, SaleOr
 
     private BigDecimal getTotalItem(SaleOrderItem item) {
         BigDecimal subTotal = getSubTotalItem(item.getUnitaryPrice(), item.getQuantity());
-        return subTotal.subtract(item.getDiscountAmount());
+        if(item.getDiscountAmount() != null) {
+            return subTotal.subtract(item.getDiscountAmount());
+        } else {
+            return subTotal;
+        }
+
     }
 
     private BigDecimal getSubTotalItem(BigDecimal price, Integer quantity) {
-        return price.multiply(BigDecimal.valueOf(quantity));
+        if(price != null && quantity!= null) {
+            return price.multiply(BigDecimal.valueOf(quantity));
+        } else {
+            return price;
+        }
     }
 }
