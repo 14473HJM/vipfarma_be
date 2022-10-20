@@ -160,6 +160,12 @@ INSERT INTO sale_orders (id, created_date, sale_order_status, status_detail, tot
 VALUES (1002, CURRENT_DATE -10, 'BILLED', null, 600, 1001, 1001, 1004);
 INSERT INTO sale_orders (id, created_date, sale_order_status, status_detail, total_amount, branch_office_id, customer_id, user_id)
 VALUES (1003, CURRENT_DATE -20, 'DELIVERED', null, 750, 1001, 1001, 1004);
+INSERT INTO sale_orders (id, created_date, sale_order_status, status_detail, total_amount, branch_office_id, customer_id, user_id)
+VALUES (1004, CURRENT_DATE, 'READY_TO_BILL', null, 350, 1002, 1002, 1004);
+INSERT INTO sale_orders (id, created_date, sale_order_status, status_detail, total_amount, branch_office_id, customer_id, user_id)
+VALUES (1005, CURRENT_DATE -10, 'READY_TO_BILL', null, 680, 1001, 1002, 1004);
+INSERT INTO sale_orders (id, created_date, sale_order_status, status_detail, total_amount, branch_office_id, customer_id, user_id)
+VALUES (1006, CURRENT_DATE -20, 'READY_TO_BILL', null, 1250, 1001, 1001, 1003);
 
 INSERT INTO taxes (id, label_invoice, tax_type, tax_value)
 VALUES (1001, 'IVA Consumidor Final', 'VAT', CONVERT('0.21',DECIMAL(19,2)));
