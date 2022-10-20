@@ -21,7 +21,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.util.ReflectionTestUtils;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -31,6 +33,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class BillItemServiceTest {
@@ -45,7 +48,7 @@ public class BillItemServiceTest {
     @MockBean private SaleOrderService saleOrderService;
 
     @MockBean private BillItemService billItemService;
-
+    @MockBean private UserService userService;
     @MockBean private ModelMapper modelMapper;
 
     @Test
@@ -93,6 +96,7 @@ public class BillItemServiceTest {
                 BigDecimal.valueOf(1000), BigDecimal.ZERO, BigDecimal.valueOf(1000));
         items.add(item);
         given(taxService.getTaxByTaxType(TaxType.VAT)).willReturn(tax);
+        ReflectionTestUtils.setField(billService, "taxService", taxService);
         // when
         ReflectionTestUtils.invokeMethod(billService, "calculateTaxes", items, billId);
         // then
@@ -115,16 +119,21 @@ public class BillItemServiceTest {
                 SaleOrderStatus.READY_TO_BILL, null, Arrays.asList(saleOrderItem), null);
         BillItem billItem = new BillItem(1L, 1L, new Offer(), 1, "Offer 1",
                 BigDecimal.valueOf(1000), BigDecimal.ZERO, BigDecimal.valueOf(1000));
-        Bill bill = new Bill(1L, null, new Customer(), 1L,  LocalDate.now(), null, null, null);
+        BillItem taxItem = new BillItem(1L, 1L, new Offer(), 1, "Iva",
+                null, null, BigDecimal.valueOf(210));
+        Bill bill = new Bill(1L, null, new Customer(), 1L,  LocalDate.now(), null, null, null, null);
         Tax tax = new Tax(1L, TaxType.VAT, "Iva Consumidor Final", BigDecimal.valueOf(0.21));
+        User user = new User(1L, null, null, null, null, null);
         given(saleOrderService.getById(1L)).willReturn(saleOrder);
         given(billService.create(Mockito.any())).willReturn(bill);
         given(billItemService.billingItem(saleOrderItem, 1L)).willReturn(billItem);
-        given(billItemService.createAll(Mockito.anyList())).willReturn(Arrays.asList(billItem));
+        given(billItemService.createAll(Mockito.anyList())).willReturn(Arrays.asList(billItem, taxItem));
         given(taxService.getTaxByTaxType(TaxType.VAT)).willReturn(tax);
+        given(userService.getById(1L)).willReturn(user);
         // when
         bill = billService.billOrder(1L, 1L);
         // then
         Assertions.assertNotNull(bill.getItems());
+        Assertions.assertEquals(BigDecimal.valueOf(1210).setScale(2), bill.getTotalAmount());
     }
 }

@@ -3,11 +3,13 @@ package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.controllers;
 
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.billing.Bill;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.common.BranchOffice;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.user.UserLogged;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.BillService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -23,8 +25,9 @@ public class BillController {
     }
 
     @PostMapping("/billing/order/{id}")
-    public ResponseEntity<Bill> billOrder(@PathVariable Long id) {
-        Bill bill = billService.billOrder(id, null);
+    public ResponseEntity<Bill> billOrder(@PathVariable Long id,
+                                          @Valid @RequestBody UserLogged userLogged) {
+        Bill bill = billService.billOrder(id, userLogged.getId());
         return ResponseEntity.created(null).body(bill);
     }
 
