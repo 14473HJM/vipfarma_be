@@ -12,6 +12,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -32,5 +33,11 @@ public class CustomerController {
     public ResponseEntity<Customer> getById(@PathVariable Long id) {
         Customer customer = customerService.getById(id);
         return ResponseEntity.ok(customer);
+    }
+
+    @DeleteMapping("/customers/{id}")
+    public void deleteById(@PathVariable Long id) {
+        customerService.deleteById(id);
+
     }
 }

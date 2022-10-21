@@ -15,4 +15,6 @@ public interface BaseModelService<M, E> {
 
     M update(M model);
 
+    void deleteById(Long id);
+
 }
