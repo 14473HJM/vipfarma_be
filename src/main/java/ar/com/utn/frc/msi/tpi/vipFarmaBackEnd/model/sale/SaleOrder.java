@@ -1,6 +1,7 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale;
 
 
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.common.BranchOffice;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.customer.Customer;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.user.User;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class SaleOrder {
     private Long id;
     private User user;
     private Customer customer;
+    private BranchOffice branchOfficeId;
     private LocalDate createdDate;
     private SaleOrderStatus saleOrderStatus;
     private String statusDetail;
