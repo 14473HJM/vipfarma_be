@@ -35,4 +35,13 @@ public class HealthInsurancePlanServiceImpl extends BaseModelServiceImpl<HealthI
         return this.modelMapper;
     }
 
+    @Override
+    public List<HealthInsurancePlan> getByInsurance(Long insuranceId) {
+        List<HealthInsurancePlanEntity> plans =
+                healthInsurancePlanRepository.findByHealthInsuranceId(insuranceId);
+
+        return plans.stream()
+                .map(entity -> getModelMapper().map(entity, HealthInsurancePlan.class))
+                .collect(Collectors.toList());
+    }
 }
