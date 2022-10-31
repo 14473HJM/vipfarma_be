@@ -33,4 +33,11 @@ public class HealthInsurancePlanController {
         HealthInsurancePlan healthInsurancePlan = healthInsurancePlanService.getById(id);
         return ResponseEntity.ok(healthInsurancePlan);
     }
+
+    @GetMapping("/healthInsurancePlan/insurance/{id}")
+    public ResponseEntity<List<HealthInsurancePlan>> getByInsuranceId(@PathVariable Long id) {
+        List<HealthInsurancePlan> healthInsurancePlans = healthInsurancePlanService.getByInsurance(id);
+        return ResponseEntity.ok(healthInsurancePlans);
+    }
+
 }
