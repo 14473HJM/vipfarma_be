@@ -94,7 +94,7 @@ public class BillItemServiceTest {
                 false, BigDecimal.valueOf(1000).setScale(2));
         Offer offer = new Offer(1L, product, healthInsurance, healthInsurancePlan, null, null, price);
         SaleOrderItem saleOrderItem = new SaleOrderItem(1L, 1L, offer, 1, price, null, null);
-        SaleOrder saleOrder = new SaleOrder(1L, new User(), new Customer(), LocalDate.now(),
+        SaleOrder saleOrder = new SaleOrder(1L, new User(), new Customer(), null, LocalDate.now(),
                 SaleOrderStatus.READY_TO_BILL, null, Arrays.asList(saleOrderItem), null);
         BillItem billItem = new BillItem(1L, 1L, new Offer(), 1, "Offer 1",
                 BigDecimal.valueOf(1000), BigDecimal.ZERO, BigDecimal.valueOf(1000));
