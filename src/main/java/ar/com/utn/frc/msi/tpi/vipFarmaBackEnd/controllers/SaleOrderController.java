@@ -15,6 +15,7 @@ import java.time.ZonedDateTime;
 import java.util.LinkedList;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
 public class SaleOrderController {

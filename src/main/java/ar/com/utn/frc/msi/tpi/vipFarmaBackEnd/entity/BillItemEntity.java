@@ -20,7 +20,7 @@ public class BillItemEntity {
 
     @OneToOne
     @JoinColumn(name = "offerId", referencedColumnName = "id")
-    private OfferEntity offerId;
+    private OfferEntity offer;
 
     private Integer quantity;
     private BigDecimal unitaryPrice;
