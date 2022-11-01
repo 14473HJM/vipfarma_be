@@ -15,7 +15,7 @@ import java.util.List;
 
 @Data
 @Entity(name = "bills")
-public class BillEntity {
+public class BillEntity extends Deleteable{
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

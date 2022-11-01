@@ -1,5 +1,6 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.impl;
 
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.Deleteable;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.BaseModelService;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -10,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class BaseModelServiceImpl<M, E> implements BaseModelService<M, E> {
+public abstract class BaseModelServiceImpl<M, E extends Deleteable> implements BaseModelService<M, E> {
 
     private final Class<M> modelClass;
     private final ParameterizedType modelParameterizedType;
@@ -36,24 +37,27 @@ public abstract class BaseModelServiceImpl<M, E> implements BaseModelService<M, 
          * if processing a unique primary element
          */
         List<E> list = getJpaRepository().findAllById(Arrays.asList(id));
+        list = list.stream().filter(entity -> entity.getIsDeleted().equals(false)).collect(Collectors.toList());
         if(!list.isEmpty()) {
             return getModelMapper().map(list.get(0), modelClass);
         } else {
             throw new EntityNotFoundException(String.format("%s id %s not found", modelClass.getName(), id));
         }
-        /*
-        Optional<E> entity = getJpaRepository().findById(id);
-        if(entity.isEmpty()) {
-            throw new EntityNotFoundException(String.format("%s id %s not found", modelClass.getName(), id));
-        } else {
-            return getModelMapper().map(entity.get(), modelClass);
-        }
-        */
+    }
+
+    @Override
+    public List<M> getAllByIds(List<Long> ids) {
+        List<E> entityList = getJpaRepository().findAllById(ids);
+        entityList = entityList.stream().filter(entity -> entity.getIsDeleted().equals(false)).collect(Collectors.toList());
+        return entityList.stream()
+                .map(entity -> getModelMapper().map(entity, modelClass))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<M> getAll() {
         List<E> entityList = getJpaRepository().findAll();
+        entityList = entityList.stream().filter(entity -> entity.getIsDeleted().equals(false)).collect(Collectors.toList());
         return entityList.stream()
                 .map(entity -> getModelMapper().map(entity, modelClass))
                 .collect(Collectors.toList());
@@ -85,10 +89,10 @@ public abstract class BaseModelServiceImpl<M, E> implements BaseModelService<M, 
         return getModelMapper().map(entity, modelClass);
     }
 
-    public void deleteById(Long id){
-        if(getJpaRepository().existsById(id)){
-            getJpaRepository().deleteById(id);
-        }
-
+    @Override
+    public void delete(M model){
+        E entity = getModelMapper().map(model, entityClass);
+        entity.delete();
+        getJpaRepository().save(entity);
     }
 }

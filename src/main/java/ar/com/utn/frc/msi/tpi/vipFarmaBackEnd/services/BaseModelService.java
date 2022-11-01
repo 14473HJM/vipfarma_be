@@ -1,13 +1,17 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services;
 
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.Deleteable;
+
 import javax.persistence.Entity;
 import java.util.List;
 
-public interface BaseModelService<M, E> {
+public interface BaseModelService<M, E extends Deleteable> {
 
     M getById(Long id);
 
     List<M> getAll();
+
+    List<M> getAllByIds(List<Long> ids);
 
     M create(M model);
 
@@ -15,6 +19,6 @@ public interface BaseModelService<M, E> {
 
     M update(M model);
 
-    void deleteById(Long id);
+    void delete(M model);
 
 }

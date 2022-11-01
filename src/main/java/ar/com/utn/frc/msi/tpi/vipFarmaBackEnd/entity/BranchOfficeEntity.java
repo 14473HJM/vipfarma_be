@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity(name = "branchOffice")
-public class BranchOfficeEntity {
+public class BranchOfficeEntity extends Deleteable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

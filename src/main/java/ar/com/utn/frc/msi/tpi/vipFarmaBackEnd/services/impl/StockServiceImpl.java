@@ -84,6 +84,16 @@ public class StockServiceImpl extends BaseModelServiceImpl<Stock, StockEntity> i
         return stocksToReserved;
     }
 
+    @Override
+    public void inactivateStocks(List<Stock> stocks) {
+        stocks.forEach(stock -> {
+            stock.setAvailableStock(0);
+            stock.setStockStatus(StockStatus.INACTIVE);
+            stock.setEndDate(LocalDate.now());
+            update(stock);
+        });
+    }
+
     private Stock copyStockToReserve(Integer quantity, Stock stock) {
         Stock reserveStock = new Stock();
         reserveStock.setAvailableStock(quantity);

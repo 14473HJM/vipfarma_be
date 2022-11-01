@@ -10,14 +10,13 @@ import java.util.List;
 
 @Data
 @Entity(name = "lockers")
-public class LockerEntity {
+public class LockerEntity extends Deleteable {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "rackId")
-    private RackEntity rack;
+    @JoinColumn(name = "rackId", referencedColumnName = "id")
+    private Long rackId;
 
     @OneToOne
     @JoinColumn(name = "productId", referencedColumnName = "id")

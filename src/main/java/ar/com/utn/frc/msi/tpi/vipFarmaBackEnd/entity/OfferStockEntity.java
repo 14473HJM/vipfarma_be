@@ -20,5 +20,4 @@ public class OfferStockEntity {
     private String discountType;
     private BigDecimal discountValue;
     private Long stock;
-
 }

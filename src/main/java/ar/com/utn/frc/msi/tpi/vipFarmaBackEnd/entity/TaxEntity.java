@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @Data
 @Entity(name = "taxes")
-public class TaxEntity {
+public class TaxEntity extends Deleteable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -19,5 +19,4 @@ public class TaxEntity {
     private TaxType taxType;
     private String labelInvoice;
     private BigDecimal taxValue;
-
 }

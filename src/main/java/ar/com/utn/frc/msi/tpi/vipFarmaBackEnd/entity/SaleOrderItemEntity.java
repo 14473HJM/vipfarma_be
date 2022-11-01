@@ -8,7 +8,7 @@ import java.util.List;
 
 @Data
 @Entity(name = "saleOrderItems")
-public class SaleOrderItemEntity {
+public class SaleOrderItemEntity extends Deleteable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -25,10 +25,10 @@ public class SaleOrderItemEntity {
     private BigDecimal discountAmount;
     private BigDecimal totalPrice;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "orderItemStocks",
-            joinColumns = @JoinColumn(name = "saleOrderItemId"),
-            inverseJoinColumns = @JoinColumn(name = "stockId"))
+            joinColumns = @JoinColumn(name = "saleOrderItemId", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "stockId", referencedColumnName = "id"))
     private List<StockEntity> stocks;
 }

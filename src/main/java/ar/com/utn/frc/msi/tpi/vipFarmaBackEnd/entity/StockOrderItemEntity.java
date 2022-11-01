@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Data
 @Entity(name = "stockOrderItem")
-public class StockOrderItemEntity {
+public class StockOrderItemEntity extends Deleteable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
