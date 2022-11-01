@@ -4,6 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @Entity(name = "saleOrderItems")
@@ -24,7 +25,10 @@ public class SaleOrderItemEntity {
     private BigDecimal discountAmount;
     private BigDecimal totalPrice;
 
-    @OneToOne
-    @JoinColumn(name = "stockId", referencedColumnName = "id")
-    private StockEntity stock;
+    @ManyToMany
+    @JoinTable(
+            name = "orderItemStocks",
+            joinColumns = @JoinColumn(name = "saleOrderItemId"),
+            inverseJoinColumns = @JoinColumn(name = "stockId"))
+    private List<StockEntity> stocks;
 }

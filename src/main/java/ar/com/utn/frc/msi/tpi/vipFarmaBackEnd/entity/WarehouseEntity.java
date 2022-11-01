@@ -1,6 +1,8 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 import java.util.List;
@@ -20,5 +22,6 @@ public class WarehouseEntity {
     private BranchOfficeEntity branchOffice;
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "warehouse")
+    @Fetch(FetchMode.SELECT)
     private List<RackEntity> racks;
 }

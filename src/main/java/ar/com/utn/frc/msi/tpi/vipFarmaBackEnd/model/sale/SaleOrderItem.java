@@ -8,6 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,5 +22,5 @@ public class SaleOrderItem {
     private BigDecimal unitaryPrice;
     private BigDecimal discountAmount;
     private BigDecimal totalPrice;
-    private Stock stock;
+    private List<Stock> stocks;
 }

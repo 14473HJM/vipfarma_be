@@ -2,6 +2,7 @@ package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.impl;
 
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.BranchOfficeEntity;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.SaleOrderEntity;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.Product;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrder;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrderItem;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrderStatus;
@@ -9,13 +10,14 @@ import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.stock.Stock;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.repositories.SaleOrderRepository;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.SaleOrderItemService;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.SaleOrderService;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.StockService;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -31,6 +33,8 @@ public class SaleOrderServiceImpl extends BaseModelServiceImpl<SaleOrder, SaleOr
 
     private final SaleOrderRepository saleOrderRepository;
 
+    private final StockService stockService;
+
     private final ModelMapper modelMapper;
 
     @Override
@@ -44,6 +48,7 @@ public class SaleOrderServiceImpl extends BaseModelServiceImpl<SaleOrder, SaleOr
     }
 
     @Override
+    @Transactional
     public SaleOrder create(SaleOrder saleOrder) {
 
         // Set status to CREATED, creation date and save Order
@@ -53,7 +58,10 @@ public class SaleOrderServiceImpl extends BaseModelServiceImpl<SaleOrder, SaleOr
 
         // Set orderId in each items and save items
         if(saleOrder.getSaleOrderItems() != null && !saleOrder.getSaleOrderItems().isEmpty()) {
-            List<SaleOrderItem> savedItems = saveSaleOrserItems(saleOrder.getSaleOrderItems(), savedOrder.getId());
+            List<SaleOrderItem> savedItems = saveSaleOrderItems(
+                    saleOrder.getSaleOrderItems(),
+                    savedOrder.getId(),
+                    saleOrder.getBranchOfficeId().getId());
             // Set itemsSaved into order saved
             savedOrder.setSaleOrderItems(savedItems);
             // Calculate total Amount Order
@@ -63,9 +71,13 @@ public class SaleOrderServiceImpl extends BaseModelServiceImpl<SaleOrder, SaleOr
         return savedOrder;
     }
 
-    private List<SaleOrderItem> saveSaleOrserItems(List<SaleOrderItem> saleOrderItems, Long savedOrderId) {
+
+    private List<SaleOrderItem> saveSaleOrderItems(List<SaleOrderItem> saleOrderItems, Long savedOrderId, Long branchOfficeId) {
         for(SaleOrderItem item : saleOrderItems) {
             item.setOrderId(savedOrderId);
+            Product product = item.getOffer().getProduct();
+            List<Stock> stocks = stockService.reserveStock(product.getId(), branchOfficeId, item.getQuantity());
+            item.setStocks(stocks);
         }
         List<SaleOrderItem> savedItems = saleOrderItemService.createAll(saleOrderItems);
         return savedItems;

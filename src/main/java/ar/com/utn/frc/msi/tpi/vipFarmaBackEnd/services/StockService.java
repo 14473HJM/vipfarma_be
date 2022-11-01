@@ -12,5 +12,5 @@ public interface StockService extends BaseModelService<Stock, StockEntity> {
 
     List<Stock> getStockByProductAndBranchOffice(Long productId, Long branchOfficeId);
 
-    Stock reserveStock(Product product);
+    List<Stock> reserveStock(Long productId, Long branchOfficeId, Integer quantity);
 }
