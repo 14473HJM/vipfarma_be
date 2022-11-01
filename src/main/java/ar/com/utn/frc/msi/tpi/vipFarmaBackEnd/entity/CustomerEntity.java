@@ -10,7 +10,7 @@ import javax.persistence.*;
 
 @Data
 @Entity(name = "customers")
-public class CustomerEntity {
+public class CustomerEntity extends Deleteable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -28,7 +28,5 @@ public class CustomerEntity {
     @OneToOne
     @JoinColumn(name = "healthInsurancePlanId")
     private HealthInsurancePlanEntity healthInsurancePlanId;
-
-
 
 }

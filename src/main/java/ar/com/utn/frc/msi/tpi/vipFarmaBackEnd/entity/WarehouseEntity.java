@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Entity(name = "warehouses")
-public class WarehouseEntity {
+public class WarehouseEntity extends Deleteable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -21,7 +21,7 @@ public class WarehouseEntity {
     @JoinColumn(name = "branchOfficeId", referencedColumnName = "id")
     private BranchOfficeEntity branchOffice;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "warehouse")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "warehouseId")
     @Fetch(FetchMode.SELECT)
     private List<RackEntity> racks;
 }

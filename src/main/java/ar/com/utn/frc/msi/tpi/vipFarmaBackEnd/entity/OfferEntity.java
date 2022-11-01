@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 @Data
 @Entity(name = "offers")
-public class OfferEntity {
+public class OfferEntity extends Deleteable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

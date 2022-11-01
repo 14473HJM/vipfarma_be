@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 @Data
 @Entity(name = "stocks")
-public class StockEntity {
+public class StockEntity extends Deleteable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

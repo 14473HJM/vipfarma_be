@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 @Data
 @Entity(name = "stockOrder")
-public class StockOrderEntity {
+public class StockOrderEntity extends Deleteable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
