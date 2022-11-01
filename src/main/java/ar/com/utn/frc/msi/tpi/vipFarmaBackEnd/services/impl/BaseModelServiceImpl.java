@@ -3,9 +3,11 @@ package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.impl;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.Deleteable;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.BaseModelService;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.internal.util.Assert;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.persistence.EntityNotFoundException;
+import javax.validation.constraints.NotNull;
 import java.lang.reflect.ParameterizedType;
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +39,9 @@ public abstract class BaseModelServiceImpl<M, E extends Deleteable> implements B
          * if processing a unique primary element
          */
         List<E> list = getJpaRepository().findAllById(Arrays.asList(id));
-        list = list.stream().filter(entity -> entity.getIsDeleted().equals(false)).collect(Collectors.toList());
+        list = list.stream().filter(
+                entity -> (entity.getIsDeleted() == null || entity.equals(false)))
+                .collect(Collectors.toList());
         if(!list.isEmpty()) {
             return getModelMapper().map(list.get(0), modelClass);
         } else {
@@ -48,7 +52,9 @@ public abstract class BaseModelServiceImpl<M, E extends Deleteable> implements B
     @Override
     public List<M> getAllByIds(List<Long> ids) {
         List<E> entityList = getJpaRepository().findAllById(ids);
-        entityList = entityList.stream().filter(entity -> entity.getIsDeleted().equals(false)).collect(Collectors.toList());
+        entityList = entityList.stream().filter(
+                        entity -> (entity.getIsDeleted() == null || entity.equals(false)))
+                .collect(Collectors.toList());
         return entityList.stream()
                 .map(entity -> getModelMapper().map(entity, modelClass))
                 .collect(Collectors.toList());
@@ -57,7 +63,9 @@ public abstract class BaseModelServiceImpl<M, E extends Deleteable> implements B
     @Override
     public List<M> getAll() {
         List<E> entityList = getJpaRepository().findAll();
-        entityList = entityList.stream().filter(entity -> entity.getIsDeleted().equals(false)).collect(Collectors.toList());
+        entityList = entityList.stream().filter(
+                        entity -> (entity.getIsDeleted() == null || entity.equals(false)))
+                .collect(Collectors.toList());
         return entityList.stream()
                 .map(entity -> getModelMapper().map(entity, modelClass))
                 .collect(Collectors.toList());
