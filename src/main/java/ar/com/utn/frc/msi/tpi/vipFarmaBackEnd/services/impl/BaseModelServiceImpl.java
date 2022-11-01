@@ -84,4 +84,11 @@ public abstract class BaseModelServiceImpl<M, E> implements BaseModelService<M, 
         entity = getJpaRepository().save(entity);
         return getModelMapper().map(entity, modelClass);
     }
+
+    public void deleteById(Long id){
+        if(getJpaRepository().existsById(id)){
+            getJpaRepository().deleteById(id);
+        }
+
+    }
 }
