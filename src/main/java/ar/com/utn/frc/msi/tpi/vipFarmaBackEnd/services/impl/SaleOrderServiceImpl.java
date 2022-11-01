@@ -96,6 +96,15 @@ public class SaleOrderServiceImpl extends BaseModelServiceImpl<SaleOrder, SaleOr
     @Override
     public SaleOrder changeStatus(Long id, SaleOrderStatus saleOrderStatus) {
         SaleOrder saleOrder = this.getById(id);
+        if(saleOrderStatus == SaleOrderStatus.DELIVERED && saleOrder.getSaleOrderStatus() == SaleOrderStatus.BILLED) {
+            saleOrder.getSaleOrderItems().forEach(
+                    item -> {
+                        List<Stock> stocks = stockService.getAllByIds(
+                                item.getStocks().stream().map(stock -> stock.getId())
+                                        .collect(Collectors.toList()));
+                        stockService.inactivateStocks(stocks);
+                    });
+        }
         saleOrder.setSaleOrderStatus(saleOrderStatus);
         saleOrder = this.update(saleOrder);
         return saleOrder;

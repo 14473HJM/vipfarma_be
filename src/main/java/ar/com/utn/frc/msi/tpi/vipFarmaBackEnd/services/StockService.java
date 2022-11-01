@@ -13,4 +13,6 @@ public interface StockService extends BaseModelService<Stock, StockEntity> {
     List<Stock> getStockByProductAndBranchOffice(Long productId, Long branchOfficeId);
 
     List<Stock> reserveStock(Long productId, Long branchOfficeId, Integer quantity);
+
+    void inactivateStocks(List<Stock> stocks);
 }
