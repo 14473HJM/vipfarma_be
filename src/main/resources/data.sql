@@ -87,6 +87,25 @@ INSERT INTO stocks (id, available_stock, created_date, due_date, end_date, initi
 VALUES (1011, 1000, CURRENT_DATE -10, CURRENT_DATE +600, null, 1000, 'ACTIVE', 1008, 1008);
 INSERT INTO stocks (id, available_stock, created_date, due_date, end_date, initial_stock, stock_status, locker_id, product_id)
 VALUES (1012, 1000, CURRENT_DATE -10, CURRENT_DATE +600, null, 1000, 'ACTIVE', 1009, 1009);
+INSERT INTO stocks (id, available_stock, created_date, due_date, end_date, initial_stock, stock_status, locker_id, product_id)
+VALUES (1013, 1, CURRENT_DATE -100, CURRENT_DATE + 100, null, 1, 'RESERVED', 1001, 1001);
+INSERT INTO stocks (id, available_stock, created_date, due_date, end_date, initial_stock, stock_status, locker_id, product_id)
+VALUES (1014, 1, CURRENT_DATE -50, CURRENT_DATE + 200, null, 1, 'RESERVED', 1002, 1002);
+INSERT INTO stocks (id, available_stock, created_date, due_date, end_date, initial_stock, stock_status, locker_id, product_id)
+VALUES (1015, 1, CURRENT_DATE -100, CURRENT_DATE + 100, null, 1, 'RESERVED', 1001, 1001);
+INSERT INTO stocks (id, available_stock, created_date, due_date, end_date, initial_stock, stock_status, locker_id, product_id)
+VALUES (1016, 1, CURRENT_DATE -50, CURRENT_DATE + 200, null, 1, 'RESERVED', 1002, 1002);
+INSERT INTO stocks (id, available_stock, created_date, due_date, end_date, initial_stock, stock_status, locker_id, product_id)
+VALUES (1017, 1, CURRENT_DATE -50, CURRENT_DATE + 200, null, 1, 'RESERVED', 1003, 1003);
+INSERT INTO stocks (id, available_stock, created_date, due_date, end_date, initial_stock, stock_status, locker_id, product_id)
+VALUES (1018, 1, CURRENT_DATE -100, CURRENT_DATE + 100, null, 1, 'INACTIVE', 1001, 1001);
+INSERT INTO stocks (id, available_stock, created_date, due_date, end_date, initial_stock, stock_status, locker_id, product_id)
+VALUES (1019, 1, CURRENT_DATE -50, CURRENT_DATE + 200, null, 1, 'INACTIVE', 1002, 1002);
+INSERT INTO stocks (id, available_stock, created_date, due_date, end_date, initial_stock, stock_status, locker_id, product_id)
+VALUES (1020, 1, CURRENT_DATE -50, CURRENT_DATE + 200, null, 1, 'INACTIVE', 1003, 1003);
+INSERT INTO stocks (id, available_stock, created_date, due_date, end_date, initial_stock, stock_status, locker_id, product_id)
+VALUES (1021, 1, CURRENT_DATE -100, CURRENT_DATE + 30, null, 1, 'INACTIVE', 1004, 1004);
+
 
 INSERT INTO offers (id, discount_type, discount_value, health_insurance_id, health_insurance_plan_id, product_id)
 VALUES (1001, null, null, null, null, 1001);
@@ -188,6 +207,26 @@ INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, tota
 VALUES (1008, null, 1, 1003, 300, 300, 1003);
 INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
 VALUES (1009, null, 1, 1003, 150, 150, 1004);
+
+INSERT INTO order_item_stocks (sale_order_item_id, stock_id)
+VALUES (1001, 1013);
+INSERT INTO order_item_stocks (sale_order_item_id, stock_id)
+VALUES (1002, 1014);
+INSERT INTO order_item_stocks (sale_order_item_id, stock_id)
+VALUES (1003, 1015);
+INSERT INTO order_item_stocks (sale_order_item_id, stock_id)
+VALUES (1004, 1016);
+INSERT INTO order_item_stocks (sale_order_item_id, stock_id)
+VALUES (1005, 1017);
+INSERT INTO order_item_stocks (sale_order_item_id, stock_id)
+VALUES (1006, 1018);
+INSERT INTO order_item_stocks (sale_order_item_id, stock_id)
+VALUES (1007, 1019);
+INSERT INTO order_item_stocks (sale_order_item_id, stock_id)
+VALUES (1008, 1020);
+INSERT INTO order_item_stocks (sale_order_item_id, stock_id)
+VALUES (1009, 1021);
+
 
 INSERT INTO bills (id, cae, created_date, due_date, customer_id, sale_order_id, user_id)
 VALUES (1001, '1234567891234567890', CURRENT_DATE, CURRENT_DATE +1, 1001, 1002, 1001);

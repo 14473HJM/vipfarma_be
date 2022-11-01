@@ -76,6 +76,12 @@ public class OfferServiceImpl extends BaseModelServiceImpl<Offer, OfferEntity> i
         return getOfferStockList(offerStockEntityList);
     }
 
+    @Override
+    public List<OfferStock> getOfferStockByBranchOffice(Long branchOfficeId) {
+        List<OfferStockEntity> offerStockEntityList = offerRepository.getOfferStockByBranchOffice(branchOfficeId);
+        return getOfferStockList(offerStockEntityList);
+    }
+
     private List<OfferStock> getOfferStockList(List<OfferStockEntity> offerStockEntityList) {
         List<OfferStock> offerStockList = offerStockEntityList.stream()
                 .map(entity -> modelMapper.map(entity, OfferStock.class))
