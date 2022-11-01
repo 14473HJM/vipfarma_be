@@ -7,7 +7,9 @@ import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.OfferService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
@@ -41,8 +43,18 @@ public class OfferController {
     }
 
     @GetMapping("/stocks/offers")
-    public ResponseEntity<List<OfferStock>> getAllWithStock() {
-        List<OfferStock> offerList = offerService.getAllOffersWithStock();
+    public ResponseEntity<List<OfferStock>> getAllWithStock(@RequestParam(required = false) Long branchOfficeId,
+                                                            @RequestParam(required = false) Long productId) {
+        List<OfferStock> offerList;
+        if(productId == null && branchOfficeId == null) {
+            offerList = offerService.getAllOffersWithStock();
+        } else if(productId != null && branchOfficeId == null) {
+            offerList = offerService.getOfferStockByProductId(productId);
+        } else if(productId != null && branchOfficeId != null) {
+            offerList = offerService.getOfferStockByProductIdAndBranchOffice(productId, branchOfficeId);
+        } else {
+            offerList = offerService.getOfferStockByBranchOffice(branchOfficeId);
+        }
         return ResponseEntity.ok(offerList);
     }
 }

@@ -43,4 +43,13 @@ public interface OfferRepository extends JpaRepository<OfferEntity, Long> {
             "AND O.id = :id " +
             "GROUP BY O.id, O.product, O.discountType, O.discountValue, O.healthInsurance, O.healthInsurancePlan")
     OfferStockEntity getOfferByIdWithStock(Long id);
+
+    @Query("SELECT new ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.OfferStockEntity(" +
+            "O.id, O.product, O.healthInsurance, O.healthInsurancePlan, O.discountType, O.discountValue, SUM(L.currentStock)) " +
+            "FROM offers O, lockers L " +
+            "WHERE O.product = L.product " +
+            "AND L.branchOfficeId = :branchOfficeId " +
+            "GROUP BY O.id, O.product, O.discountType, O.discountValue, O.healthInsurance, O.healthInsurancePlan")
+    List<OfferStockEntity> getOfferStockByBranchOffice(Long branchOfficeId);
+
 }

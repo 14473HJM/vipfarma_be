@@ -23,4 +23,8 @@ public class SaleOrderItemEntity {
     private BigDecimal unitaryPrice;
     private BigDecimal discountAmount;
     private BigDecimal totalPrice;
+
+    @OneToOne
+    @JoinColumn(name = "stockId", referencedColumnName = "id")
+    private StockEntity stock;
 }

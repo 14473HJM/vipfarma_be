@@ -1,6 +1,7 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.impl;
 
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.StockEntity;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.Product;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.stock.Stock;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.repositories.StockRepository;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.StockService;
@@ -44,5 +45,10 @@ public class StockServiceImpl extends BaseModelServiceImpl<Stock, StockEntity> i
         return stockEntityList.stream()
                 .map(entity -> getModelMapper().map(entity, Stock.class))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public Stock reserveStock(Product product) {
+        return null;
     }
 }
