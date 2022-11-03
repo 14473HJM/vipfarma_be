@@ -6,5 +6,5 @@ import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.BaseModelService;
 
 public interface BillService extends BaseModelService<Bill, BillEntity> {
 
-    Bill billOrder(Long id, Long userId);
+    Bill billOrder(Long id, Long userId, Boolean preview);
 }

@@ -27,8 +27,9 @@ public class BillController {
 
     @PostMapping("/billing/order/{id}")
     public ResponseEntity<Bill> billOrder(@PathVariable Long id,
-                                          @Valid @RequestBody UserLogged userLogged) {
-        Bill bill = billService.billOrder(id, userLogged.getId());
+                                          @Valid @RequestBody UserLogged userLogged,
+                                          @RequestParam Boolean preview) {
+        Bill bill = billService.billOrder(id, userLogged.getId(), preview);
         return ResponseEntity.created(null).body(bill);
     }
 
