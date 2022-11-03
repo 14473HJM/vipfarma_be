@@ -91,10 +91,21 @@ public abstract class BaseModelServiceImpl<M, E extends Deleteable> implements B
 
 
     @Override
-    public M update(Object model) {
+    public M update(M model) {
         E entity = getModelMapper().map(model, entityClass);
         entity = getJpaRepository().save(entity);
         return getModelMapper().map(entity, modelClass);
+    }
+
+    @Override
+    public List<M>updateAll(List<M> modelList) {
+        List<E> entityList = modelList.stream()
+                .map(model -> getModelMapper().map(model, entityClass))
+                .collect(Collectors.toList());
+        entityList = getJpaRepository().saveAll(entityList);
+        return entityList.stream()
+                .map(entity -> getModelMapper().map(entity, modelClass))
+                .collect(Collectors.toList());
     }
 
     @Override
