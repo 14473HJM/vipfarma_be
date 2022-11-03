@@ -13,7 +13,8 @@ public enum StockOrderItemStatus {
     NO_RECEIVED(false, true),
     COMPLETELY_RECEIVED(false, false),
     PARTIALLY_RECEIVED(false, false),
-    STORED(false, true);
+    STORED(false, true),
+    CANCELED(false, true);
 
     private Boolean isInitialStatus;
     private Boolean isFinalStatus;
