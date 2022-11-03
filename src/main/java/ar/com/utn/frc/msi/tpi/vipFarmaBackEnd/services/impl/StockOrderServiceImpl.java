@@ -117,19 +117,19 @@ public class StockOrderServiceImpl extends BaseModelServiceImpl<StockOrder, Stoc
                         item.setStockOrderItemStatus(StockOrderItemStatus.PENDING);
                         stockOrderItemService.update(item);
                     });
-        } else if (stockOrderStatus == StockOrderStatus.PENDING_DELIVERY && stockOrder.getStockOrderStatus() == StockOrderStatus.CANCELED) {
+        } else if (stockOrderStatus == StockOrderStatus.CANCELED && stockOrder.getStockOrderStatus() == StockOrderStatus.PENDING_DELIVERY) {
             stockOrder.getStockOrderItems().forEach(
                     item -> {
                         item.setStockOrderItemStatus(StockOrderItemStatus.CANCELED);
                         stockOrderItemService.update(item);
                     });
-        } else if (stockOrderStatus == StockOrderStatus.PENDING_DELIVERY && stockOrder.getStockOrderStatus() == StockOrderStatus.REJECTED) {
+        } else if (stockOrderStatus == StockOrderStatus.REJECTED && stockOrder.getStockOrderStatus() == StockOrderStatus.PENDING_DELIVERY) {
             stockOrder.getStockOrderItems().forEach(
                     item -> {
                         item.setStockOrderItemStatus(StockOrderItemStatus.RETURNED);
                         stockOrderItemService.update(item);
                     });
-        } else if (stockOrderStatus == StockOrderStatus.PENDING_DELIVERY && stockOrder.getStockOrderStatus() == StockOrderStatus.RECEIVED) {
+        } else if (stockOrderStatus == StockOrderStatus.RECEIVED && stockOrder.getStockOrderStatus() == StockOrderStatus.PENDING_DELIVERY) {
             stockOrder.getStockOrderItems().forEach(
                     item -> {
                         if(item.getStockOrderItemStatus() == StockOrderItemStatus.CREATED ||
