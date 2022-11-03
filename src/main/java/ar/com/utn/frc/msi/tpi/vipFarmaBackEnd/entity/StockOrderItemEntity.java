@@ -11,7 +11,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Entity(name = "stockOrderItem")
+@Entity(name = "stockOrderItems")
 public class StockOrderItemEntity extends Deleteable {
 
     @Id

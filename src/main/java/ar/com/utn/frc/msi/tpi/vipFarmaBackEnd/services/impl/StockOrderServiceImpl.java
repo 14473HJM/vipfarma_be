@@ -58,7 +58,7 @@ public class StockOrderServiceImpl extends BaseModelServiceImpl<StockOrder, Stoc
         // Set status to CREATED, creation date and save Order
         stockOrder.setStockOrderStatus(StockOrderStatus.CREATED);
         stockOrder.setCreatedDate(LocalDate.now());
-        stockOrder.setPurchaseOrderId(random.nextLong(1243L, 2678L));
+        stockOrder.setPurchaseOrderId(random.nextLong());
         StockOrder savedOrder = super.create(stockOrder);
 
         // Set orderId in each items and save items

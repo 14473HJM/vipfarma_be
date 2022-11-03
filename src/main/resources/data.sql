@@ -11,8 +11,6 @@ INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) 
 INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1007, 1001, 'vendedor2@email.com', 'password', 'vendedor02', 'SELLER');
 INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1008, 1001, 'vendedor3@email.com', 'password', 'vendedor03', 'SELLER');
 
-
-
 INSERT INTO health_insurance (id, name) VALUES (1001, 'OSDE');
 INSERT INTO health_insurance (id, name) VALUES (1002, 'SWISS MEDICAL');
 INSERT INTO health_insurance (id, name) VALUES (1003, 'MEDIFE');
@@ -253,3 +251,35 @@ INSERT INTO bill_items (id, bill_id, discount_amount, label_invoice, quantity, t
 VALUES (1006, 2, null, 'Ibuprofeno 800', 1, 300, 300, 1003);
 INSERT INTO bill_items (id, bill_id, discount_amount, label_invoice, quantity, total_price, unitary_price, offer_id)
 VALUES (1007, 2, null, 'Ibuprofeno 500', 1, 150, 150, 1004);
+
+
+INSERT INTO stock_orders (id, created_date, stock_order_status, purchase_order_id, warehouse_id)
+VALUES (1001, CURRENT_DATE -45, 'CREATED', 1235467, 1001);
+INSERT INTO stock_orders (id, created_date, stock_order_status, purchase_order_id, warehouse_id)
+VALUES (1002, CURRENT_DATE -10, 'PENDING_DELIVERY', 12678384, 1001);
+INSERT INTO stock_orders (id, created_date, stock_order_status, purchase_order_id, warehouse_id)
+VALUES (1003, CURRENT_DATE -20, 'PENDING_DELIVERY', 2312345, 1001);
+INSERT INTO stock_orders (id, created_date, stock_order_status, purchase_order_id, warehouse_id)
+VALUES (1004, CURRENT_DATE - 45, 'PENDING_DELIVERY', 56454532, 1001);
+INSERT INTO stock_orders (id, created_date, stock_order_status, purchase_order_id, warehouse_id)
+VALUES (1005, CURRENT_DATE -10, 'PENDING_DELIVERY', 65478934, 1001);
+INSERT INTO stock_orders (id, created_date, stock_order_status, purchase_order_id, warehouse_id)
+VALUES (1006, CURRENT_DATE -20, 'PENDING_DELIVERY', 23445768, 1001);
+
+
+INSERT INTO stock_order_items (id, required_quantity, stock_order_id, stock_order_item_status, product_id)
+VALUES (1001, 2000, 1002, 'PENDING', 1001);
+INSERT INTO stock_order_items (id, required_quantity, stock_order_id, stock_order_item_status, product_id)
+VALUES (1002, 1000, 1002, 'PENDING', 1002);
+INSERT INTO stock_order_items (id, required_quantity, stock_order_id, stock_order_item_status, product_id)
+VALUES (1003, 1500, 1002, 'PENDING', 1003);
+INSERT INTO stock_order_items (id, required_quantity, stock_order_id, stock_order_item_status, product_id)
+VALUES (1004, 5000, 1002, 'PENDING', 1004);
+INSERT INTO stock_order_items (id, required_quantity, stock_order_id, stock_order_item_status, product_id)
+VALUES (1005, 1000, 1002, 'PENDING', 1005);
+INSERT INTO stock_order_items (id, required_quantity, stock_order_id, stock_order_item_status, product_id)
+VALUES (1006, 500, 1002, 'PENDING', 1006);
+INSERT INTO stock_order_items (id, required_quantity, stock_order_id, stock_order_item_status, product_id)
+VALUES (1007, 200, 1002, 'PENDING', 1007);
+INSERT INTO stock_order_items (id, required_quantity, stock_order_id, stock_order_item_status, product_id)
+VALUES (1008, 100, 1002, 'PENDING', 1008);
