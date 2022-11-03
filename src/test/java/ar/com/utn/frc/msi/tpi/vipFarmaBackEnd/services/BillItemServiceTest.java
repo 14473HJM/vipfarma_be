@@ -110,7 +110,7 @@ public class BillItemServiceTest {
         given(taxService.getTaxByTaxType(TaxType.VAT)).willReturn(tax);
         given(userService.getById(1L)).willReturn(user);
         // when
-        bill = billService.billOrder(1L, 1L);
+        bill = billService.billOrder(1L, 1L, false);
         // then
         Assertions.assertNotNull(bill.getItems());
         Assertions.assertEquals(BigDecimal.valueOf(1210).setScale(2), bill.getTotalAmount());

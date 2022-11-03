@@ -2,10 +2,16 @@ INSERT INTO branch_office (id, name, location) VALUES (1001, 'NORTE', 'Herrera y
 INSERT INTO branch_office (id, name, location) VALUES (1002, 'CENTRO', 'Boulevard San Juan 966. Observatorio.');
 INSERT INTO branch_office (id, name, location) VALUES (1003, 'SUR', 'Av. Valparaiso 1453, Jardin.');
 
-INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1001, 1001, 'cajero1@email.com', 'password', 'caja', 'CASHIER');
-INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1002, 1001, 'deposito1@email.com', 'password', 'deposito', 'WAREHOUSE_MANAGER');
-INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1003, 1001, 'admin@email.com', 'password', 'admin', 'ADMIN');
-INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1004, 1001, 'vendedor1@email.com', 'password', 'vendedor', 'SELLER');
+INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1001, 1001, 'cajero1@email.com', 'password', 'caja01', 'CASHIER');
+INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1002, 1001, 'cajero2@email.com', 'password', 'caja02', 'CASHIER');
+INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1003, 1001, 'cajero3@email.com', 'password', 'caja03', 'CASHIER');
+INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1004, 1001, 'deposito1@email.com', 'password', 'deposito01', 'WAREHOUSE_MANAGER');
+INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1005, 1001, 'admin@email.com', 'password', 'admin', 'ADMIN');
+INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1006, 1001, 'vendedor1@email.com', 'password', 'vendedor01', 'SELLER');
+INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1007, 1001, 'vendedor2@email.com', 'password', 'vendedor02', 'SELLER');
+INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1008, 1001, 'vendedor3@email.com', 'password', 'vendedor03', 'SELLER');
+
+
 
 INSERT INTO health_insurance (id, name) VALUES (1001, 'OSDE');
 INSERT INTO health_insurance (id, name) VALUES (1002, 'SWISS MEDICAL');

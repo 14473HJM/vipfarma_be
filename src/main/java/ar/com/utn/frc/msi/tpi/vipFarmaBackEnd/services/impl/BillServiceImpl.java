@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.RollbackException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
@@ -53,7 +54,7 @@ public class BillServiceImpl extends BaseModelServiceImpl<Bill, BillEntity> impl
 
     @Override
     @Transactional
-    public Bill billOrder(Long id, Long userId) {
+    public Bill billOrder(Long id, Long userId, Boolean preview) {
         SaleOrder saleOrder = saleOrderService.getById(id);
         Bill bill = new Bill();
         bill.setOrderId(id);
@@ -65,7 +66,10 @@ public class BillServiceImpl extends BaseModelServiceImpl<Bill, BillEntity> impl
             throw new EntityNotFoundException(String.format("%s id %s not found", "User", userId));
         }
         bill.setUser(user);
-        bill = this.create(bill);
+        if(!preview) {
+            // Si es una preview, no grab los datos en la base
+            bill = this.create(bill);
+        }
 
         List<BillItem> billItemList = new LinkedList<>();
         for(SaleOrderItem item : saleOrder.getSaleOrderItems()) {
@@ -73,14 +77,21 @@ public class BillServiceImpl extends BaseModelServiceImpl<Bill, BillEntity> impl
         }
 
         this.calculateTaxes(billItemList, bill.getId());
-        billItemList = billItemService.createAll(billItemList);
+        if(!preview) {
+            // Si es una preview, no grab los datos en la base
+            billItemList = billItemService.createAll(billItemList);
+        }
 
         bill.setTotalAmount(this.getTotalAmount(billItemList));
         bill.setItems(billItemList);
 
         bill.setCae(this.getCae());
 
-        saleOrderService.changeStatus(id, SaleOrderStatus.BILLED);
+        if(!preview) {
+            // Si es una preview, no grabo los datos en la base
+            saleOrderService.changeStatus(id, SaleOrderStatus.BILLED);
+        }
+
         return bill;
     }
 
