@@ -13,6 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -35,11 +36,19 @@ public class LockerServiceImpl extends BaseModelServiceImpl<Locker, LockerEntity
 
     @Override
     public List<Locker> getAllByProduct(Long productId) {
-        return lockerRepository.getAllByProductId(productId);
+        List<LockerEntity> entities = lockerRepository.getAllByProductId(productId);
+
+        return entities.stream()
+                .map(entity -> getModelMapper().map(entity, Locker.class))
+                .collect(Collectors.toList());
     }
 
     @Override
     public List<Locker> getAllByProductAndAvailability(Long productId, Integer availability) {
-        return lockerRepository.getAllByProductAndAvailability(productId, availability);
+        List<LockerEntity> entities = lockerRepository.getAllByProductAndAvailability(productId, availability);
+
+        return entities.stream()
+                .map(entity -> getModelMapper().map(entity, Locker.class))
+                .collect(Collectors.toList());
     }
 }
