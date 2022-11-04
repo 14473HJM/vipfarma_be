@@ -120,6 +120,10 @@ public class StockOrderServiceImpl extends BaseModelServiceImpl<StockOrder, Stoc
     public StockOrder changeStatus(Long id, StockOrderStatus stockOrderStatus, StockOrder stockOrder) {
         StockOrder actualOrder = this.getById(id);
         if(stockOrderStatus == StockOrderStatus.PENDING_DELIVERY && actualOrder.getStockOrderStatus() == StockOrderStatus.CREATED) {
+            if(stockOrder == null) {
+                throw new IllegalArgumentException("A new order to update is necessary to change from " +
+                        "CREATED status to PENDING_DELIVERY");
+            }
             stockOrder.getStockOrderItems().forEach(
                     item -> {
                         item.setStockOrderItemStatus(StockOrderItemStatus.PENDING);
@@ -138,6 +142,10 @@ public class StockOrderServiceImpl extends BaseModelServiceImpl<StockOrder, Stoc
             actualOrder.setStockOrderStatus(stockOrderStatus);
             actualOrder = this.update(actualOrder);
         } else if (stockOrderStatus == StockOrderStatus.REJECTED && actualOrder.getStockOrderStatus() == StockOrderStatus.PENDING_DELIVERY) {
+            if(stockOrder == null) {
+                throw new IllegalArgumentException("A new order to update is necessary to change from " +
+                        "PENDING_DELIVERY status to REJECTED");
+            }
             actualOrder.getStockOrderItems().forEach(
                     item -> {
                         item.setStockOrderItemStatus(StockOrderItemStatus.RETURNED);
@@ -147,6 +155,10 @@ public class StockOrderServiceImpl extends BaseModelServiceImpl<StockOrder, Stoc
             stockOrder.setStockOrderStatus(stockOrderStatus);
             actualOrder = this.update(stockOrder);
         } else if (stockOrderStatus == StockOrderStatus.RECEIVED && actualOrder.getStockOrderStatus() == StockOrderStatus.PENDING_DELIVERY) {
+            if(stockOrder == null) {
+                throw new IllegalArgumentException("A new order to update is necessary to change from " +
+                        "PENDING_DELIVERY status to RECEIVED");
+            }
             stockOrder.getStockOrderItems().forEach(
                     item -> {
                         if(item.getStockOrderItemStatus() == StockOrderItemStatus.CREATED ||

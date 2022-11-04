@@ -54,7 +54,7 @@ public class StockController {
     @PutMapping("/stock/orders/{id}/status/{status}")
     public ResponseEntity<StockOrder> changeStatus(@PathVariable("id") Long id,
                                                   @PathVariable("status") StockOrderStatus stockOrderStatus,
-                                                   @RequestBody StockOrder stockOrder) {
+                                                   @RequestBody(required = false) StockOrder stockOrder) {
         StockOrder stockOrderChanged = stockOrderService.changeStatus(id, stockOrderStatus, stockOrder);
         return ResponseEntity.ok(stockOrderChanged);
     }
