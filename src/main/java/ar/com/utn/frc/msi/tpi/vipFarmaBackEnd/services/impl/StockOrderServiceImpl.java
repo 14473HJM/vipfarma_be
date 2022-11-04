@@ -167,7 +167,7 @@ public class StockOrderServiceImpl extends BaseModelServiceImpl<StockOrder, Stoc
                                     "set the order in RECEIVED status");
                         }
                     });
-            stockOrderItemService.updateAll(actualOrder.getStockOrderItems());
+            stockOrderItemService.updateAll(stockOrder.getStockOrderItems());
             stockOrder.setStockOrderStatus(stockOrderStatus);
             actualOrder = this.update(stockOrder);
         } else {
