@@ -13,5 +13,7 @@ public interface StockOrderService extends BaseModelService<StockOrder, StockOrd
 
     List<StockOrder> getOrdersByStatusAndWarehouse(StockOrderStatus stockOrderStatus, Long warehouseId);
 
-    StockOrder changeStatus(Long id, StockOrderStatus stockOrderStatus);
+    List<StockOrder> getOrdersByStatusAndBranchOffice(StockOrderStatus stockOrderStatus, Long branchOfficeId);
+
+    StockOrder changeStatus(Long id, StockOrderStatus stockOrderStatus, StockOrder stockOrder);
 }

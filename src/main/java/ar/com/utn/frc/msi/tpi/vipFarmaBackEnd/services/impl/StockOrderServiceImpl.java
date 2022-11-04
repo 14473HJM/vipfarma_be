@@ -109,27 +109,56 @@ public class StockOrderServiceImpl extends BaseModelServiceImpl<StockOrder, Stoc
     }
 
     @Override
-    public StockOrder changeStatus(Long id, StockOrderStatus stockOrderStatus) {
-        StockOrder stockOrder = this.getById(id);
-        if(stockOrderStatus == StockOrderStatus.PENDING_DELIVERY && stockOrder.getStockOrderStatus() == StockOrderStatus.CREATED) {
+    public List<StockOrder> getOrdersByStatusAndBranchOffice(StockOrderStatus stockOrderStatus, Long branchOfficeId) {
+        List<StockOrderEntity> ordersList = stockOrderRepository.getByStockOrderStatusAndBranchOffice(stockOrderStatus, branchOfficeId);
+        return ordersList.stream()
+                .map(entity -> getModelMapper().map(entity, StockOrder.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public StockOrder changeStatus(Long id, StockOrderStatus stockOrderStatus, StockOrder stockOrder) {
+        StockOrder actualOrder = this.getById(id);
+        if(stockOrderStatus == StockOrderStatus.PENDING_DELIVERY && actualOrder.getStockOrderStatus() == StockOrderStatus.CREATED) {
+            if(stockOrder == null) {
+                throw new IllegalArgumentException("A new order to update is necessary to change from " +
+                        "CREATED status to PENDING_DELIVERY");
+            }
             stockOrder.getStockOrderItems().forEach(
                     item -> {
                         item.setStockOrderItemStatus(StockOrderItemStatus.PENDING);
                         stockOrderItemService.update(item);
                     });
-        } else if (stockOrderStatus == StockOrderStatus.CANCELED && stockOrder.getStockOrderStatus() == StockOrderStatus.PENDING_DELIVERY) {
-            stockOrder.getStockOrderItems().forEach(
+            stockOrderItemService.updateAll(stockOrder.getStockOrderItems());
+            stockOrder.setStockOrderStatus(stockOrderStatus);
+            actualOrder = this.update(stockOrder);
+        } else if (stockOrderStatus == StockOrderStatus.CANCELED && actualOrder.getStockOrderStatus() == StockOrderStatus.PENDING_DELIVERY) {
+            actualOrder.getStockOrderItems().forEach(
                     item -> {
                         item.setStockOrderItemStatus(StockOrderItemStatus.CANCELED);
                         stockOrderItemService.update(item);
                     });
-        } else if (stockOrderStatus == StockOrderStatus.REJECTED && stockOrder.getStockOrderStatus() == StockOrderStatus.PENDING_DELIVERY) {
-            stockOrder.getStockOrderItems().forEach(
+            stockOrderItemService.updateAll(actualOrder.getStockOrderItems());
+            actualOrder.setStockOrderStatus(stockOrderStatus);
+            actualOrder = this.update(actualOrder);
+        } else if (stockOrderStatus == StockOrderStatus.REJECTED && actualOrder.getStockOrderStatus() == StockOrderStatus.PENDING_DELIVERY) {
+            if(stockOrder == null) {
+                throw new IllegalArgumentException("A new order to update is necessary to change from " +
+                        "PENDING_DELIVERY status to REJECTED");
+            }
+            actualOrder.getStockOrderItems().forEach(
                     item -> {
                         item.setStockOrderItemStatus(StockOrderItemStatus.RETURNED);
                         stockOrderItemService.update(item);
                     });
-        } else if (stockOrderStatus == StockOrderStatus.RECEIVED && stockOrder.getStockOrderStatus() == StockOrderStatus.PENDING_DELIVERY) {
+            stockOrderItemService.updateAll(actualOrder.getStockOrderItems());
+            stockOrder.setStockOrderStatus(stockOrderStatus);
+            actualOrder = this.update(stockOrder);
+        } else if (stockOrderStatus == StockOrderStatus.RECEIVED && actualOrder.getStockOrderStatus() == StockOrderStatus.PENDING_DELIVERY) {
+            if(stockOrder == null) {
+                throw new IllegalArgumentException("A new order to update is necessary to change from " +
+                        "PENDING_DELIVERY status to RECEIVED");
+            }
             stockOrder.getStockOrderItems().forEach(
                     item -> {
                         if(item.getStockOrderItemStatus() == StockOrderItemStatus.CREATED ||
@@ -138,13 +167,13 @@ public class StockOrderServiceImpl extends BaseModelServiceImpl<StockOrder, Stoc
                                     "set the order in RECEIVED status");
                         }
                     });
-            stockOrderItemService.updateAll(stockOrder.getStockOrderItems());
+            stockOrderItemService.updateAll(actualOrder.getStockOrderItems());
+            stockOrder.setStockOrderStatus(stockOrderStatus);
+            actualOrder = this.update(stockOrder);
         } else {
             throw new IllegalArgumentException(String.format("This operation is not allowed, can´t go from %s " +
-                    " status to %s status.", stockOrder.getStockOrderStatus(), stockOrderStatus));
+                    " status to %s status.", actualOrder.getStockOrderStatus(), stockOrderStatus));
         }
-        stockOrder.setStockOrderStatus(stockOrderStatus);
-        stockOrder = this.update(stockOrder);
-        return stockOrder;
+        return actualOrder;
     }
 }

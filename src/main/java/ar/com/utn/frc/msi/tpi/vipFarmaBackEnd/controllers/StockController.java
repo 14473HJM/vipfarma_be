@@ -30,12 +30,15 @@ public class StockController {
 
     @GetMapping("/stock/orders")
     public ResponseEntity<List<StockOrder>> getOrders(@RequestParam(required = false) StockOrderStatus stockOrderStatus,
-                                                     @RequestParam(required = false) Long warehouseId) {
+                                                     @RequestParam(required = false) Long warehouseId,
+                                                      @RequestParam(required = false) Long branchOfficeId) {
         List<StockOrder> stockOrderList;
         if(stockOrderStatus == null && warehouseId == null) {
             stockOrderList = stockOrderService.getAll();
-        } else if (stockOrderStatus != null && warehouseId != null) {
+        } else if (stockOrderStatus != null && warehouseId != null && branchOfficeId == null) {
             stockOrderList = stockOrderService.getOrdersByStatusAndWarehouse(stockOrderStatus, warehouseId);
+        } else if (stockOrderStatus != null && branchOfficeId != null && warehouseId == null) {
+            stockOrderList = stockOrderService.getOrdersByStatusAndBranchOffice(stockOrderStatus, branchOfficeId);
         } else {
             throw new IllegalArgumentException("Both parameters are required, saleOrderStatus and branchOfficeId");
         }
@@ -50,9 +53,10 @@ public class StockController {
 
     @PutMapping("/stock/orders/{id}/status/{status}")
     public ResponseEntity<StockOrder> changeStatus(@PathVariable("id") Long id,
-                                                  @PathVariable("status") StockOrderStatus stockOrderStatus) {
-        StockOrder stockOrder = stockOrderService.changeStatus(id, stockOrderStatus);
-        return ResponseEntity.ok(stockOrder);
+                                                  @PathVariable("status") StockOrderStatus stockOrderStatus,
+                                                   @RequestBody(required = false) StockOrder stockOrder) {
+        StockOrder stockOrderChanged = stockOrderService.changeStatus(id, stockOrderStatus, stockOrder);
+        return ResponseEntity.ok(stockOrderChanged);
     }
 
     @PutMapping("/stock/orders/{id}")
