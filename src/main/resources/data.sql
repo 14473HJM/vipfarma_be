@@ -11,11 +11,13 @@ INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) 
 INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1007, 1001, 'vendedor2@email.com', 'password', 'vendedor02', 'SELLER');
 INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1008, 1001, 'vendedor3@email.com', 'password', 'vendedor03', 'SELLER');
 
+INSERT INTO health_insurance (id, name) VALUES (1, 'SIN OBRA SOCIAL');
 INSERT INTO health_insurance (id, name) VALUES (1001, 'OSDE');
 INSERT INTO health_insurance (id, name) VALUES (1002, 'SWISS MEDICAL');
 INSERT INTO health_insurance (id, name) VALUES (1003, 'MEDIFE');
 INSERT INTO health_insurance (id, name) VALUES (1004, 'SANCOR');
 
+INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1, 1, 'SIN PLAN');
 INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1001, 1001, 'OSDE 210');
 INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1002, 1001, 'OSDE 310');
 INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1003, 1001, 'OSDE 410');
