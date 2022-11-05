@@ -13,7 +13,7 @@ import java.util.List;
 
 @Data
 @Entity(name = "saleOrders")
-public class SaleOrderEntity {
+public class SaleOrderEntity extends Deleteable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

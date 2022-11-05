@@ -8,6 +8,7 @@ import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.repositories.HealthInsuranceReposi
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.HealthInsuranceService;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -18,34 +19,20 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class HealthInsuranceServiceImpl implements HealthInsuranceService {
+public class HealthInsuranceServiceImpl extends BaseModelServiceImpl<HealthInsurance, HealthInsuranceEntity> implements HealthInsuranceService {
 
     private final HealthInsuranceRepository healthInsuranceRepository;
 
     private final ModelMapper modelMapper;
 
     @Override
-    public HealthInsurance createHealthInsurance(HealthInsurance healthInsurance) {
-        HealthInsuranceEntity entity = modelMapper.map(healthInsurance, HealthInsuranceEntity.class);
-        entity = healthInsuranceRepository.save(entity);
-        return modelMapper.map(entity, HealthInsurance.class);
+    protected JpaRepository getJpaRepository() {
+        return this.healthInsuranceRepository;
     }
 
     @Override
-    public List<HealthInsurance> getHealthInsurances() {
-        List<HealthInsuranceEntity> entityList = healthInsuranceRepository.findAll();
-        return entityList.stream()
-                .map(entity -> modelMapper.map(entity, HealthInsurance.class))
-                .collect(Collectors.toList());
+    protected ModelMapper getModelMapper() {
+        return this.modelMapper;
     }
 
-    @Override
-    public HealthInsurance getById(Long id) {
-        Optional<HealthInsuranceEntity> healthInsuranceEntityOptional = healthInsuranceRepository.findById(id);
-        if(healthInsuranceEntityOptional.isEmpty()) {
-            throw new EntityNotFoundException(String.format("HealthInsurance id {} not found", id));
-        } else {
-            return modelMapper.map(healthInsuranceEntityOptional.get(), HealthInsurance.class);
-        }
-    }
 }

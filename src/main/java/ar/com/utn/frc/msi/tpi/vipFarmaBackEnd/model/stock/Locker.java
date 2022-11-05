@@ -14,7 +14,7 @@ import java.util.List;
 public class Locker {
 
     private Long id;
-    private Long rackId;
+    private Rack rack;
     private Product product;
     private Integer stockCapacity;
 

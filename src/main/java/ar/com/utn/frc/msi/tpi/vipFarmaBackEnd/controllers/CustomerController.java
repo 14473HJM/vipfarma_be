@@ -8,10 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class CustomerController {
 
     private final CustomerService customerService;
@@ -32,5 +34,16 @@ public class CustomerController {
     public ResponseEntity<Customer> getById(@PathVariable Long id) {
         Customer customer = customerService.getById(id);
         return ResponseEntity.ok(customer);
+    }
+
+    @DeleteMapping("/customers/{id}")
+    public ResponseEntity deleteById(@PathVariable Long id) {
+        Customer customer = customerService.getById(id);
+        if(customer != null) {
+            customerService.delete(customer);
+        } else {
+            throw new EntityNotFoundException(String.format("Customer id %s not found", id));
+        }
+        return ResponseEntity.ok().body(null);
     }
 }

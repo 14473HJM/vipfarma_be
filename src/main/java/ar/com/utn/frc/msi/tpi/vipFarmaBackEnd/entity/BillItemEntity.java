@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 
 @Data
 @Entity(name = "billItems")
-public class BillItemEntity {
+public class BillItemEntity extends Deleteable{
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -20,7 +20,7 @@ public class BillItemEntity {
 
     @OneToOne
     @JoinColumn(name = "offerId", referencedColumnName = "id")
-    private OfferEntity offerId;
+    private OfferEntity offer;
 
     private Integer quantity;
     private BigDecimal unitaryPrice;

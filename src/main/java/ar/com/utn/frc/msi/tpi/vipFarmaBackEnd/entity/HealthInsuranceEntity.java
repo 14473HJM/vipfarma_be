@@ -11,7 +11,7 @@ import java.util.List;
 
 @Data
 @Entity(name = "healthInsurance")
-public class HealthInsuranceEntity {
+public class HealthInsuranceEntity extends Deleteable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

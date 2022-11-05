@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 @Data
 @Entity(name = "products")
-public class ProductEntity {
+public class ProductEntity extends Deleteable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)

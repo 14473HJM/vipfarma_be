@@ -23,8 +23,18 @@ public class LockerController {
     }
 
     @GetMapping("/lockers")
-    public ResponseEntity<List<Locker>> getAll() {
-        List<Locker> lockerList = lockerService.getAll();
+    public ResponseEntity<List<Locker>> getAll(@RequestParam(required = false) Long productId,
+                                               @RequestParam(required = false) Integer availability) {
+        List<Locker> lockerList;
+        if(productId == null && availability == null) {
+            lockerList = lockerService.getAll();
+        } else if (productId != null && availability == null) {
+            lockerList = lockerService.getAllByProduct(productId);
+        } else if (productId != null && availability != null) {
+            lockerList = lockerService.getAllByProductAndAvailability(productId, availability);
+        } else {
+            throw new IllegalArgumentException("productId is required if availability included");
+        }
         return ResponseEntity.ok(lockerList);
     }
 

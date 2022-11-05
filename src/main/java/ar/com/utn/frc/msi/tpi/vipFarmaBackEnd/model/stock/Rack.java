@@ -14,6 +14,6 @@ public class Rack {
 
     private Long id;
     private String name;
-    private Long warehouseId;
+    private Warehouse warehouse;
     private List<Locker> lockers;
 }

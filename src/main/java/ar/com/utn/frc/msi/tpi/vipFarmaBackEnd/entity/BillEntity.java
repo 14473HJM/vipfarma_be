@@ -15,7 +15,7 @@ import java.util.List;
 
 @Data
 @Entity(name = "bills")
-public class BillEntity {
+public class BillEntity extends Deleteable{
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -23,15 +23,15 @@ public class BillEntity {
 
     @OneToOne
     @JoinColumn(name = "userId", referencedColumnName = "id")
-    private UserEntity userId;
+    private UserEntity user;
 
     @OneToOne
     @JoinColumn(name = "customerId", referencedColumnName = "id")
-    private CustomerEntity customerId;
+    private CustomerEntity customer;
 
     @OneToOne
     @JoinColumn(name = "saleOrderId", referencedColumnName = "id")
-    private SaleOrderEntity saleOrderId;
+    private SaleOrderEntity saleOrder;
 
     private LocalDate createdDate;
     private LocalDate dueDate;

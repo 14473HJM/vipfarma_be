@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity(name = "healthInsurancePlan")
-public class HealthInsurancePlanEntity {
+public class HealthInsurancePlanEntity extends Deleteable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
