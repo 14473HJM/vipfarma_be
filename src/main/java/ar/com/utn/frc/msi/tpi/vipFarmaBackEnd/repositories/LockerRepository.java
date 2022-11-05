@@ -12,10 +12,10 @@ import java.util.List;
 @Repository
 public interface LockerRepository extends JpaRepository<LockerEntity, Long> {
 
-    List<Locker> getAllByProductId(Long productId);
+    List<LockerEntity> getAllByProductId(Long productId);
 
     @Query("SELECT L FROM lockers L " +
             "WHERE L.product.id = :productId " +
             "AND (L.stockCapacity - L.occupiedCapacity) > :availability")
-    List<Locker> getAllByProductAndAvailability(Long productId, Integer availability);
+    List<LockerEntity> getAllByProductAndAvailability(Long productId, Integer availability);
 }
