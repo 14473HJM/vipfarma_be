@@ -11,6 +11,8 @@ public interface ProductService extends BaseModelService<Product, ProductEntity>
 
     Product getProductByBarcode(Long barcode);
 
+    List<Product> getProductsByNameOrBarcode(String name, Long barcode);
+
     List<OfferStock> getProductStockByProductId(Long productId);
 
     List<OfferStock> getProductStockByProductIdAndBranchOffice(Long productId, Long branchOfficeId);

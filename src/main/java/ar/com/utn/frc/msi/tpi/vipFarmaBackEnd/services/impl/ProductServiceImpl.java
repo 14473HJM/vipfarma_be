@@ -50,6 +50,14 @@ public class ProductServiceImpl extends BaseModelServiceImpl<Product,ProductEnti
     }
 
     @Override
+    public List<Product> getProductsByNameOrBarcode(String name, Long barcode) {
+        List<ProductEntity> productEntityList = productRepository.getByNameIgnoreCaseOrBarcode(name, barcode);
+        return productEntityList.stream()
+                .map(entity -> getModelMapper().map(entity, Product.class))
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<OfferStock> getProductStockByProductId(Long productId) {
         return null;
     }
