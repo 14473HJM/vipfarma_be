@@ -37,8 +37,8 @@ public interface OfferRepository extends JpaRepository<OfferEntity, Long> {
             "WHERE O.product = L.product " +
             "AND L = S.lockerId " +
             "AND S.stockStatus = 'ACTIVE'" +
-            "AND O.product = :productId " +
-            "AND L.branchOfficeId = :branchOfficeId " +
+            "AND O.product.id = :productId " +
+            "AND L.branchOfficeId.id = :branchOfficeId " +
             "GROUP BY O.id, O.product, O.discountType, O.discountValue, O.healthInsurance, O.healthInsurancePlan")
     List<OfferStockEntity> getOfferStockByProductIdAndBranchOffice(Long productId, Long branchOfficeId);
 
