@@ -57,4 +57,13 @@ public class OfferController {
         }
         return ResponseEntity.ok(offerList);
     }
+
+    @GetMapping("/stock/offer")
+    public ResponseEntity<OfferStock> getOfferByParameters(@RequestParam Long branchOfficeId,
+                                                           @RequestParam Long productId,
+                                                           @RequestParam(required = false) Long planId) {
+        OfferStock offer = offerService
+                .getOfferStockByProductIdAndBranchOfficeAndPlanId(productId, branchOfficeId, planId);
+        return ResponseEntity.ok(offer);
+    }
 }

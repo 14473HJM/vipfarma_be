@@ -26,7 +26,7 @@ INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1007, 
 INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1008, 1003, 'MDF2');
 INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1009, 1003, 'MDF3');
 INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1010, 1004, 'Estudiantes');
-INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1011, 1004, 'Profecionales');
+INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1011, 1004, 'Profesionales');
 INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1012, 1004, 'Familly');
 
 INSERT INTO warehouses (id, location, name, branch_office_id) VALUES (1001, 'Herrera y Guzman 966, Marques de Sobremonte.', 'Deposito NORTE', 1001);

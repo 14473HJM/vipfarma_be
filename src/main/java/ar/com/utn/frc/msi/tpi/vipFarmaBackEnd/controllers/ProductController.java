@@ -1,12 +1,14 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.controllers;
 
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.Product;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.customer.Customer;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.user.User;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -48,6 +50,17 @@ public class ProductController {
         product.setId(id);
         product = productService.update(product);
         return ResponseEntity.ok(product);
+    }
+
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity deleteById(@PathVariable Long id) {
+        Product product = productService.getById(id);
+        if(product != null) {
+            productService.delete(product);
+        } else {
+            throw new EntityNotFoundException(String.format("Product id %s not found", id));
+        }
+        return ResponseEntity.ok().body(null);
     }
 
 }
