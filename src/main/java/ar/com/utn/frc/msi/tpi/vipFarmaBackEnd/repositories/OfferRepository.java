@@ -58,6 +58,30 @@ public interface OfferRepository extends JpaRepository<OfferEntity, Long> {
             "WHERE O.product = L.product " +
             "AND L = S.lockerId " +
             "AND S.stockStatus = 'ACTIVE'" +
+            "AND O.product.id = :productId " +
+            "AND L.branchOfficeId.id = :branchId " +
+            "AND O.healthInsurancePlan.id = :planId " +
+            "GROUP BY O.id, O.product, O.discountType, O.discountValue, O.healthInsurance, O.healthInsurancePlan")
+    OfferStockEntity getOfferByProductIdAndBranchIdAndPlanIdWithStock(Long productId, Long branchId, Long planId);
+
+    @Query("SELECT new ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.OfferStockEntity(" +
+            "O.id, O.product, O.healthInsurance, O.healthInsurancePlan, O.discountType, O.discountValue, SUM(L.currentStock)) " +
+            "FROM offers O, lockers L, stocks S " +
+            "WHERE O.product = L.product " +
+            "AND L = S.lockerId " +
+            "AND S.stockStatus = 'ACTIVE'" +
+            "AND O.product.id = :productId " +
+            "AND L.branchOfficeId.id = :branchId " +
+            "AND O.healthInsurancePlan is null " +
+            "GROUP BY O.id, O.product, O.discountType, O.discountValue, O.healthInsurance, O.healthInsurancePlan")
+    OfferStockEntity getOfferByProductIdAndBranchIdAndNullPlanWithStock(Long productId, Long branchId);
+
+    @Query("SELECT new ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.OfferStockEntity(" +
+            "O.id, O.product, O.healthInsurance, O.healthInsurancePlan, O.discountType, O.discountValue, SUM(L.currentStock)) " +
+            "FROM offers O, lockers L, stocks S " +
+            "WHERE O.product = L.product " +
+            "AND L = S.lockerId " +
+            "AND S.stockStatus = 'ACTIVE'" +
             "AND L.branchOfficeId = :branchOfficeId " +
             "GROUP BY O.id, O.product, O.discountType, O.discountValue, O.healthInsurance, O.healthInsurancePlan")
     List<OfferStockEntity> getOfferStockByBranchOffice(Long branchOfficeId);

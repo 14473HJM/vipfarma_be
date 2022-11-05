@@ -77,6 +77,26 @@ public class OfferServiceImpl extends BaseModelServiceImpl<Offer, OfferEntity> i
     }
 
     @Override
+    public OfferStock getOfferStockByProductIdAndBranchOfficeAndPlanId(Long productId, Long branchOfficeId, Long planId) {
+        OfferStockEntity offerStockEntity = null;
+        if(planId != null) {
+            offerStockEntity = offerRepository
+                    .getOfferByProductIdAndBranchIdAndPlanIdWithStock(productId, branchOfficeId, planId);
+            if(offerStockEntity == null) {
+                offerStockEntity = getOfferWithoutPlan(productId, branchOfficeId);
+            }
+        } else {
+            offerStockEntity = getOfferWithoutPlan(productId, branchOfficeId);
+        }
+
+        if(offerStockEntity == null) {
+            throw new IllegalArgumentException("No Hay Oferta para ese Producto");
+        }
+
+        return modelMapper.map(offerStockEntity, OfferStock.class);
+    }
+
+    @Override
     public List<OfferStock> getOfferStockByBranchOffice(Long branchOfficeId) {
         List<OfferStockEntity> offerStockEntityList = offerRepository.getOfferStockByBranchOffice(branchOfficeId);
         return getOfferStockList(offerStockEntityList);
@@ -139,5 +159,9 @@ public class OfferServiceImpl extends BaseModelServiceImpl<Offer, OfferEntity> i
         } else {
             return BigDecimal.ZERO;
         }
+    }
+
+    private OfferStockEntity getOfferWithoutPlan(Long prodId, Long branchId) {
+        return offerRepository.getOfferByProductIdAndBranchIdAndNullPlanWithStock(prodId, branchId);
     }
 }
