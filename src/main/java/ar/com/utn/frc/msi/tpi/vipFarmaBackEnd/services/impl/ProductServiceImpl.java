@@ -37,7 +37,7 @@ public class ProductServiceImpl extends BaseModelServiceImpl<Product,ProductEnti
 
     @Override
     public List<Product> getProductsByName(String name) {
-        List<ProductEntity> productEntityList = productRepository.getByNameContaining(name);
+        List<ProductEntity> productEntityList = productRepository.getByNameContainingIgnoreCase(name);
         return productEntityList.stream()
                 .map(entity -> getModelMapper().map(entity, Product.class))
                 .collect(Collectors.toList());
