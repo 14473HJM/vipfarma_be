@@ -12,4 +12,6 @@ public interface LockerService extends BaseModelService<Locker, LockerEntity> {
     List<Locker> getAllByProduct(Long productId);
 
     List<Locker> getAllByProductAndAvailability(Long productId, Integer availability);
+
+    List<Locker> getAllByBranchOfficeId(Long branchId);
 }

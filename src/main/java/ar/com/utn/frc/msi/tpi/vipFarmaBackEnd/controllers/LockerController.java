@@ -25,10 +25,13 @@ public class LockerController {
 
     @GetMapping("/lockers")
     public ResponseEntity<List<Locker>> getAll(@RequestParam(required = false) Long productId,
-                                               @RequestParam(required = false) Integer availability) {
+                                               @RequestParam(required = false) Integer availability,
+                                               @RequestParam(required = false) Long branchOfficeId) {
         List<Locker> lockerList;
         if(productId == null && availability == null) {
-            lockerList = lockerService.getAll();
+            lockerList = (branchOfficeId == null)
+                    ? lockerService.getAll()
+                    : lockerService.getAllByBranchOfficeId(branchOfficeId);
         } else if (productId != null && availability == null) {
             lockerList = lockerService.getAllByProduct(productId);
         } else if (productId != null && availability != null) {

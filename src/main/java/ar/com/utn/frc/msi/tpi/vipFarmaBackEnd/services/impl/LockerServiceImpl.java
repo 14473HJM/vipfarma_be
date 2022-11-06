@@ -51,4 +51,12 @@ public class LockerServiceImpl extends BaseModelServiceImpl<Locker, LockerEntity
                 .map(entity -> getModelMapper().map(entity, Locker.class))
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<Locker> getAllByBranchOfficeId(Long branchId) {
+        List<LockerEntity> lockers = lockerRepository.getAllByBranchOffice(branchId);
+        return lockers.stream()
+                .map(entity -> getModelMapper().map(entity, Locker.class))
+                .collect(Collectors.toList());
+    }
 }
