@@ -69,6 +69,16 @@ INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branc
 INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1008, 1000, 1000, 1000, 1001, 1008, 1003);
 INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1009, 1000, 1000, 1000, 1001, 1009, 1003);
 INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1010, 150, 200, 1500, 1001, 1001, 1004);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1011, 0, 0, 10000, 1001, 1001, 1001);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1012, 0, 0, 10000, 1001, 1002, 1001);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1013, 0, 0, 10000, 1001, 1003, 1001);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1014, 0, 0, 10000, 1001, 1004, 1002);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1015, 0, 0, 10000, 1001, 1005, 1002);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1016, 0, 0, 10000, 1001, 1006, 1002);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1017, 0, 0, 10000, 1001, 1007, 1003);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1018, 0, 0, 10000, 1001, 1008, 1003);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1019, 0, 0, 10000, 1001, 1009, 1003);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1020, 0, 0, 10000, 1001, 1010, 1004);
 
 INSERT INTO stocks (id, available_stock, created_date, due_date, end_date, initial_stock, stock_status, locker_id, product_id)
 VALUES (1001, 150, CURRENT_DATE -100, CURRENT_DATE + 100, null, 500, 'ACTIVE', 1001, 1001);
