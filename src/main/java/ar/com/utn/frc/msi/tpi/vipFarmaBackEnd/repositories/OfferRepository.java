@@ -72,7 +72,7 @@ public interface OfferRepository extends JpaRepository<OfferEntity, Long> {
             "AND S.stockStatus = 'ACTIVE'" +
             "AND O.product.id = :productId " +
             "AND L.branchOfficeId.id = :branchId " +
-            "AND O.healthInsurancePlan is null " +
+            "AND O.healthInsurancePlan.id = 1 " +
             "GROUP BY O.id, O.product, O.discountType, O.discountValue, O.healthInsurance, O.healthInsurancePlan")
     OfferStockEntity getOfferByProductIdAndBranchIdAndNullPlanWithStock(Long productId, Long branchId);
 
