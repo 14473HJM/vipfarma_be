@@ -1,9 +1,14 @@
 package ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.impl;
 
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.OfferStockEntity;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.StockEntity;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.StockSummaryEntity;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.OfferStock;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.catalog.Product;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.stock.Locker;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.stock.Stock;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.stock.StockStatus;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.stock.StockSummary;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.repositories.StockRepository;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.StockService;
 import lombok.RequiredArgsConstructor;
@@ -94,6 +99,25 @@ public class StockServiceImpl extends BaseModelServiceImpl<Stock, StockEntity> i
         });
     }
 
+    @Override
+    public List<StockSummary> getStockSummary(Long productId, StockStatus stockStatus, Long lockerId) {
+        List<StockSummaryEntity> entities = new LinkedList<>();
+        if(productId != null && stockStatus == null && lockerId == null) {
+            entities = stockRepository.getStockSummaryByProduct(productId);
+            return getStockSummaryList(entities);
+        } else
+        if(productId != null && stockStatus != null && lockerId == null) {
+            entities = stockRepository.getStockSummaryByStatusAndProduct(stockStatus, productId);
+            return getStockSummaryList(entities);
+        } else if (productId == null && stockStatus != null && lockerId == null) {
+            entities = stockRepository.getStockSummaryByStatus(stockStatus);
+            return getStockSummaryList(entities);
+        } else {
+            entities = stockRepository.getStockSummaryByLocker(lockerId);
+            return getStockSummaryList(entities);
+        }
+    }
+
     private Stock copyStockToReserve(Integer quantity, Stock stock) {
         Stock reserveStock = new Stock();
         reserveStock.setAvailableStock(quantity);
@@ -104,5 +128,27 @@ public class StockServiceImpl extends BaseModelServiceImpl<Stock, StockEntity> i
         reserveStock.setDueDate(stock.getDueDate());
         reserveStock.setProduct(stock.getProduct());
         return reserveStock;
+    }
+
+    private List<StockSummary> getStockSummaryList(List<StockSummaryEntity> stockSummaryEntities) {
+        List<StockSummary> offerStockList = stockSummaryEntities.stream()
+                .map(entity -> getStockSummary(entity))
+                .collect(Collectors.toList());
+        return offerStockList;
+    }
+
+    private StockSummary getStockSummary(StockSummaryEntity stockSummaryEntitie) {
+        Stock stock = new Stock();
+        if(stockSummaryEntitie.getProduct() != null) {
+            stock.setProduct(modelMapper.map(stockSummaryEntitie.getProduct(), Product.class));
+        }
+        if(stockSummaryEntitie.getLockerId() != null) {
+            stock.setLocker(modelMapper.map(stockSummaryEntitie.getLockerId(), Locker.class));
+        }
+        if(stockSummaryEntitie.getStockStatus() != null) {
+            stock.setStockStatus(stockSummaryEntitie.getStockStatus());
+        }
+        StockSummary offerStock = new StockSummary(stock, stockSummaryEntitie.getValue());
+        return offerStock;
     }
 }
