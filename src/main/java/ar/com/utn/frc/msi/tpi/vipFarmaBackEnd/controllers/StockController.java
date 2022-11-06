@@ -25,4 +25,10 @@ public class StockController {
         List<StockSummary> stockSummaries = stockService.getStockSummary(productId, stockStatus, lockerId);
         return ResponseEntity.ok(stockSummaries);
     }
+
+    @GetMapping("/stock/summary/group")
+    public ResponseEntity<List<StockSummary>> getStocksGrouped() {
+        List<StockSummary> stockSummaries = stockService.getStockSummaryGrouped();
+        return ResponseEntity.ok(stockSummaries);
+    }
 }

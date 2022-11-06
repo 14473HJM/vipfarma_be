@@ -22,17 +22,10 @@ public interface StockRepository extends JpaRepository<StockEntity, Long> {
             "ORDER BY S.dueDate ASC")
     List<StockEntity> getStockEntityByProductIdAndBranchOfficeId(Long productId, Long branchOfficeId);
 
-    @Query("SELECT new ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.StockSummaryEntity(S.productId, SUM(S.availableStock)) " +
-            "FROM stocks S " +
-            "WHERE S.productId.id = :productId " +
-            "GROUP BY S.productId")
-    List<StockSummaryEntity> getStockSummaryByProduct(Long productId);
-
     @Query("SELECT new ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.StockSummaryEntity(S.stockStatus, SUM(S.availableStock)) " +
             "FROM stocks S " +
-            "WHERE S.stockStatus = :status " +
             "GROUP BY S.stockStatus")
-    List<StockSummaryEntity> getStockSummaryByStatus(StockStatus status);
+    List<StockSummaryEntity> getStockSummaryByStatusGrouped();
 
     @Query("SELECT new ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.StockSummaryEntity(S.productId, S.stockStatus, SUM(S.availableStock)) " +
             "FROM stocks S " +
@@ -46,4 +39,16 @@ public interface StockRepository extends JpaRepository<StockEntity, Long> {
             "WHERE S.lockerId.id = :lockerId " +
             "GROUP BY S.lockerId")
     List<StockSummaryEntity> getStockSummaryByLocker(Long lockerId);
+
+    @Query("SELECT new ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.StockSummaryEntity(S.productId, S.stockStatus, SUM(S.availableStock)) " +
+            "FROM stocks S " +
+            "WHERE S.productId.id = :productId " +
+            "GROUP BY S.stockStatus, S.productId")
+    List<StockSummaryEntity> getStockSummaryByProduct(Long productId);
+
+    @Query("SELECT new ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.StockSummaryEntity(S.productId, S.stockStatus, SUM(S.availableStock)) " +
+            "FROM stocks S " +
+            "WHERE S.stockStatus = :status " +
+            "GROUP BY S.stockStatus, S.productId")
+    List<StockSummaryEntity> getStockSummaryByStatus(StockStatus status);
 }
