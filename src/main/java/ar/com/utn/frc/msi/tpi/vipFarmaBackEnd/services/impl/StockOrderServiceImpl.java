@@ -9,6 +9,7 @@ import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrder;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrderItem;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.sale.SaleOrderStatus;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.model.stock.*;
+import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.repositories.LockerRepository;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.repositories.SaleOrderRepository;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.repositories.StockOrderRepository;
 import ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.services.*;
@@ -20,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -34,6 +36,8 @@ public class StockOrderServiceImpl extends BaseModelServiceImpl<StockOrder, Stoc
     private final StockOrderItemService stockOrderItemService;
 
     private final StockOrderRepository stockOrderRepository;
+
+    private final LockerService lockerService;
 
     private final StockService stockService;
 
@@ -170,10 +174,41 @@ public class StockOrderServiceImpl extends BaseModelServiceImpl<StockOrder, Stoc
             stockOrderItemService.updateAll(stockOrder.getStockOrderItems());
             stockOrder.setStockOrderStatus(stockOrderStatus);
             actualOrder = this.update(stockOrder);
+        } else if (stockOrderStatus == StockOrderStatus.STORED && actualOrder.getStockOrderStatus() == StockOrderStatus.RECEIVED) {
+            if(stockOrder == null) {
+                throw new IllegalArgumentException("A new order to update is necessary to change from " +
+                        "RECEIVED status to STORED");
+            }
+            stockOrder.getStockOrderItems().forEach(
+                    item -> {
+                        if(item.getStockOrderItemStatus() == StockOrderItemStatus.STORED) {
+                            Locker locker = lockerService.getById(item.getLockersToSave().get(0).getId());
+                            Stock stock = increaseStock(item.getActualQuantity(), item.getProduct(), locker);
+                            locker.setCurrentStock(locker.getCurrentStock() + item.getActualQuantity());
+                            locker.setOccupiedCapacity(locker.getOccupiedCapacity() + item.getActualQuantity());
+                            stockService.create(stock);
+                            lockerService.update(locker);
+                            stockOrderItemService.update(item);
+                        }
+                    });
+            stockOrder.setStockOrderStatus(stockOrderStatus);
+            actualOrder = this.update(stockOrder);
         } else {
             throw new IllegalArgumentException(String.format("This operation is not allowed, can´t go from %s " +
                     " status to %s status.", actualOrder.getStockOrderStatus(), stockOrderStatus));
         }
         return actualOrder;
+    }
+
+    private Stock increaseStock(Integer stockAmount, Product product, Locker locker) {
+        Stock stock = new Stock();
+        stock.setCreatedDate(LocalDate.now());
+        stock.setInitialStock(stockAmount);
+        stock.setStockStatus(StockStatus.ACTIVE);
+        stock.setAvailableStock(stockAmount);
+        stock.setProduct(product);
+        stock.setLocker(locker);
+        stock.setDueDate(LocalDate.now().plusDays(300));
+        return stock;
     }
 }
