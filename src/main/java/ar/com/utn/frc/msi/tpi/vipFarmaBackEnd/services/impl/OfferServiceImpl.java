@@ -12,6 +12,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
@@ -90,7 +91,7 @@ public class OfferServiceImpl extends BaseModelServiceImpl<Offer, OfferEntity> i
         }
 
         if(offerStockEntity == null) {
-            throw new IllegalArgumentException("No Hay Oferta para ese Producto");
+            throw new EntityNotFoundException("No Hay Oferta para ese Producto");
         }
 
         return modelMapper.map(offerStockEntity, OfferStock.class);
