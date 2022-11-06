@@ -49,6 +49,7 @@ public interface StockRepository extends JpaRepository<StockEntity, Long> {
     @Query("SELECT new ar.com.utn.frc.msi.tpi.vipFarmaBackEnd.entity.StockSummaryEntity(S.productId, S.stockStatus, SUM(S.availableStock)) " +
             "FROM stocks S " +
             "WHERE S.stockStatus = :status " +
-            "GROUP BY S.stockStatus, S.productId")
+            "GROUP BY S.stockStatus, S.productId " +
+            "ORDER BY SUM(S.availableStock)")
     List<StockSummaryEntity> getStockSummaryByStatus(StockStatus status);
 }
