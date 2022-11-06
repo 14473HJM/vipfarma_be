@@ -19,6 +19,8 @@ public interface BaseModelService<M, E extends Deleteable> {
 
     M update(M model);
 
+    List<M> updateAll(List<M> model);
+
     void delete(M model);
 
 }

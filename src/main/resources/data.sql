@@ -11,13 +11,13 @@ INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) 
 INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1007, 1001, 'vendedor2@email.com', 'password', 'vendedor02', 'SELLER');
 INSERT INTO users (id, branch_office_id, email, password, user_name, user_role) VALUES (1008, 1001, 'vendedor3@email.com', 'password', 'vendedor03', 'SELLER');
 
-
-
+INSERT INTO health_insurance (id, name) VALUES (1, 'SIN OBRA SOCIAL');
 INSERT INTO health_insurance (id, name) VALUES (1001, 'OSDE');
 INSERT INTO health_insurance (id, name) VALUES (1002, 'SWISS MEDICAL');
 INSERT INTO health_insurance (id, name) VALUES (1003, 'MEDIFE');
 INSERT INTO health_insurance (id, name) VALUES (1004, 'SANCOR');
 
+INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1, 1, 'SIN PLAN');
 INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1001, 1001, 'OSDE 210');
 INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1002, 1001, 'OSDE 310');
 INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1003, 1001, 'OSDE 410');
@@ -28,7 +28,7 @@ INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1007, 
 INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1008, 1003, 'MDF2');
 INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1009, 1003, 'MDF3');
 INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1010, 1004, 'Estudiantes');
-INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1011, 1004, 'Profecionales');
+INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1011, 1004, 'Profesionales');
 INSERT INTO health_insurance_plan (id, health_insurance_id, name) VALUES (1012, 1004, 'Familly');
 
 INSERT INTO warehouses (id, location, name, branch_office_id) VALUES (1001, 'Herrera y Guzman 966, Marques de Sobremonte.', 'Deposito NORTE', 1001);
@@ -68,6 +68,19 @@ INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branc
 INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1007, 200, 200, 1000, 1001, 1007, 1003);
 INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1008, 1000, 1000, 1000, 1001, 1008, 1003);
 INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1009, 1000, 1000, 1000, 1001, 1009, 1003);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1010, 150, 200, 1500, 1001, 1001, 1004);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1011, 0, 0, 10000, 1001, 1001, 1001);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1012, 0, 0, 10000, 1001, 1002, 1001);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1013, 0, 0, 10000, 1001, 1003, 1001);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1014, 0, 0, 10000, 1001, 1004, 1002);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1015, 0, 0, 10000, 1001, 1005, 1002);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1016, 0, 0, 10000, 1001, 1006, 1002);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1017, 0, 0, 10000, 1001, 1007, 1003);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1018, 0, 0, 10000, 1001, 1008, 1003);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1019, 0, 0, 10000, 1001, 1009, 1003);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1020, 0, 0, 10000, 1001, 1010, 1004);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1021, 500, 1000, 10000, 1002, 1009, 1005);
+INSERT INTO lockers (id, current_stock, occupied_capacity, stock_capacity, branch_office_id, product_id, rack_id) VALUES (1022, 350, 50, 10000, 1002, 1010, 1006);
 
 INSERT INTO stocks (id, available_stock, created_date, due_date, end_date, initial_stock, stock_status, locker_id, product_id)
 VALUES (1001, 150, CURRENT_DATE -100, CURRENT_DATE + 100, null, 500, 'ACTIVE', 1001, 1001);
@@ -114,25 +127,25 @@ VALUES (1021, 1, CURRENT_DATE -100, CURRENT_DATE + 30, null, 1, 'INACTIVE', 1004
 
 
 INSERT INTO offers (id, discount_type, discount_value, health_insurance_id, health_insurance_plan_id, product_id)
-VALUES (1001, null, null, null, null, 1001);
+VALUES (1001, null, null, 1, 1, 1001);
 INSERT INTO offers (id, discount_type, discount_value, health_insurance_id, health_insurance_plan_id, product_id)
-VALUES (1002, null, null, null, null, 1002);
+VALUES (1002, null, null, 1, 1, 1002);
 INSERT INTO offers (id, discount_type, discount_value, health_insurance_id, health_insurance_plan_id, product_id)
-VALUES (1003, null, null, null, null, 1003);
+VALUES (1003, null, null, 1, 1, 1003);
 INSERT INTO offers (id, discount_type, discount_value, health_insurance_id, health_insurance_plan_id, product_id)
-VALUES (1004, null, null, null, null, 1004);
+VALUES (1004, null, null, 1, 1, 1004);
 INSERT INTO offers (id, discount_type, discount_value, health_insurance_id, health_insurance_plan_id, product_id)
-VALUES (1005, null, null, null, null, 1005);
+VALUES (1005, null, null, 1, 1, 1005);
 INSERT INTO offers (id, discount_type, discount_value, health_insurance_id, health_insurance_plan_id, product_id)
-VALUES (1006, null, null, null, null, 1006);
+VALUES (1006, null, null, 1, 1, 1006);
 INSERT INTO offers (id, discount_type, discount_value, health_insurance_id, health_insurance_plan_id, product_id)
-VALUES (1007, null, null, null, null, 1007);
+VALUES (1007, null, null, 1, 1, 1007);
 INSERT INTO offers (id, discount_type, discount_value, health_insurance_id, health_insurance_plan_id, product_id)
-VALUES (1008, null, null, null, null, 1008);
+VALUES (1008, null, null, 1, 1, 1008);
 INSERT INTO offers (id, discount_type, discount_value, health_insurance_id, health_insurance_plan_id, product_id)
-VALUES (1009, null, null, null, null, 1009);
+VALUES (1009, null, null, 1, 1, 1009);
 INSERT INTO offers (id, discount_type, discount_value, health_insurance_id, health_insurance_plan_id, product_id)
-VALUES (1010, null, null, null, null, 1010);
+VALUES (1010, null, null, 1, 1, 1010);
 INSERT INTO offers (id, discount_type, discount_value, health_insurance_id, health_insurance_plan_id, product_id)
 VALUES (1011, 'PERCENTAGE', CONVERT('0.20',DECIMAL(19,2)), 1001, 1001, 1001);
 INSERT INTO offers (id, discount_type, discount_value, health_insurance_id, health_insurance_plan_id, product_id)
@@ -178,6 +191,10 @@ INSERT INTO customers (id, address, identification, identification_type, last_na
 VALUES (1001, 'Calle sin numero 150', '28654321', 'DNI', 'Lescano', 'Pablo', 1001, 1001);
 INSERT INTO customers (id, address, identification, identification_type, last_name, name, health_insurance_id, health_insurance_plan_id)
 VALUES (1002, 'La esquina del infinito', '20987654', 'DNI', 'Nápoli', 'Chizzo', 1001, 1002);
+INSERT INTO customers (id, address, identification, identification_type, last_name, name, health_insurance_id, health_insurance_plan_id)
+VALUES (1003, 'Pepit 345', '20987694', 'DNI', 'Morais', 'Hernan', 1, 1);
+INSERT INTO customers (id, address, identification, identification_type, last_name, name, health_insurance_id, health_insurance_plan_id)
+VALUES (1004, 'HolaHola 345', '45987694', 'DNI', 'Spicoña ', 'Maga', 1004, 1012);
 
 INSERT INTO sale_orders (id, created_date, sale_order_status, status_detail, total_amount, branch_office_id, customer_id, user_id)
 VALUES (1001, CURRENT_DATE, 'READY_TO_BILL', null, 300, 1001, 1001, 1004);
@@ -253,3 +270,35 @@ INSERT INTO bill_items (id, bill_id, discount_amount, label_invoice, quantity, t
 VALUES (1006, 2, null, 'Ibuprofeno 800', 1, 300, 300, 1003);
 INSERT INTO bill_items (id, bill_id, discount_amount, label_invoice, quantity, total_price, unitary_price, offer_id)
 VALUES (1007, 2, null, 'Ibuprofeno 500', 1, 150, 150, 1004);
+
+
+INSERT INTO stock_orders (id, created_date, stock_order_status, purchase_order_id, warehouse_id)
+VALUES (1001, CURRENT_DATE -45, 'CREATED', 1235467, 1001);
+INSERT INTO stock_orders (id, created_date, stock_order_status, purchase_order_id, warehouse_id)
+VALUES (1002, CURRENT_DATE -10, 'PENDING_DELIVERY', 12678384, 1001);
+INSERT INTO stock_orders (id, created_date, stock_order_status, purchase_order_id, warehouse_id)
+VALUES (1003, CURRENT_DATE -20, 'PENDING_DELIVERY', 2312345, 1001);
+INSERT INTO stock_orders (id, created_date, stock_order_status, purchase_order_id, warehouse_id)
+VALUES (1004, CURRENT_DATE - 45, 'PENDING_DELIVERY', 56454532, 1001);
+INSERT INTO stock_orders (id, created_date, stock_order_status, purchase_order_id, warehouse_id)
+VALUES (1005, CURRENT_DATE -10, 'PENDING_DELIVERY', 65478934, 1001);
+INSERT INTO stock_orders (id, created_date, stock_order_status, purchase_order_id, warehouse_id)
+VALUES (1006, CURRENT_DATE -20, 'PENDING_DELIVERY', 23445768, 1001);
+
+
+INSERT INTO stock_order_items (id, required_quantity, stock_order_id, stock_order_item_status, product_id)
+VALUES (1001, 2000, 1002, 'PENDING', 1001);
+INSERT INTO stock_order_items (id, required_quantity, stock_order_id, stock_order_item_status, product_id)
+VALUES (1002, 1000, 1002, 'PENDING', 1002);
+INSERT INTO stock_order_items (id, required_quantity, stock_order_id, stock_order_item_status, product_id)
+VALUES (1003, 1500, 1002, 'PENDING', 1003);
+INSERT INTO stock_order_items (id, required_quantity, stock_order_id, stock_order_item_status, product_id)
+VALUES (1004, 5000, 1002, 'PENDING', 1004);
+INSERT INTO stock_order_items (id, required_quantity, stock_order_id, stock_order_item_status, product_id)
+VALUES (1005, 1000, 1002, 'PENDING', 1005);
+INSERT INTO stock_order_items (id, required_quantity, stock_order_id, stock_order_item_status, product_id)
+VALUES (1006, 500, 1002, 'PENDING', 1006);
+INSERT INTO stock_order_items (id, required_quantity, stock_order_id, stock_order_item_status, product_id)
+VALUES (1007, 200, 1002, 'PENDING', 1007);
+INSERT INTO stock_order_items (id, required_quantity, stock_order_id, stock_order_item_status, product_id)
+VALUES (1008, 100, 1002, 'PENDING', 1008);

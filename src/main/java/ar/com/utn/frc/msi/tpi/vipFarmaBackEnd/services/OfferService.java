@@ -16,5 +16,7 @@ public interface OfferService extends BaseModelService<Offer, OfferEntity> {
 
     List<OfferStock> getOfferStockByProductIdAndBranchOffice(Long productId, Long branchOfficeId);
 
+    OfferStock getOfferStockByProductIdAndBranchOfficeAndPlanId(Long productId, Long branchOfficeId, Long planId);
+
     List<OfferStock> getOfferStockByBranchOffice(Long branchOfficeId);
 }

@@ -12,6 +12,7 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
 public class OfferController {
@@ -56,5 +57,14 @@ public class OfferController {
             offerList = offerService.getOfferStockByBranchOffice(branchOfficeId);
         }
         return ResponseEntity.ok(offerList);
+    }
+
+    @GetMapping("/stock/offer")
+    public ResponseEntity<OfferStock> getOfferByParameters(@RequestParam Long branchOfficeId,
+                                                           @RequestParam Long productId,
+                                                           @RequestParam(required = false) Long planId) {
+        OfferStock offer = offerService
+                .getOfferStockByProductIdAndBranchOfficeAndPlanId(productId, branchOfficeId, planId);
+        return ResponseEntity.ok(offer);
     }
 }

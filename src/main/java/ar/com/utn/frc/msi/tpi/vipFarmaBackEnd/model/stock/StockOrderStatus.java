@@ -9,6 +9,7 @@ public enum StockOrderStatus {
 
     CREATED(true, false),
     PENDING_DELIVERY(false, false),
+    STORED(false, true),
     RECEIVED(false, true),
     REJECTED(false, true),
     CANCELED(false, true);

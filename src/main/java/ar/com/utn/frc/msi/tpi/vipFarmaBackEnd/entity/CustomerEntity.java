@@ -22,11 +22,11 @@ public class CustomerEntity extends Deleteable {
     private String address;
 
     @OneToOne
-    @JoinColumn(name = "healthInsuranceId")
+    @JoinColumn(name = "healthInsuranceId", nullable = true)
     private HealthInsuranceEntity healthInsuranceId;
 
     @OneToOne
-    @JoinColumn(name = "healthInsurancePlanId")
+    @JoinColumn(name = "healthInsurancePlanId", nullable = true)
     private HealthInsurancePlanEntity healthInsurancePlanId;
 
 }

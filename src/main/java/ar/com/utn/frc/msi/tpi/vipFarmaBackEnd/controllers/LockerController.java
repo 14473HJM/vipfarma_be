@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @RestController
 @RequiredArgsConstructor
 public class LockerController {
@@ -23,8 +24,21 @@ public class LockerController {
     }
 
     @GetMapping("/lockers")
-    public ResponseEntity<List<Locker>> getAll() {
-        List<Locker> lockerList = lockerService.getAll();
+    public ResponseEntity<List<Locker>> getAll(@RequestParam(required = false) Long productId,
+                                               @RequestParam(required = false) Integer availability,
+                                               @RequestParam(required = false) Long branchOfficeId) {
+        List<Locker> lockerList;
+        if(productId == null && availability == null) {
+            lockerList = (branchOfficeId == null)
+                    ? lockerService.getAll()
+                    : lockerService.getAllByBranchOfficeId(branchOfficeId);
+        } else if (productId != null && availability == null) {
+            lockerList = lockerService.getAllByProduct(productId);
+        } else if (productId != null && availability != null) {
+            lockerList = lockerService.getAllByProductAndAvailability(productId, availability);
+        } else {
+            throw new IllegalArgumentException("productId is required if availability included");
+        }
         return ResponseEntity.ok(lockerList);
     }
 

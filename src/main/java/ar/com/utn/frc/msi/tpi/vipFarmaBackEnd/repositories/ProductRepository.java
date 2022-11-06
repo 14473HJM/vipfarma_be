@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<ProductEntity, Long> {
-    List<ProductEntity> getByNameContaining(String name);
+    List<ProductEntity> getByNameContainingIgnoreCase(String name);
+    List<ProductEntity> getByNameIgnoreCaseOrBarcode(String name, Long barcode);
     ProductEntity getByBarcode (Long barcode);
 }
