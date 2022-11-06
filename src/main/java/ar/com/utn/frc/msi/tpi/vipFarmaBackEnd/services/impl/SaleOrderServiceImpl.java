@@ -66,6 +66,8 @@ public class SaleOrderServiceImpl extends BaseModelServiceImpl<SaleOrder, SaleOr
             savedOrder.setSaleOrderItems(savedItems);
             // Calculate total Amount Order
             savedOrder.setTotalAmount(this.getTotalOrder(savedItems));
+            savedOrder.setSaleOrderStatus(SaleOrderStatus.READY_TO_BILL);
+            this.update(savedOrder);
         }
 
         return savedOrder;
