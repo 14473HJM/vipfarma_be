@@ -18,4 +18,8 @@ public interface LockerRepository extends JpaRepository<LockerEntity, Long> {
             "WHERE L.product.id = :productId " +
             "AND (L.stockCapacity - L.occupiedCapacity) > :availability")
     List<LockerEntity> getAllByProductAndAvailability(Long productId, Integer availability);
+
+    @Query("SELECT L FROM lockers L " +
+            "WHERE L.branchOfficeId.id = :branchId ")
+    List<LockerEntity> getAllByBranchOffice(Long branchId);
 }
