@@ -19,4 +19,6 @@ public interface StockService extends BaseModelService<Stock, StockEntity> {
     void inactivateStocks(List<Stock> stocks);
 
     List<StockSummary> getStockSummary(Long productId, StockStatus stockStatus, Long lockerId);
+
+    List<StockSummary> getStockSummaryGrouped();
 }

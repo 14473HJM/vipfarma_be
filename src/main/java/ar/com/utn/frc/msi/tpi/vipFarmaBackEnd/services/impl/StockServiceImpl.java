@@ -118,6 +118,13 @@ public class StockServiceImpl extends BaseModelServiceImpl<Stock, StockEntity> i
         }
     }
 
+    @Override
+    public List<StockSummary> getStockSummaryGrouped() {
+        List<StockSummaryEntity> entities =
+                stockRepository.getStockSummaryByStatusGrouped();
+        return getStockSummaryList(entities);
+    }
+
     private Stock copyStockToReserve(Integer quantity, Stock stock) {
         Stock reserveStock = new Stock();
         reserveStock.setAvailableStock(quantity);
