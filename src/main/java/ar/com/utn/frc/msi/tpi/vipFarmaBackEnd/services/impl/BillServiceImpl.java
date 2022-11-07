@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.RollbackException;
 import java.math.BigDecimal;
+import java.math.MathContext;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.LinkedList;
@@ -123,12 +124,14 @@ public class BillServiceImpl extends BaseModelServiceImpl<Bill, BillEntity> impl
             taxAmount = taxAmount.add(this.calculateTax(item, tax));
         }
         taxesItem.setUnitaryPrice(taxAmount);
-        taxesItem.setTotalPrice(taxAmount);
+        taxesItem.setTotalPrice(taxAmount.setScale(2, RoundingMode.HALF_UP));
         billItemList.add(taxesItem);
     }
 
     private BigDecimal calculateTax(BillItem item, Tax tax) {
-        return item.getUnitaryPrice().multiply(BigDecimal.valueOf(item.getQuantity())).multiply(tax.getTaxValue());
+        return item.getUnitaryPrice().setScale(2, RoundingMode.HALF_UP)
+                .multiply(BigDecimal.valueOf(item.getQuantity()))
+                .multiply(tax.getTaxValue());
     }
 
     private String getCae() {
