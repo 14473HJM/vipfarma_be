@@ -52,15 +52,13 @@ public class BillItemServiceImpl extends BaseModelServiceImpl<BillItem, BillItem
     }
 
     private BigDecimal calculateTaxFreePrice(SaleOrderItem item, Tax tax) {
-        return item.getTotalPrice().divide(BigDecimal.ONE.add(tax.getTaxValue()), RoundingMode.HALF_UP);
+        return item.getUnitaryPrice().divide(BigDecimal.ONE.add(tax.getTaxValue()), 4, RoundingMode.HALF_UP);
     }
 
     private BigDecimal calculateTotalPrice(BillItem item) {
-//        return item.getTotalPrice()
-//                .multiply(BigDecimal.valueOf(item.getQuantity()))
-//                .divide(BigDecimal.ONE.add(tax.getTaxValue()), RoundingMode.HALF_UP)
-//                .subtract(item.getDiscountAmount());
-        BigDecimal totalWithOutDiscount = item.getUnitaryPrice().multiply(BigDecimal.valueOf(item.getQuantity()));
+        BigDecimal totalWithOutDiscount = item.getUnitaryPrice()
+                .multiply(BigDecimal.valueOf(item.getQuantity()))
+                .setScale(2, RoundingMode.HALF_UP);
         return (item.getDiscountAmount() != null)? totalWithOutDiscount.subtract(item.getDiscountAmount()):totalWithOutDiscount;
     }
 
