@@ -113,12 +113,13 @@ public class BillServiceImpl extends BaseModelServiceImpl<Bill, BillEntity> impl
         for(BillItem item : billItemList) {
             taxAmount = taxAmount.add(this.calculateTax(item, tax));
         }
+        taxesItem.setUnitaryPrice(taxAmount);
         taxesItem.setTotalPrice(taxAmount);
         billItemList.add(taxesItem);
     }
 
     private BigDecimal calculateTax(BillItem item, Tax tax) {
-        return item.getTotalPrice().multiply(tax.getTaxValue());
+        return item.getUnitaryPrice().multiply(BigDecimal.valueOf(item.getQuantity())).multiply(tax.getTaxValue());
     }
 
     private String getCae() {
