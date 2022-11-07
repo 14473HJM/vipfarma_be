@@ -215,7 +215,9 @@ VALUES (1001, 'IVA Consumidor Final', 'VAT', CONVERT('0.21',DECIMAL(19,2)));
 INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
 VALUES (1001, null, 1, 1001, 100, 100, 1001);
 INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
-VALUES (1002, null, 1, 1001, 200, 200, 1002);
+VALUES (1002, null, 3, 1001, 200, 200, 1002);
+INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
+VALUES (1010, CONVERT('40.00',DECIMAL(19,2)), 2, 1001, 200, 200, 1002);
 INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
 VALUES (1003, null, 1, 1002, 100, 100, 1001);
 INSERT INTO sale_order_items (id, discount_amount, quantity, sale_order_id, total_price, unitary_price, offer_id)
