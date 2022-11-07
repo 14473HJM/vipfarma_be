@@ -61,7 +61,7 @@ public class SaleOrderServiceImpl extends BaseModelServiceImpl<SaleOrder, SaleOr
             List<SaleOrderItem> savedItems = saveSaleOrderItems(
                     saleOrder.getSaleOrderItems(),
                     savedOrder.getId(),
-                    saleOrder.getBranchOfficeId().getId());
+                    saleOrder.getBranchOffice().getId());
             // Set itemsSaved into order saved
             savedOrder.setSaleOrderItems(savedItems);
             // Calculate total Amount Order
@@ -80,6 +80,7 @@ public class SaleOrderServiceImpl extends BaseModelServiceImpl<SaleOrder, SaleOr
             Product product = item.getOffer().getProduct();
             List<Stock> stocks = stockService.reserveStock(product.getId(), branchOfficeId, item.getQuantity());
             item.setStocks(stocks);
+            item.setDiscountAmount(this.getDiscountItem(item));
         }
         List<SaleOrderItem> savedItems = saleOrderItemService.createAll(saleOrderItems);
         return savedItems;
@@ -115,7 +116,7 @@ public class SaleOrderServiceImpl extends BaseModelServiceImpl<SaleOrder, SaleOr
     private BigDecimal getTotalOrder(List<SaleOrderItem> items) {
         BigDecimal totalAmount = BigDecimal.ZERO;
         for(SaleOrderItem item : items) {
-            totalAmount.add(getTotalItem(item));
+            totalAmount = totalAmount.add(getTotalItem(item));
         }
         return totalAmount;
     }
@@ -135,6 +136,15 @@ public class SaleOrderServiceImpl extends BaseModelServiceImpl<SaleOrder, SaleOr
             return price.multiply(BigDecimal.valueOf(quantity));
         } else {
             return price;
+        }
+    }
+
+    private BigDecimal getDiscountItem(SaleOrderItem item) {
+        if(item.getDiscountAmount() != null) {
+            BigDecimal totalDiscount = item.getDiscountAmount().multiply(BigDecimal.valueOf(item.getQuantity()));
+            return totalDiscount;
+        } else {
+            return BigDecimal.ZERO;
         }
     }
 }

@@ -20,7 +20,7 @@ public class SaleOrder {
     private Long id;
     private User user;
     private Customer customer;
-    private BranchOffice branchOfficeId;
+    private BranchOffice branchOffice;
     private LocalDate createdDate;
     private SaleOrderStatus saleOrderStatus;
     private String statusDetail;
