@@ -35,7 +35,7 @@ public class BillController {
 
     @GetMapping("/bills")
     public ResponseEntity<List<Bill>> getAll() {
-        List<Bill> billList = billService.getAll();
+        List<Bill> billList = billService.getAllBills();
         return ResponseEntity.ok(billList);
     }
 

@@ -95,6 +95,15 @@ public class BillServiceImpl extends BaseModelServiceImpl<Bill, BillEntity> impl
         return bill;
     }
 
+    @Override
+    public List<Bill> getAllBills() {
+        List<Bill> bills = this.getAll();
+        for(Bill b : bills) {
+            b.setTotalAmount(this.getTotalAmount(b.getItems()));
+        }
+        return bills;
+    }
+
     private BigDecimal getTotalAmount(List<BillItem> billItemList) {
         BigDecimal totalAmount = BigDecimal.ZERO;
         for(BillItem item : billItemList) {
