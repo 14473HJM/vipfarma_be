@@ -10,6 +10,7 @@ import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -41,4 +42,6 @@ public class BillEntity extends Deleteable{
     private List<BillItemEntity> items;
 
     private String cae;
+
+    private BigDecimal totalAmount;
 }
