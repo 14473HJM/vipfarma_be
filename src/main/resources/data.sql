@@ -188,13 +188,13 @@ INSERT INTO offers (id, discount_type, discount_value, health_insurance_id, heal
 VALUES (1030, 'PERCENTAGE', CONVERT('0.30',DECIMAL(19,2)), 1001, 1002, 1010);
 
 INSERT INTO customers (id, address, identification, identification_type, last_name, name, health_insurance_id, health_insurance_plan_id)
-VALUES (1001, 'Calle sin numero 150', '28654321', 'DNI', 'Lescano', 'Pablo', 1001, 1001);
+VALUES (1001, 'Morales 150', '28654321', 'DNI', 'Zárate', 'Francisco', 1001, 1001);
 INSERT INTO customers (id, address, identification, identification_type, last_name, name, health_insurance_id, health_insurance_plan_id)
-VALUES (1002, 'La esquina del infinito', '20987654', 'DNI', 'Nápoli', 'Chizzo', 1001, 1002);
+VALUES (1002, 'Diego de Alvarado 2345', '20987654', 'DNI', 'Suárez', 'David', 1001, 1002);
 INSERT INTO customers (id, address, identification, identification_type, last_name, name, health_insurance_id, health_insurance_plan_id)
-VALUES (1003, 'Pepit 345', '20987694', 'DNI', 'Morais', 'Hernan', 1, 1);
+VALUES (1003, 'Gorriti 2134', '20987694', 'DNI', 'Figueroa', 'Hernan', 1, 1);
 INSERT INTO customers (id, address, identification, identification_type, last_name, name, health_insurance_id, health_insurance_plan_id)
-VALUES (1004, 'HolaHola 345', '45987694', 'DNI', 'Spicoña ', 'Maga', 1004, 1012);
+VALUES (1004, 'Morales  345', '35987694', 'DNI', 'Quinteros ', 'Lourdes', 1004, 1012);
 
 INSERT INTO sale_orders (id, created_date, sale_order_status, status_detail, total_amount, branch_office_id, customer_id, user_id)
 VALUES (1001, CURRENT_DATE, 'READY_TO_BILL', null, 300, 1001, 1001, 1004);
